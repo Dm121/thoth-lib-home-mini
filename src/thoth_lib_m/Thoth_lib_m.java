@@ -7,7 +7,11 @@
 package thoth_lib_m;
 
 import thoth_lib_m.dataclass.*;
+import thoth_lib_m.guiclass.*;
+import thoth_lib_m.databaseclass.*;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.FlowLayout;
 /**
  *
  * @author 1
@@ -20,19 +24,22 @@ public class Thoth_lib_m {
     public static void main(String[] args) {
         // TODO code application logic here
         try{
-        Book b1 = new Book(1, 2, 1);
-        JOptionPane.showMessageDialog(null, b1.toString());
-        b1.specifyCopyBook(3);
-        JOptionPane.showMessageDialog(null, b1.toString());
-        b1.getMainData().setAuthors("Pushkin A.S.");
-        b1.getMainData().setTitle("Captain's daughter");
-        b1.getDateline().setYear(1949);
-        b1.getDateline().setYear(10949);
-        b1.getAdditData().setNumVolume("1");
-        JOptionPane.showMessageDialog(null, b1.toString());
-        b1.getCopyBook().setBookCase("2");
-        JOptionPane.showMessageDialog(null, b1.getCopyBook().getBookCase());
-        JOptionPane.showMessageDialog(null, "Success!");
+            CatalogJElements elem = new CatalogJElements();
+            ConnectionSQLiteDB sqliteDB = new ConnectionSQLiteDB();
+            JPanel testPanel = new JPanel();
+            JFrame testView = new JFrame();
+            testView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            testView.setSize(800, 350);
+            sqliteDB.connDB("db/thoth_lhm_sqlite.db");
+            testPanel.setLayout(new FlowLayout());
+            //testPanel.add();
+            JScrollPane scroll = new JScrollPane(
+                elem.getPanelBook(sqliteDB.getConnectionC()));
+            testView.add(
+                    scroll);
+            testView.setVisible(true);
+            sqliteDB.closeDB(sqliteDB.getConnectionC());
+            JOptionPane.showMessageDialog(null, "Success!");
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getStackTrace(),
