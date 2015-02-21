@@ -39,7 +39,10 @@ public class Dateline implements Serializable{
         }
         else{
             JOptionPane.showMessageDialog(null,
-                    filterYear, "Предупреждение (Warning): ",
+                    "Значение года может варьироваться от 40 до 9999.\n" +
+            "Вы ввели значение: " + year + ".\n" +
+            "Поэтому будет использовано значение по умолчанию: 2015.", 
+                    "Предупреждение (Warning): ",
                     JOptionPane.WARNING_MESSAGE);
             this.year = 2015;
         }
@@ -71,7 +74,10 @@ public class Dateline implements Serializable{
         }
         else{
             JOptionPane.showMessageDialog(null,
-                    filterYearTwo, "Предупреждение (Warning): ",
+                    "Значение года может варьироваться от 40 до 9999.\n" +
+            "Вы ввели значение: " + year + ".\n" +
+            "Поэтому текущее значение: " + this.year + 
+            " - изменено не будет.", "Предупреждение (Warning): ",
                     JOptionPane.WARNING_MESSAGE);
         }
     }

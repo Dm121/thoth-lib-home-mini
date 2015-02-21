@@ -27,6 +27,7 @@ public class Thoth_lib_m {
         b1.getMainData().setAuthors("Pushkin A.S.");
         b1.getMainData().setTitle("Captain's daughter");
         b1.getDateline().setYear(1949);
+        b1.getDateline().setYear(10949);
         b1.getAdditData().setNumVolume("1");
         JOptionPane.showMessageDialog(null, b1.toString());
         b1.getCopyBook().setBookCase("2");
