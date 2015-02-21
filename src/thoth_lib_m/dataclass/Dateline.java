@@ -17,7 +17,14 @@ public class Dateline implements Serializable{
     private String publisher;
     private String place;
     private int year;
-        
+    String filterYear = "Значения года варьируются от 40 до 9999.\n" +
+            "Вы ввели значение: " + this.year + ".\n" +
+            "Поэтому будет использовано значение по умолчанию: 2015.";
+    String filterYearTwo = "Значения года варьируются от 40 до 9999.\n" +
+            "Вы ввели значение: " + this.year + ".\n" +
+            "Поэтому текущее значение: " + this.year + 
+            " - изменено не будет.";
+    
     public Dateline(){
         this.publisher = "";
         this.place = "";
@@ -32,10 +39,7 @@ public class Dateline implements Serializable{
         }
         else{
             JOptionPane.showMessageDialog(null,
-                    "Значение года может варьироваться от 40 до 9999.\n" +
-            "Вы ввели значение: " + year + ".\n" +
-            "Поэтому будет использовано значение по умолчанию: 2015.", 
-                    "Предупреждение (Warning): ",
+                    filterYear, "Предупреждение (Warning): ",
                     JOptionPane.WARNING_MESSAGE);
             this.year = 2015;
         }
@@ -67,10 +71,7 @@ public class Dateline implements Serializable{
         }
         else{
             JOptionPane.showMessageDialog(null,
-                    "Значение года может варьироваться от 40 до 9999.\n" +
-            "Вы ввели значение: " + year + ".\n" +
-            "Поэтому текущее значение: " + this.year + 
-            " - изменено не будет.", "Предупреждение (Warning): ",
+                    filterYearTwo, "Предупреждение (Warning): ",
                     JOptionPane.WARNING_MESSAGE);
         }
     }
