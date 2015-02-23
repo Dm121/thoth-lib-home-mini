@@ -24,20 +24,13 @@ public class Thoth_lib_m {
     public static void main(String[] args) {
         // TODO code application logic here
         try{
-            CatalogJElements elem = new CatalogJElements();
             ConnectionSQLiteDB sqliteDB = new ConnectionSQLiteDB();
-            JPanel testPanel = new JPanel();
-            JFrame testView = new JFrame();
-            testView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            testView.setSize(800, 350);
             sqliteDB.connDB("db/thoth_lhm_sqlite.db");
-            testPanel.setLayout(new FlowLayout());
-            //testPanel.add();
-            JScrollPane scroll = new JScrollPane(
-                elem.getPanelBook(sqliteDB.getConnectionC()));
-            testView.add(
-                    scroll);
-            testView.setVisible(true);
+            //
+            CatalogJFrame window = new CatalogJFrame();
+            window.createGUI(sqliteDB.getConnectionC());
+            window.setShow(true);
+            //
             sqliteDB.closeDB(sqliteDB.getConnectionC());
             JOptionPane.showMessageDialog(null, "Success!");
         }

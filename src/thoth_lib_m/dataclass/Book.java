@@ -20,6 +20,8 @@ public class Book extends FieldID{
     AdditData additData;
     CopyBook copy;
     
+    private boolean flagNewBook;
+    
     public Book(int idBook, int idType, int idSection){
         super(idBook);
         this.idTypeBook = idType;
@@ -27,6 +29,7 @@ public class Book extends FieldID{
         this.mainData = new MainData();
         this.dateline = new Dateline();
         this.additData = new AdditData();
+        this.flagNewBook = true;
     }
     
     public int getIdTypeBook(){
@@ -75,6 +78,14 @@ public class Book extends FieldID{
         return this.copy;
     }
     
+    public boolean getStatusRecord(){
+        return this.flagNewBook;
+    }
+    
+    public void setStatusRecord(boolean flag){
+        this.flagNewBook = flag;
+    }
+    
     @Override
     public String toString(){
         String copyNull;
@@ -82,7 +93,8 @@ public class Book extends FieldID{
             copyNull = "Экземпляр книги не указан.";
         }
         else { copyNull = this.copy.toString(); }
-        return "[id of book = " + this.idBook + "]\n" + 
+        return "Book in database: " + this.flagNewBook + ".\n" +
+                "[id of book = " + this.idBook + "]\n" + 
                 "Type of Book: " + this.idTypeBook + ".\n" +
                 "Number of Section: " + this.idSection + ".\n" +
                 this.mainData.toString() + "\n" +

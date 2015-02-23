@@ -7,7 +7,7 @@
 package thoth_lib_m.databaseclass;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import javax.sql.rowset.CachedRowSet;
 
 /**
