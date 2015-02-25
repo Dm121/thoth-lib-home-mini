@@ -9,7 +9,9 @@ package thoth_lib_m.guiclass;
 import java.util.ArrayList;
 import java.sql.*;
 import java.awt.*;
+import java.util.Arrays;
 import javax.swing.*;
+import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.InfoSection;
 
 /**
@@ -69,6 +71,7 @@ public class Section {
                         listModel.addElement(rs.getString("describe"));
                     }
                 }
+                section.setSelectedIndex(0);
             }
             catch(SQLException e){
                 JOptionPane.showMessageDialog(null, 
@@ -109,16 +112,27 @@ public class Section {
                 sql = "INSERT INTO section (id_section, describe, above_section) " +
                         "VALUES (" + (rs.getInt(1) + 1) + ", '" + nameSection +
                         "', 1)";
-                sqwi.executeUpdate(sql);
+                            
                 infoSection.add(new InfoSection(rs.getInt(1) + 1, 
                             nameSection, 1));
+                
+                sqwi.executeUpdate(sql);
+                               
+                
                 nameSection = "-->" + nameSection;
                 listModel.addElement(nameSection);
+                //
+                //Выбрать самый последний элемент
+                section.setSelectedIndex(listModel.size() - 1);
+                //
             }
             catch(SQLException e){
+                String regex = ",";
                 JOptionPane.showMessageDialog(null, 
                     "Error: \n" + e.getClass().getName() + 
-                            "(method: insertItemList):" + e.getMessage(), 
+                            "(method: insertItemList):" + e.getMessage() + "\n" +
+                            AdditClass.splitString(regex, 
+                                    Arrays.toString(e.getStackTrace())), 
                     "Ошибка работы с БД (Error DataBase): ", JOptionPane.ERROR_MESSAGE);
                 err = true;
             }
@@ -180,11 +194,12 @@ public class Section {
                             sqwd.executeUpdate(sql);
                             listModel.remove(selectedIndex);
                             infoSection.remove(infoSection.get(selectedIndex));
+                            section.setSelectedIndex(selectedIndex - 1);
                         }
                     }
                     else{
                         JOptionPane.showMessageDialog(null, 
-                                "Невозможно удалить раздел." + 
+                                "Невозможно удалить раздел.\n " + 
                                 "Чтобы удалить раздел, он должен быть пустым.", 
                                 "Предупреждение (Warning)", JOptionPane.WARNING_MESSAGE);
                         err = true;
@@ -247,18 +262,25 @@ public class Section {
                         JOptionPane.QUESTION_MESSAGE);
                     sqwu = c.createStatement();
                     sql = "update section " +
-                        "set section.describe = '" + newName + "' " +
+                        "set describe = '" + newName + "' " +
                         "where id_section = " + id +";";
+                    //
+                    JOptionPane.showMessageDialog(null, newName + "\n" + id);
+                    //
                     sqwu.executeUpdate(sql);
                     infoSection.get(selectedIndex).setDescribe(newName);
                     listModel.removeElementAt(selectedIndex);
                     newName = "-->" + newName;
                     listModel.add(selectedIndex, newName);
+                    section.setSelectedIndex(selectedIndex);
                 }
                 catch(SQLException e){
+                    String regex = ",";
                     JOptionPane.showMessageDialog(null, 
                     "Error: \n" + e.getClass().getName() + 
-                            "(method: renameSection):" + e.getMessage(), 
+                            "(method: renameSection):" + e.getMessage() + "\n" +
+                            AdditClass.splitString(regex, 
+                                    Arrays.toString(e.getStackTrace())), 
                     "Ошибка работы с БД (Error DataBase): ", JOptionPane.ERROR_MESSAGE);
                     err = true;
                 }

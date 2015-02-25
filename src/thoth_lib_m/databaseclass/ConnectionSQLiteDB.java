@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.Arrays;
 import javax.sql.rowset.*;
 import javax.swing.JOptionPane;
+import thoth_lib_m.AdditClass;
 
 /**
  *Класс для работы с соединением с Базами Данных, 
@@ -63,9 +64,11 @@ public class ConnectionSQLiteDB extends ConnectionDB{
             rowset.setPassword("");
         }
         catch(SQLException e){
+            String regex = ",";
             JOptionPane.showMessageDialog(null, 
                     "Ошибка: Метод: connCacheDB: " + e.getMessage() + ".\n" +
-                            Arrays.toString(e.getStackTrace()), 
+                            AdditClass.splitString(regex, 
+                                    Arrays.toString(e.getStackTrace())), 
                     "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
             err = true;
         }
