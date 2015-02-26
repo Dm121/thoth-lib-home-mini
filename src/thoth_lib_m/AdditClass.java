@@ -7,6 +7,7 @@
 package thoth_lib_m;
 
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *Вспомогательные методы
@@ -22,5 +23,23 @@ public class AdditClass {
             sterr.append("\n");
         }
         return sterr.toString();
+    }
+    
+    public static void errorMes(Exception e, String nameMethod){
+        String regex = ",";
+        JOptionPane.showMessageDialog(null, 
+                "Ошибка: (Метод: " + nameMethod + "): \n" +
+                        e.getClass().getName() + ": " 
+                        + e.getMessage() + "\n" +
+                        AdditClass.splitString(regex, 
+                                Arrays.toString(e.getStackTrace())), 
+                "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public static void warningMes(String mess, String nameMethod){
+        JOptionPane.showMessageDialog(null, 
+                "(Метод: " + nameMethod + "): \n" +
+                        mess, 
+                "Предупреждение (Warning): ", JOptionPane.WARNING_MESSAGE);
     }
 }

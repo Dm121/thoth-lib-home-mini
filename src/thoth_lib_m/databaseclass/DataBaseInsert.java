@@ -6,9 +6,7 @@
 
 package thoth_lib_m.databaseclass;
 
-import java.util.Arrays;
 import java.sql.*;
-import javax.swing.JOptionPane;
 import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.Book;
 
@@ -17,7 +15,9 @@ import thoth_lib_m.dataclass.Book;
  * в Базу Данных
  * @author Sirota Dmitry
  */
-public class DataBaseInsert {
+public class DataBaseInsert 
+    extends DataBaseHelper{
+    
     private final static String sql_insert_book = 
             "insert into bo_book " +
 "(id_book, num_volume, authors, title, publisher, place, year, notes, " +
@@ -27,11 +27,12 @@ public class DataBaseInsert {
             "insert into inv_book " +
 "(inv_num, bookcase, bookshelf, condition, id_book) " +
 "values (?, ?, ?, ?, ?);";
-    private ConnectionSQLiteDB connect;
+    //
+    
+    //
     
     public DataBaseInsert() throws SQLException{
-        connect = new ConnectionSQLiteDB();
-        connect.connDB("db/thoth_lhm_sqlite.db");
+        super();
     }
     
     public PreparedStatement getInsertBook(){
@@ -40,14 +41,7 @@ public class DataBaseInsert {
             ps = connect.getConnectionC().prepareStatement(sql_insert_book);
         }
         catch(SQLException e){
-            String regex = ",";
-            JOptionPane.showMessageDialog(null, 
-                    "Ошибка: (Метод: getInsertBook): \n" +
-                            e.getClass().getName() + ": " 
-                            + e.getMessage() + "\n" +
-                            AdditClass.splitString(regex, 
-                                    Arrays.toString(e.getStackTrace())), 
-                    "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
+            AdditClass.errorMes(e, "getInsertBook");
             ps = null;
         }
         return ps;
@@ -59,14 +53,7 @@ public class DataBaseInsert {
             ps = connect.getConnectionC().prepareStatement(sql_insert_inv);
         }
         catch(SQLException e){
-            String regex = ",";
-            JOptionPane.showMessageDialog(null, 
-                    "Ошибка: (Метод: getInsertInv): \n" +
-                            e.getClass().getName() + ": " 
-                            + e.getMessage() + "\n" +
-                            AdditClass.splitString(regex, 
-                                    Arrays.toString(e.getStackTrace())), 
-                    "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
+            AdditClass.errorMes(e, "getInsertInv");
             ps = null;
         }
         return ps;
@@ -89,21 +76,25 @@ public class DataBaseInsert {
             flag = true;
         }
         catch(SQLException e){
-            String regex = ",";
-            JOptionPane.showMessageDialog(null, 
-                    "Ошибка: (Метод: insertBook): \n" +
-                            e.getClass().getName() + ": " 
-                            + e.getMessage() + "\n" +
-                            AdditClass.splitString(regex, 
-                                    Arrays.toString(e.getStackTrace())), 
-                    "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
+            AdditClass.errorMes(e, "insertBook");
         }
         return flag;
     }
     
     public boolean insertCopy(PreparedStatement ps, Book copyBook){
         boolean flag = false;
-        //
+        try{
+            ps.setInt(1, copyBook.getCopyBook().getInvNum());
+            ps.setString(2, copyBook.getCopyBook().getBookCase());
+            ps.setString(3, copyBook.getCopyBook().getBookShelf());
+            ps.setString(4, copyBook.getCopyBook().getCondition());
+            ps.setInt(5, copyBook.getCopyBook().getIdBook());
+            ps.executeUpdate();
+            flag = true;
+        }
+        catch(SQLException e){
+            AdditClass.errorMes(e, "insertCopy");
+        }
         return flag;
     }
 }
