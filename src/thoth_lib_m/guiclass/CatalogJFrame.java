@@ -74,18 +74,20 @@ public class CatalogJFrame extends JFrame{
         JScrollPane scroll = new JScrollPane(tablePanel);
                 
         Box boxAddit = Box.createHorizontalBox();
-        s.getSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
+        s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
         s.addDataList(c);
-        boxAddit.add(new JScrollPane(s.getSection()));
+        boxAddit.add(new JScrollPane(s.getScrollSection()));
         boxAddit.add(new JScrollPane(tabbedPane));
         
         
         this.add(boxMain, BorderLayout.NORTH);
         this.add(scroll, BorderLayout.CENTER);
         this.add(boxAddit, BorderLayout.SOUTH);
+        //this.pack();
     }
     
     public void setShow(boolean visible){
+        //this.setLocationRelativeTo(null);
         this.setVisible(visible);
     }
 }
