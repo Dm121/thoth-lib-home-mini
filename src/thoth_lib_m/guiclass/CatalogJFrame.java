@@ -7,8 +7,11 @@
 package thoth_lib_m.guiclass;
 
 import java.awt.*;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.*;
 import java.sql.*;
+import thoth_lib_m.dataclass.InfoSection;
 
 /**
  *Главное окно модуля "Каталогизатор"
@@ -76,6 +79,10 @@ public class CatalogJFrame extends JFrame{
         Box boxAddit = Box.createHorizontalBox();
         s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
         s.addDataList(c);
+        s.getSection().addListSelectionListener((ListSelectionEvent e) -> {
+            Integer selectedIndex = s.getSection().getSelectedIndex();
+            InfoSection ifS = s.getArrayISection(selectedIndex);
+        });
         boxAddit.add(new JScrollPane(s.getScrollSection()));
         boxAddit.add(new JScrollPane(tabbedPane));
         

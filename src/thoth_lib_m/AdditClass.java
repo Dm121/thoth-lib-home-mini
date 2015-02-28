@@ -42,4 +42,16 @@ public class AdditClass {
                         mess, 
                 "Предупреждение (Warning): ", JOptionPane.WARNING_MESSAGE);
     }
+    
+    public static void infoMes(String mess){
+        JOptionPane.showMessageDialog(null, mess, 
+                "Информация (Information): ", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public static void infoMes(String mess, String nameMethod){
+        JOptionPane.showMessageDialog(null, 
+                "(Метод: " + nameMethod + "): \n" +
+                        mess, 
+                "Информация (Information): ", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

@@ -11,6 +11,7 @@ import thoth_lib_m.guiclass.*;
 import thoth_lib_m.databaseclass.*;
 import javax.swing.JOptionPane;
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.FlowLayout;
 /**
  *
@@ -26,6 +27,12 @@ public class Thoth_lib_m {
         try{
             ConnectionSQLiteDB sqliteDB = new ConnectionSQLiteDB();
             sqliteDB.connDB("db/thoth_lhm_sqlite.db");
+            //
+            DefaultTableModel myModel = new DefaultTableModel();
+            JTable table = new JTable(myModel);
+            TableRowSorter<TableModel> sorter = 
+                    new TableRowSorter<TableModel>(table.getModel());
+            
             //
             CatalogJFrame window = new CatalogJFrame();
             window.createGUI(sqliteDB.getConnectionC());

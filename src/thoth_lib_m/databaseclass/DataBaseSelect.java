@@ -19,13 +19,13 @@ public class DataBaseSelect
     extends DataBaseHelper{
     
     private final static String section = 
-            "select bo_book.*, inv_book.[inv_num], " + 
-            "inv_book.[bookcase], inv_book.[bookshelf], " +
-            "inv_book.[condition] " +
+            "select bo_book.*, inv_book.inv_num, " + 
+            "inv_book.bookcase, inv_book.bookshelf, " +
+            "inv_book.condition " +
             "from bo_book, inv_book, section " +
-            "where inv_book.[id_book] = bo_book.[id_book] " +
-            "and bo_book.[id_section] = section.[id_section] " +
-            "and section.[id_section] = ?;";
+            "where inv_book.id_book = bo_book.id_book " +
+            "and bo_book.id_section = section.id_section " +
+            "and section.id_section = ?;";
     
     //private String selectQw;
     

@@ -63,7 +63,7 @@ public class Book extends FieldID{
     public void specifyCopyBook(int invNum){
         this.copy = new CopyBook(this.idBook, invNum);
         //
-        JOptionPane.showMessageDialog(null, "Экземпляр книги указан.");
+        //JOptionPane.showMessageDialog(null, "Экземпляр книги указан.");
         //
     }
     
