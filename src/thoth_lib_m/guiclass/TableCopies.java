@@ -8,6 +8,7 @@ package thoth_lib_m.guiclass;
 
 import java.util.*;
 import java.sql.*;
+import java.awt.Font;
 import javax.swing.*;
 import javax.swing.table.*;
 import thoth_lib_m.AdditClass;
@@ -19,17 +20,26 @@ import thoth_lib_m.databaseclass.*;
  * @author Sirota Dmitry
  */
 public class TableCopies {
-    private final TableModel modelCopies;
+    private final TableCopiesModel modelCopies;
     private final SortFilterModel sorter;
     private final JTable table;
         
-    public TableCopies() throws Exception{
-        modelCopies = new TableCopiesModel();
+    public TableCopies(List<CopyTable> list) throws Exception{
+        Font font = new Font("Calibri", Font.PLAIN, 16);
+        modelCopies = new TableCopiesModel(list);
         sorter = new SortFilterModel(modelCopies);
         table = new JTable(sorter);
+        table.setFont(font);
+        table.getColumnModel().getColumn(0).setMaxWidth(200);
+        table.getColumnModel().getColumn(1).setMaxWidth(380);
+        table.getColumnModel().getColumn(2).setMaxWidth(80);
+        table.getColumnModel().getColumn(3).setMaxWidth(60);
+        table.getColumnModel().getColumn(4).setMaxWidth(60);
+        table.setDefaultRenderer(String.class, new StringRenderer());
+        table.getTableHeader().setReorderingAllowed(false);
     }
     
-    public ArrayList<Book> listBooks(InfoSection ifS)
+    public static ArrayList<Book> listBooks(int selectedSection)
         throws Exception{
         DataBaseSelect connect = null;
         PreparedStatement ps = null;
@@ -42,32 +52,32 @@ public class TableCopies {
         try{
             connect = new DataBaseSelect();
             ps = connect.getSelectSection();
-            try(ResultSet rs = connect.selectBookSection(ps, ifS);){
+            try(ResultSet rs = connect.selectBooks(ps, selectedSection);){
                 while(rs.next()){
-                    dataBook = new Book(rs.getInt("bo_book.id_book"),
-                            rs.getInt("bo_book.id_type"),
-                            rs.getInt("bo_book.id_section"));
+                    dataBook = new Book(rs.getInt("id_book"),
+                            rs.getInt("id_type"),
+                            rs.getInt("id_section"));
                     dataBook.getMainData().setAuthors(
-                                        rs.getString("bo_book.authors"));
+                                        rs.getString("authors"));
                     dataBook.getMainData().setTitle(
-                                        rs.getString("bo_book.title"));
+                                        rs.getString("title"));
                     dataBook.getDateline().setPublisher(
-                                        rs.getString("bo_book.publisher"));
+                                        rs.getString("publisher"));
                     dataBook.getDateline().setPlace(
-                                        rs.getString("bo_book.place"));
+                                        rs.getString("place"));
                     dataBook.getDateline().setYear(
-                                        rs.getInt("bo_book.year"));
+                                        rs.getInt("year"));
                     dataBook.getAdditData().setNumVolume(
-                                        rs.getString("bo_book.num_volume"));
+                                        rs.getString("num_volume"));
                     dataBook.getAdditData().setNotes(
-                                        rs.getString("bo_book.notes"));
-                    dataBook.specifyCopyBook(rs.getInt("inv_book.inv_num"));
+                                        rs.getString("notes"));
+                    dataBook.specifyCopyBook(rs.getInt("inv_num"));
                     dataBook.getCopyBook().setBookCase(
-                                        rs.getString("inv_book.bookcase"));
+                                        rs.getString("bookcase"));
                     dataBook.getCopyBook().setBookShelf(
-                                        rs.getString("inv_book.bookshelf"));
+                                        rs.getString("bookshelf"));
                     dataBook.getCopyBook().setCondition(
-                                        rs.getString("inv_book.condition"));
+                                        rs.getString("condition"));
                     books.add(dataBook);
                 }
             }
@@ -83,5 +93,35 @@ public class TableCopies {
         }
         
         return books;
+    }
+    
+    public static ArrayList<CopyTable> listCopies(List<Book> books){
+        
+        int i; //for loop
+        ArrayList<CopyTable> copies = new ArrayList<>();
+        CopyTable copyRec;
+        
+        for(i = 0; i < books.size(); i++){
+            copyRec = new CopyTable(
+                    books.get(i).getIdBook());
+            copyRec.setAuthorsTable(books.get(i).getMainData().getAuthors());
+            copyRec.setTitleTable(books.get(i).getMainData().getTitle());
+            copyRec.setYearTable(books.get(i).getDateline().getYear());
+            copyRec.setBookCaseTable(
+                books.get(i).getCopyBook().getBookCase());
+            copyRec.setBookShelfTable(
+                books.get(i).getCopyBook().getBookShelf());
+            copies.add(copyRec);
+        }
+        
+        return copies;
+    }
+    
+    public SortFilterModel getSortTable(){
+        return sorter;
+    }
+    
+    public JTable getCopyTable(){
+        return table;
     }
 }

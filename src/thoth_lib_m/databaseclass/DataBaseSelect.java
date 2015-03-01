@@ -46,14 +46,14 @@ public class DataBaseSelect
         return ps;
     }
     
-    public ResultSet selectBookSection(PreparedStatement ps, InfoSection is){
+    public ResultSet selectBooks(PreparedStatement ps, int selectedSection){
         ResultSet rs = null;
         try{
-            ps.setInt(1, is.getIdSection());
+            ps.setInt(1, selectedSection);
             rs =  ps.executeQuery();
         }
         catch(SQLException e){
-            AdditClass.errorMes(e, "selectBookSection");
+            AdditClass.errorMes(e, "selectBookS");
         }
         return rs;
     }

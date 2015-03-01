@@ -82,9 +82,11 @@ public class ConnectionSQLiteDB extends ConnectionDB{
         try{
             if(c != null) { c.close(); } 
             //
+            /*
             JOptionPane.showMessageDialog(null, 
                     "Соединение с Базой Данных закрыто.\n" +
                     "Нажмите \"OK\"");
+            */
             //
         }
         catch(SQLException e){

@@ -42,8 +42,11 @@ public class Thoth_lib_m {
             JOptionPane.showMessageDialog(null, "Success!");
         }
         catch(Exception e){
+            AdditClass.errorMes(e, "Error: UnSucces");
+            /*
             JOptionPane.showMessageDialog(null, e.getStackTrace(),
                     "Error: UnSucces: ", JOptionPane.ERROR_MESSAGE);
+            */
         }
     }
     

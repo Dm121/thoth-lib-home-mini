@@ -6,9 +6,11 @@
 
 package thoth_lib_m.guiclass;
 
+import java.util.List;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.table.*;
+import thoth_lib_m.dataclass.CopyTable;
 /**
  *Сортировка для строк основной таблицы,
  * содержащей сведения об экземплярах
@@ -16,15 +18,18 @@ import javax.swing.table.*;
  */
 public class SortFilterModel extends AbstractTableModel{
     
-    private TableModel model = null;
+    private TableCopiesModel model = null;
     private int sortColumn;
     private Row[] rows;
+    private boolean flagSort;
     
-    public SortFilterModel(TableModel m){
+    public SortFilterModel(TableCopiesModel m){
         this.model = m;
+        this.flagSort = false;
+        setRows();
     }
     
-    public void setRows(){
+    private void setRows(){
         int i; //for loop
         if(this.model != null){
             rows = new Row[model.getRowCount()];
@@ -33,6 +38,10 @@ public class SortFilterModel extends AbstractTableModel{
                 rows[i].index = i;
             }
         }
+    }
+    
+    public void setRowsM(){
+        setRows();
     }
     
     /**
@@ -53,6 +62,14 @@ public class SortFilterModel extends AbstractTableModel{
         this.sortColumn = numColumn;
         Arrays.sort(rows, Collections.reverseOrder());
         fireTableDataChanged();
+    }
+    
+    public boolean getFlagSort(){
+        return this.flagSort;
+    }
+    
+    public void setFlagSort(boolean flag){
+        this.flagSort = flag;
     }
     
     @Override
@@ -91,6 +108,24 @@ public class SortFilterModel extends AbstractTableModel{
             return ((TableCopiesModel)model).getIdRec(this.rows[row].index);
         }
         else { return -1; }
+    }
+    
+    public void addArrayCopies(List<CopyTable> copies) throws Exception{
+        if(model instanceof TableCopiesModel){
+            ((TableCopiesModel)model).addArrayCopies(copies);
+        }
+    }
+    
+    public void addRow(CopyTable copy) throws Exception{
+        if(model instanceof TableCopiesModel){
+            ((TableCopiesModel)model).addRow(copy);
+        }
+    }
+    
+    public void clearTable(){
+        if(model instanceof TableCopiesModel){
+            ((TableCopiesModel)model).clearTable();
+        }
     }
     
     private class Row implements Comparable<Row>{
