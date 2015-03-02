@@ -29,14 +29,19 @@ public class CatalogJFrame extends JFrame{
     final int DEFAULT_WIDTH = 800;
     final int DEFAULT_HEIGHT = 650;
     TableCopies table;
+    //int numRow;
+    ArrayList<Book> books;
+    JTabbedPane tabbedPane;
                
     public CatalogJFrame() throws Exception{
         super("Каталогизатор");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        ArrayList<Book> b = TableCopies.listBooks(1);
-        ArrayList<CopyTable> cpB = TableCopies.listCopies(b);
+        this.books = TableCopies.listBooks(1);
+        ArrayList<CopyTable> cpB = TableCopies.listCopies(this.books);
         table = new TableCopies(cpB);
+        tabbedPane = new JTabbedPane(
+                    JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
     }
     
     public void createGUI(Connection c)
@@ -51,12 +56,11 @@ public class CatalogJFrame extends JFrame{
         this.setLayout(new BorderLayout());
         CatalogJElements elem = new CatalogJElements();
         Section s = new Section();
-        JTabbedPane tabbedPane = new JTabbedPane(
-                    JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-        
-        tabbedPane.addTab("Библиографическое описание", elem.getPanelBook(c));
-        tabbedPane.addTab("Данные книги", elem.getPanelCopy());
-        tabbedPane.addTab("Поиск", elem.getPanelSearch());
+         
+        this.getTabbedPane().addTab("Библиографическое описание", 
+                elem.getPanelBook(c));
+        this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
+        this.getTabbedPane().addTab("Поиск", elem.getPanelSearch());
         //
         /*
         gbcc.anchor = GridBagConstraints.NORTHWEST;
@@ -114,15 +118,24 @@ public class CatalogJFrame extends JFrame{
                 }
             }
         });
+        
         ListSelectionModel lsm = table.getCopyTable().getSelectionModel();
-        lsm.addListSelectionListener((ListSelectionEvent e) -> {
+                lsm.addListSelectionListener((ListSelectionEvent e) -> {
+            int i;      //for loop
             int numRow = table.getSortTable().getIdBookRecord(
                     table.getCopyTable().getSelectedRow());
+            if(numRow > -1){
+                for(i = 0; i < this.getBooks().size(); i++){
+                    if(numRow == this.getBooks().get(i).getIdBook()){
+                        //
+                    }
+                }
+            }
             //
             //AdditClass.infoMes("" + numRow + "");
             //
-            numRow = -1;
         });
+                
         JScrollPane scroll = new JScrollPane(table.getCopyTable());
         tablePanel.add(scroll);
                 
@@ -133,8 +146,9 @@ public class CatalogJFrame extends JFrame{
             try {
                 Integer selectedIndex = s.getSection().getSelectedIndex();
                 InfoSection ifS = s.getArrayISection(selectedIndex);
-                ArrayList<Book> b = TableCopies.listBooks(ifS.getIdSection());
-                ArrayList<CopyTable> cpB = TableCopies.listCopies(b);
+                this.setBooks(TableCopies.listBooks(ifS.getIdSection()));
+                ArrayList<CopyTable> cpB = TableCopies.listCopies(
+                                                this.getBooks());
                 this.getTable().getSortTable().clearTable();
                 this.getTable().getSortTable().addArrayCopies(cpB);
                 this.getTable().getSortTable().setRowsM();
@@ -160,5 +174,17 @@ public class CatalogJFrame extends JFrame{
     
     public TableCopies getTable(){
         return table;
+    }
+    
+    public ArrayList<Book> getBooks(){
+        return this.books;
+    }
+    
+    public void setBooks(ArrayList<Book> books){
+        this.books = books;
+    }
+    
+    public JTabbedPane getTabbedPane(){
+        return this.tabbedPane;
     }
 }

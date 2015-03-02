@@ -72,9 +72,18 @@ public class SortFilterModel extends AbstractTableModel{
         this.flagSort = flag;
     }
     
+    /**
+     *Получение значений из ячеек таблицы
+     * @param row - индекс строки
+     * @param column - индекс столбца
+     * @return объект типа Object, null - если в таблице нет строк
+     */
     @Override
     public Object getValueAt(int row, int column){
-        return model.getValueAt(this.rows[row].index, column);
+        if(row > -1){
+            return model.getValueAt(this.rows[row].index, column);
+        }
+        else { return null; }
     }
     
     @Override
@@ -103,8 +112,13 @@ public class SortFilterModel extends AbstractTableModel{
         return model.getColumnClass(column);
     }
     
+    /**
+     *Получает id книги
+     * @param row - индекс строки
+     * @return id книги, -1 - если в таблице нет строк
+     */
     public int getIdBookRecord(int row){
-        if(model instanceof TableCopiesModel){
+        if((model instanceof TableCopiesModel) && (row > -1)){
             return ((TableCopiesModel)model).getIdRec(this.rows[row].index);
         }
         else { return -1; }
