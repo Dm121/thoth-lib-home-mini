@@ -6,6 +6,8 @@
 
 package thoth_lib_m.guiclass;
 
+import java.util.List;
+import java.util.ArrayList;
 //import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.sql.*;
 import java.util.Arrays;
+import thoth_lib_m.AdditClass;
 //import thoth_lib_m.databaseclass.*;
 
 /**
@@ -21,9 +24,51 @@ import java.util.Arrays;
  * @author Sirota Dmitry
  */
 public class CatalogJElements {
+    private static final int WIDTH_LABEL = 240;
+    private static final int WIDTH_TEXT = 240;
+    private static final int HEIGHT_ELEMENTS = 25;
+    //private static final int HEIGHT_TEXTAREA = 100;
+    private static final int COUNT_CHAR = 23;
+    private static final int COUNT_CHAR_TA = 47;
+    private static final int NSIZEBOOK = 5;
+    //private static final int NSIZECOPY = 2;
+    //private static final int NSIZEARRAY = 2;
+    private List<JTextField> textBook;
+    private List<JTextField> textCopy;
+    private List<JTextArea> textArray;
+    private JComboBox typeEdition;
+    private JSpinner yearValue;
+    private JLabel idBook;
+    //buttons - ButtonMenu
+    private List<JButton> buttons;
+    //search
     
-    public CatalogJElements(){
-        
+    public CatalogJElements() throws SQLException{
+        //this.authorsText = new JTextField(COUNT_CHAR);
+        int i;  //for loop
+        //
+        textBook = new ArrayList<>();
+        for(i = 0; i < NSIZEBOOK; i++){
+            textBook.add(new JTextField(COUNT_CHAR));
+        }
+        //
+        textCopy = new ArrayList<>();
+        textCopy.add(new JTextField(COUNT_CHAR));
+        textCopy.add(new JTextField(COUNT_CHAR));
+        //
+        textArray = new ArrayList<>();
+        textArray.add(new JTextArea(4, COUNT_CHAR_TA));
+        textArray.add(new JTextArea(4, COUNT_CHAR_TA));
+        //
+        typeEdition = new JComboBox();
+        //
+        SpinnerNumberModel yearModel =
+                new SpinnerNumberModel(2015, 40, 9999, 1);
+        yearValue =  new JSpinner(yearModel);
+        //
+        idBook = new JLabel();
+        //
+        buttons = new ArrayList<>();
     }
         
     public JMenuBar createMenu(JFrame frame){
@@ -63,17 +108,20 @@ public class CatalogJElements {
         JButton addButton = new JButton(addIcon);
         addButton.setToolTipText("Добавить книгу");
         catalogButton.add(addButton);
+        this.getButtonsMenu().add(addButton);
         
         ImageIcon delIcon = new ImageIcon(getClass().getResource("img/book_delete.png"));
         JButton delButton = new JButton(delIcon);
         delButton.setToolTipText("Удалить книгу");
         catalogButton.add(delButton);
+        this.getButtonsMenu().add(delButton);
         
         ImageIcon saveIcon = new ImageIcon(getClass().getResource("img/book_save.png"));
         JButton saveButton = new JButton(saveIcon);
         saveButton.setToolTipText("Сохранить все изменения");
         catalogButton.add(saveButton);
         catalogButton.addSeparator();
+        this.getButtonsMenu().add(saveButton);
         
         /*
         //Изменить раздел
@@ -124,7 +172,7 @@ public class CatalogJElements {
         if(c == null){
             JOptionPane.showMessageDialog(null,
                     "Невозможно подключиться к Базе Данных.\n" +
-                            "Метод: getTypeBook.",
+                            "Метод: CatalogJFrame.getTypeBook.",
                     "Ошибка (Error): ",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -140,10 +188,10 @@ public class CatalogJElements {
             }
             catch(SQLException e){
                 JOptionPane.showMessageDialog(null,
-                        "Ошибка при формировании списка типов изданий.\n" +
-                                "Метод: getTypeBook: " + e.getMessage() + 
-                                ".\n" + Arrays.toString(e.getStackTrace()),
-                        "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
+                    "Ошибка при формировании списка типов изданий.\n" +
+                        "Метод: CatalogJFrame.getTypeBook: " + e.getMessage() + 
+                        ".\n" + Arrays.toString(e.getStackTrace()),
+                    "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
                 values = null;
             }
             finally{
@@ -157,12 +205,6 @@ public class CatalogJElements {
     public JPanel getPanelBook(Connection c) throws SQLException{
         Font fontLabel = new Font("Calibri", Font.BOLD, 14);
         Font fontText = new Font("Calibri", Font.PLAIN, 14);
-        final int WIDTH_LABEL = 240;
-        final int WIDTH_TEXT = 240;
-        final int HEIGHT_ELEMENTS = 25;
-        final int HEIGHT_TEXTAREA = 100;
-        final int COUNT_CHAR = 23;
-        final int COUNT_CHAR_TA = 47;
         JScrollPane scroll;
         //Dimension maxSize = new Dimension(4, 48);
         JPanel panelBook = new JPanel();
@@ -173,68 +215,65 @@ public class CatalogJElements {
         JLabel typeTitle = new JLabel("Тип издания:");
         typeTitle.setFont(fontLabel);
         typeTitle.setSize(90, HEIGHT_ELEMENTS);
-        JComboBox typeEdition = this.getTypeBook(c);
-        if(typeEdition == null){
-            typeEdition = new JComboBox();
-            typeEdition.addItem("Данные не получены");
+        this.setTypeEdition(this.getTypeBook(c));
+        if(this.getTypeEdition() == null){
+            this.setTypeEdition(new JComboBox());
+            this.getTypeEdition().addItem("Данные не получены");
         }
-        typeEdition.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTypeEdition().setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
         //
         JLabel authorsTitle = new JLabel("Авторы:");
         authorsTitle.setFont(fontLabel);
         authorsTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField authorsText = new JTextField(COUNT_CHAR);
-        authorsText.setFont(fontText);
-        authorsText.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTextBook().get(0).setFont(fontText);
         //
+        //this.getAuthorsText().setFont(fontText);
+        //this.getAuthorsText().setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        //
+        
+        
         JLabel numVTitle = new JLabel("Номер тома:");
         numVTitle.setFont(fontLabel);
         numVTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField numVText = new JTextField(COUNT_CHAR);
-        numVText.setFont(fontText);
-        numVText.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTextBook().get(1).setFont(fontText);
         //
         JLabel titleTitle = new JLabel("Название:");
         titleTitle.setFont(fontLabel);
         titleTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField titleText = new JTextField(COUNT_CHAR);
-        titleText.setFont(fontText);
-        titleText.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTextBook().get(2).setFont(fontText);
         //
         JLabel publisherTitle = new JLabel("Издатель:");
         publisherTitle.setFont(fontLabel);
         publisherTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField publisherText = new JTextField(COUNT_CHAR);
-        publisherText.setFont(fontText);
-        publisherText.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTextBook().get(3).setFont(fontText);
         //
         JLabel placeTitle = new JLabel("Место издания:");
         placeTitle.setFont(fontLabel);
         placeTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField placeText = new JTextField(COUNT_CHAR);
-        placeText.setFont(fontText);
-        placeText.setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
+        this.getTextBook().get(4).setFont(fontText);
         //
         JLabel yearTitle = new JLabel("Год издания:");
         yearTitle.setFont(fontLabel);
         yearTitle.setSize(90, HEIGHT_ELEMENTS);
-        SpinnerNumberModel yearModel =
-                new SpinnerNumberModel(2015, 40, 9999, 1);
-        JSpinner yearValue =  new JSpinner(yearModel);
-        yearValue.setFont(fontText);
-        yearValue.setSize(90, HEIGHT_ELEMENTS);
+        this.getYearValue().setFont(fontText);
+        this.getYearValue().setSize(90, HEIGHT_ELEMENTS);
         //
         JLabel infoTitle = new JLabel("Содержание и примечания:");
         infoTitle.setFont(fontLabel);
         infoTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextArea infoText = new JTextArea(4, COUNT_CHAR_TA);
-        infoText.setFont(fontText);
+        this.getTextArray().get(0).setFont(fontText);
         //infoText.setMaximumSize(maxSize);
         //infoText.setAutoscrolls(true);
-        infoText.setLineWrap(true);
-        infoText.setWrapStyleWord(true);
+        this.getTextArray().get(0).setLineWrap(true);
+        this.getTextArray().get(0).setWrapStyleWord(true);
         //infoText.setSize(2 * WIDTH_TEXT + 10, HEIGHT_TEXTAREA);
-        scroll = new JScrollPane(infoText);
+        scroll = new JScrollPane(this.getTextArray().get(0));
+        //
+        JLabel idTitle = new JLabel("Идентификатор книги:");
+        idTitle.setFont(fontLabel);
+        idTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getIdBook().setFont(fontLabel);
+        this.getIdBook().setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
         //
         //event
         //
@@ -264,8 +303,8 @@ public class CatalogJElements {
         panelBook.add(typeEdition);
         
         gbcc.gridx = 1;
-        gbl.setConstraints(authorsText, gbcc);
-        panelBook.add(authorsText);
+        gbl.setConstraints(this.getTextBook().get(0), gbcc);
+        panelBook.add(this.getTextBook().get(0));
         
         gbcc.gridx = 0;
         gbcc.gridy = 2;
@@ -280,12 +319,12 @@ public class CatalogJElements {
         gbcc.gridx = 0;
         gbcc.gridy = 3;
         gbcc.insets = new Insets(0, 10, 0, 0);
-        gbl.setConstraints(numVText, gbcc);
-        panelBook.add(numVText);
+        gbl.setConstraints(this.getTextBook().get(1), gbcc);
+        panelBook.add(this.getTextBook().get(1));
         
         gbcc.gridx = 1;
-        gbl.setConstraints(titleText, gbcc);
-        panelBook.add(titleText);
+        gbl.setConstraints(this.getTextBook().get(2), gbcc);
+        panelBook.add(this.getTextBook().get(2));
         
         gbcc.gridx = 0;
         gbcc.gridy = 4;
@@ -293,10 +332,19 @@ public class CatalogJElements {
         gbl.setConstraints(publisherTitle, gbcc);
         panelBook.add(publisherTitle);
         
+        gbcc.gridx = 1;
+        gbl.setConstraints(idTitle, gbcc);
+        panelBook.add(idTitle);
+        
+        gbcc.gridx = 0;
         gbcc.gridy = 5;
         gbcc.insets = new Insets(0, 10, 0, 0);
-        gbl.setConstraints(publisherText, gbcc);
-        panelBook.add(publisherText);
+        gbl.setConstraints(this.getTextBook().get(3), gbcc);
+        panelBook.add(this.getTextBook().get(3));
+        
+        gbcc.gridx = 1;
+        gbl.setConstraints(this.getIdBook(), gbcc);
+        panelBook.add(this.getIdBook());
         
         gbcc.gridx = 0;
         gbcc.gridy = 6;
@@ -311,8 +359,8 @@ public class CatalogJElements {
         gbcc.gridx = 0;
         gbcc.gridy = 7;
         gbcc.insets = new Insets(0, 10, 0, 0);
-        gbl.setConstraints(placeText, gbcc);
-        panelBook.add(placeText);
+        gbl.setConstraints(this.getTextBook().get(4), gbcc);
+        panelBook.add(this.getTextBook().get(4));
         
         gbcc.gridx = 1;
         gbl.setConstraints(yearValue, gbcc);
@@ -336,10 +384,8 @@ public class CatalogJElements {
     public JPanel getPanelCopy(){
         Font fontLabel = new Font("Calibri", Font.BOLD, 14);
         Font fontText = new Font("Calibri", Font.PLAIN, 14);
-        final int WIDTH_LABEL = 240;
-        final int HEIGHT_ELEMENTS = 25;
-        final int COUNT_CHAR = 23;
-        final int COUNT_CHAR_TA = 47;
+        
+        
         JScrollPane scroll;
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbcc = new GridBagConstraints();
@@ -349,23 +395,21 @@ public class CatalogJElements {
         JLabel bCTitle = new JLabel("Шкаф:");
         bCTitle.setFont(fontLabel);
         bCTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField bCText = new JTextField(COUNT_CHAR);
-        bCText.setFont(fontText);
+        this.getTextCopy().get(0).setFont(fontText);
         //
         JLabel bShTitle = new JLabel("Полка:");
         bShTitle.setFont(fontLabel);
         bShTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
         JTextField bShText = new JTextField(COUNT_CHAR);
-        bShText.setFont(fontText);
+        this.getTextCopy().get(1).setFont(fontText);
         //
         JLabel condTitle = new JLabel("Состояние книги:");
         condTitle.setFont(fontLabel);
         condTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextArea condText = new JTextArea(4, COUNT_CHAR_TA);
-        condText.setFont(fontText);
-        condText.setLineWrap(true);
-        condText.setWrapStyleWord(true);
-        scroll = new JScrollPane(condText);
+        this.getTextArray().get(1).setFont(fontText);
+        this.getTextArray().get(1).setLineWrap(true);
+        this.getTextArray().get(1).setWrapStyleWord(true);
+        scroll = new JScrollPane(this.getTextArray().get(1));
         //
         //event
         //
@@ -391,12 +435,12 @@ public class CatalogJElements {
         gbcc.gridy = 1;
         gbcc.gridx = 0;
         gbcc.insets = new Insets(0, 10, 0, 0);
-        gbl.setConstraints(bCText, gbcc);
-        panelCopy.add(bCText);
+        gbl.setConstraints(this.getTextCopy().get(0), gbcc);
+        panelCopy.add(this.getTextCopy().get(0));
         
         gbcc.gridx = 1;
-        gbl.setConstraints(bShText, gbcc);
-        panelCopy.add(bShText);
+        gbl.setConstraints(this.getTextCopy().get(1), gbcc);
+        panelCopy.add(this.getTextCopy().get(1));
         
         gbcc.gridy = 2;
         gbcc.gridx = 0;
@@ -513,5 +557,72 @@ public class CatalogJElements {
         panelSearch.add(buttonSearch);
         //
         return panelSearch;
+    }
+    
+    //
+    public List<JTextField> getTextBook(){
+        return this.textBook;
+    }
+    
+    public List<JTextField> getTextCopy(){
+        return this.textCopy;
+    }
+    
+    public List<JTextArea> getTextArray(){
+        return this.textArray;
+    }
+    
+    public JComboBox getTypeEdition(){
+        return this.typeEdition;
+    }
+    
+    public void setTypeEdition(JComboBox tE){
+        this.typeEdition = tE;
+    }
+    
+    public int getValTypeEdition(){
+        return this.typeEdition.getSelectedIndex();
+    }
+    
+    public void setValTypeEdition(int selected){
+        this.typeEdition.setSelectedIndex(selected);
+    }
+    
+    public JSpinner getYearValue(){
+        return this.yearValue;
+    }
+    
+    //
+    public int getValYearValue(){
+        return (Integer)this.yearValue.getValue();
+    }
+    
+    //
+    public void setValYearValue(int year){
+        if((year > 39) && (year < 10000)){
+            this.yearValue.setValue(year);
+        }
+        else { 
+            String mess = "Присвоено некорректное значение года.\n" +
+                            "Будет сохранено предыдущие значение.\n" +
+                            "(Диапазон возможных значений от 40 до 9999 лет).";
+            AdditClass.warningMes(mess, "CatalogJElements.setYearValue");
+        }
+    }
+    
+    public JLabel getIdBook(){
+        return this.idBook;
+    }
+    
+    public String getValIdB(){
+        return this.idBook.getText();
+    }
+    
+    public void setValIdB(String id){
+        this.idBook.setText(id);
+    }
+    
+    public List<JButton> getButtonsMenu(){
+        return this.buttons;
     }
 }

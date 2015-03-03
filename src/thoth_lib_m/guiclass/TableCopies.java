@@ -30,11 +30,11 @@ public class TableCopies {
         sorter = new SortFilterModel(modelCopies);
         table = new JTable(sorter);
         table.setFont(font);
-        table.getColumnModel().getColumn(0).setMaxWidth(200);
-        table.getColumnModel().getColumn(1).setMaxWidth(380);
-        table.getColumnModel().getColumn(2).setMaxWidth(80);
-        table.getColumnModel().getColumn(3).setMaxWidth(60);
-        table.getColumnModel().getColumn(4).setMaxWidth(60);
+        table.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table.getColumnModel().getColumn(1).setPreferredWidth(380);
+        table.getColumnModel().getColumn(2).setPreferredWidth(80);
+        table.getColumnModel().getColumn(3).setPreferredWidth(60);
+        table.getColumnModel().getColumn(4).setPreferredWidth(60);
         table.setDefaultRenderer(String.class, new StringRenderer());
         table.getTableHeader().setReorderingAllowed(false);
     }

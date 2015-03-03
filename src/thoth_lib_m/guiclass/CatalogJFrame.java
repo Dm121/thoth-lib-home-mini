@@ -10,9 +10,9 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 //import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.*;
 import java.sql.*;
@@ -20,18 +20,20 @@ import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.InfoSection;
 import thoth_lib_m.dataclass.Book;
 import thoth_lib_m.dataclass.CopyTable;
+import thoth_lib_m.guiclass.guievent.*;
 
 /**
  *Главное окно модуля "Каталогизатор"
  * @author Sirota Dmitry
  */
 public class CatalogJFrame extends JFrame{
-    final int DEFAULT_WIDTH = 800;
-    final int DEFAULT_HEIGHT = 650;
-    TableCopies table;
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 650;
+    private TableCopies table;
     //int numRow;
-    ArrayList<Book> books;
-    JTabbedPane tabbedPane;
+    private ArrayList<Book> books;
+    private JTabbedPane tabbedPane;
+    private CatalogJElements elem;
                
     public CatalogJFrame() throws Exception{
         super("Каталогизатор");
@@ -42,6 +44,7 @@ public class CatalogJFrame extends JFrame{
         table = new TableCopies(cpB);
         tabbedPane = new JTabbedPane(
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+        elem = new CatalogJElements();
     }
     
     public void createGUI(Connection c)
@@ -50,17 +53,22 @@ public class CatalogJFrame extends JFrame{
         final int SECTION_WIDTH = 150;
         final int SECTION_HEIGHT = 100;
         final int MENU_HEIGHT = 25;
+        int sRow = 0;
         //JPanel mainPanel = new JPanel();
         //GridBagLayout gbl = new GridBagLayout();
         //GridBagConstraints gbcc = new GridBagConstraints();
         this.setLayout(new BorderLayout());
-        CatalogJElements elem = new CatalogJElements();
+        
         Section s = new Section();
          
         this.getTabbedPane().addTab("Библиографическое описание", 
                 elem.getPanelBook(c));
         this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
         this.getTabbedPane().addTab("Поиск", elem.getPanelSearch());
+        this.getDataBook(this.getBooks().get(0));
+        this.getTable().getCopyTable().setRowSelectionAllowed(true);
+        this.getTable().getSortTable().getIdBookRecord(sRow);
+        this.getTable().getCopyTable().setRowSelectionInterval(0, 0);
         //
         /*
         gbcc.anchor = GridBagConstraints.NORTHWEST;
@@ -86,6 +94,10 @@ public class CatalogJFrame extends JFrame{
         menuButtonPanel.add(elem.createButtonMenu());
         boxMain.add(menuPanel);
         boxMain.add(menuButtonPanel);
+        //event for Button of Menu - ButtonMenu
+        NewButAction newButAction = new NewButAction(elem, 
+            this.getTable().getCopyTable());
+        elem.getButtonsMenu().get(0).addActionListener(newButAction);
         
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridLayout(1,1));
@@ -95,6 +107,8 @@ public class CatalogJFrame extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e){
                 //if(e.getClickCount() < 2) return;
+                
+                int sRow = 0;
                 
                 //Поиск столбца, на котором был щелчок
                 int tableColumn = table.getCopyTable().columnAtPoint(
@@ -109,12 +123,16 @@ public class CatalogJFrame extends JFrame{
                 //
                 //и выполнение сортировки
                 if(!table.getSortTable().getFlagSort()){
-                    table.getSortTable().sort(modelColumn);
+                    sRow = table.getSortTable().sort(modelColumn);
                     table.getSortTable().setFlagSort(true);
                 }
                 else{
-                    table.getSortTable().reverseSort(modelColumn);
+                    sRow = table.getSortTable().reverseSort(modelColumn);
                     table.getSortTable().setFlagSort(false);
+                }
+                if(sRow > -1){
+                    table.getCopyTable().setRowSelectionAllowed(true);
+                    table.getCopyTable().setRowSelectionInterval(sRow, sRow);
                 }
             }
         });
@@ -128,6 +146,29 @@ public class CatalogJFrame extends JFrame{
                 for(i = 0; i < this.getBooks().size(); i++){
                     if(numRow == this.getBooks().get(i).getIdBook()){
                         //
+                        Book b = this.getBooks().get(i);
+                        this.elem.setValIdB(String.valueOf(b.getIdBook()));
+                        this.elem.setValTypeEdition(b.getIdTypeBook() - 1);
+                        this.elem.getTextBook().get(0).setText(
+                                            b.getMainData().getAuthors());
+                        this.elem.getTextBook().get(1).setText(
+                                            b.getAdditData().getNumVolume());
+                        this.elem.getTextBook().get(2).setText(
+                                            b.getMainData().getTitle());
+                        this.elem.getTextBook().get(3).setText(
+                                            b.getDateline().getPublisher());
+                        this.elem.getTextBook().get(4).setText(
+                                            b.getDateline().getPlace());
+                        this.elem.setValYearValue(
+                                            b.getDateline().getYear());
+                        this.elem.getTextArray().get(0).setText(
+                                            b.getAdditData().getNotes());
+                        this.elem.getTextCopy().get(0).setText(
+                                            b.getCopyBook().getBookCase());
+                        this.elem.getTextCopy().get(1).setText(
+                                            b.getCopyBook().getBookShelf());
+                        this.elem.getTextArray().get(1).setText(
+                                            b.getCopyBook().getCondition());
                     }
                 }
             }
@@ -143,6 +184,7 @@ public class CatalogJFrame extends JFrame{
         s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
         s.addDataList(c);
         s.getSection().addListSelectionListener((ListSelectionEvent e) -> {
+            int sRowS = 0;
             try {
                 Integer selectedIndex = s.getSection().getSelectedIndex();
                 InfoSection ifS = s.getArrayISection(selectedIndex);
@@ -153,6 +195,27 @@ public class CatalogJFrame extends JFrame{
                 this.getTable().getSortTable().addArrayCopies(cpB);
                 this.getTable().getSortTable().setRowsM();
                 this.getTable().getCopyTable().repaint();
+                if(this.getBooks().size() > 0){
+                    this.getDataBook(this.getBooks().get(0));
+                    this.getTable().getCopyTable().setRowSelectionAllowed(true);
+                    this.getTable().getSortTable().getIdBookRecord(sRowS);
+                    this.getTable().getCopyTable().
+                                                setRowSelectionInterval(0, 0);
+                }
+                else{
+                    this.elem.setValIdB("");
+                    this.elem.setValTypeEdition(0);
+                    this.elem.getTextBook().get(0).setText("");
+                    this.elem.getTextBook().get(1).setText("");
+                    this.elem.getTextBook().get(2).setText("");
+                    this.elem.getTextBook().get(3).setText("");
+                    this.elem.getTextBook().get(4).setText("");
+                    this.elem.setValYearValue(2015);
+                    this.elem.getTextCopy().get(0).setText("");
+                    this.elem.getTextCopy().get(1).setText("");
+                    this.elem.getTextArray().get(0).setText("");
+                    this.elem.getTextArray().get(1).setText("");
+                }
             }catch(Exception err){
                 AdditClass.errorMes(err, "CatalogJFrame.createGUI");
             }
@@ -186,5 +249,21 @@ public class CatalogJFrame extends JFrame{
     
     public JTabbedPane getTabbedPane(){
         return this.tabbedPane;
+    }
+    
+    public void getDataBook(Book book){
+        Book b = book;
+        this.elem.setValIdB(String.valueOf(b.getIdBook()));
+        this.elem.setValTypeEdition(b.getIdTypeBook() - 1);
+        this.elem.getTextBook().get(0).setText(b.getMainData().getAuthors());
+        this.elem.getTextBook().get(1).setText(b.getAdditData().getNumVolume());
+        this.elem.getTextBook().get(2).setText(b.getMainData().getTitle());
+        this.elem.getTextBook().get(3).setText(b.getDateline().getPublisher());
+        this.elem.getTextBook().get(4).setText(b.getDateline().getPlace());
+        this.elem.setValYearValue(b.getDateline().getYear());
+        this.elem.getTextArray().get(0).setText(b.getAdditData().getNotes());
+        this.elem.getTextCopy().get(0).setText(b.getCopyBook().getBookCase());
+        this.elem.getTextCopy().get(1).setText(b.getCopyBook().getBookShelf());
+        this.elem.getTextArray().get(1).setText(b.getCopyBook().getCondition());
     }
 }

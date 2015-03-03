@@ -48,20 +48,36 @@ public class SortFilterModel extends AbstractTableModel{
      *Сортировка строк "от Хорстманна Кея и Корнелла Гари" 
      * @param numColumn - Столбец, значения которого подлежат сортировке
      */
-    public void sort(int numColumn){
+    public int sort(int numColumn){
+        int i; //for loop
+        int sRow = -1;
         this.sortColumn = numColumn;
         Arrays.sort(rows);
         fireTableDataChanged();
+        for(i = 0; i < this.rows.length; i++){
+            if(this.rows[i].selected == true){
+                sRow = i;
+            }
+        }
+        return sRow;
     }
     
     /**
      *Сортировка строк в обратном порядке
      * @param numColumn - Столбец, значения которого подлежат сортировке
      */
-    public void reverseSort(int numColumn){
+    public int reverseSort(int numColumn){
+        int i; //for loop
+        int sRow = -1;
         this.sortColumn = numColumn;
         Arrays.sort(rows, Collections.reverseOrder());
         fireTableDataChanged();
+        for(i = 0; i < this.rows.length; i++){
+            if(this.rows[i].selected == true){
+                sRow = i;
+            }
+        }
+        return sRow;
     }
     
     public boolean getFlagSort(){
@@ -80,7 +96,7 @@ public class SortFilterModel extends AbstractTableModel{
      */
     @Override
     public Object getValueAt(int row, int column){
-        if(row > -1){
+        if((row > -1) && (column > -1)){
             return model.getValueAt(this.rows[row].index, column);
         }
         else { return null; }
@@ -118,7 +134,12 @@ public class SortFilterModel extends AbstractTableModel{
      * @return id книги, -1 - если в таблице нет строк
      */
     public int getIdBookRecord(int row){
+        int i; //for loop
         if((model instanceof TableCopiesModel) && (row > -1)){
+            for(i = 0; i < this.rows.length; i++){
+                if(i != row) { this.rows[i].selected = false; }
+                else{ this.rows[i].selected = true; }
+            }
             return ((TableCopiesModel)model).getIdRec(this.rows[row].index);
         }
         else { return -1; }
@@ -144,6 +165,7 @@ public class SortFilterModel extends AbstractTableModel{
     
     private class Row implements Comparable<Row>{
         public int index;
+        public boolean selected;
         
         @Override
         public int compareTo(Row other){
