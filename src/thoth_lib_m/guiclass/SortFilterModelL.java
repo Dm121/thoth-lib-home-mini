@@ -17,14 +17,14 @@ import thoth_lib_m.dataclass.CopyTable;
  * содержащей сведения об экземплярах
  * @author Sirota Dmitry
  */
-public class SortFilterModel extends AbstractTableModel{
+public class SortFilterModelL extends AbstractTableModel{
     
     private TableCopiesModel model = null;
     private int sortColumn;
-    private Row[] rows;
+    private List<Row> rows;
     private boolean flagSort;
     
-    public SortFilterModel(TableCopiesModel m){
+    public SortFilterModelL(TableCopiesModel m){
         this.model = m;
         this.flagSort = false;
         setRows();
@@ -33,29 +33,18 @@ public class SortFilterModel extends AbstractTableModel{
     private void setRows(){
         int i; //for loop
         if(this.model != null){
-            rows = new Row[model.getRowCount()];
-            for(i = 0; i < rows.length ; i++){
-                rows[i] = new Row();
-                rows[i].index = i;
+            rows = new ArrayList<>();
+            for(i = 0; i < model.getRowCount() ; i++){
+                Row r = new Row();
+                r = new Row();
+                r.index = i;
+                rows.add(r);
             }
         }
     }
     
     public void setRowsM(){
         setRows();
-    }
-    
-    private Row[] copyAddArray(int count, Row[] array){
-        int i; //for loop
-        Row[] r = new Row[array.length + count];
-        for(i = 0; i < array.length; i++){
-            r[i] = array[i];
-        }
-        for(i = array.length; i < (array.length + count); i++){
-            r[i] = new Row();
-            r[i].index = i;
-        }
-        return r;
     }
     
     /**
@@ -68,11 +57,11 @@ public class SortFilterModel extends AbstractTableModel{
         int sRow = -1;
         this.sortColumn = numColumn;
         //
-        Arrays.sort(rows);
+        Arrays.sort(rows.toArray());
         //
         fireTableDataChanged();
-        for(i = 0; i < this.rows.length; i++){
-            if(this.rows[i].selected == true){
+        for(i = 0; i < this.rows.size(); i++){
+            if(this.rows.get(i).selected == true){
                 sRow = i;
             }
         }
@@ -89,11 +78,11 @@ public class SortFilterModel extends AbstractTableModel{
         int sRow = -1;
         this.sortColumn = numColumn;
         //
-        Arrays.sort(rows, Collections.reverseOrder());
+        Arrays.sort(rows.toArray(), Collections.reverseOrder());
         //
         fireTableDataChanged();
-        for(i = 0; i < this.rows.length; i++){
-            if(this.rows[i].selected == true){
+        for(i = 0; i < this.rows.size(); i++){
+            if(this.rows.get(i).selected == true){
                 sRow = i;
             }
         }
@@ -117,19 +106,19 @@ public class SortFilterModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int row, int column){
         if((row > -1) && (column > -1)){
-            return model.getValueAt(this.rows[row].index, column);
+            return model.getValueAt(this.rows.get(row).index, column);
         }
         else { return null; }
     }
     
     @Override
     public boolean isCellEditable(int row, int column){
-        return model.isCellEditable(this.rows[row].index, column);
+        return model.isCellEditable(this.rows.get(row).index, column);
     }
     
     @Override
     public void setValueAt(Object aValue, int row, int column){
-        model.setValueAt(aValue, this.rows[row].index, column);
+        model.setValueAt(aValue, this.rows.get(row).index, column);
     }
     
     @Override
@@ -156,11 +145,11 @@ public class SortFilterModel extends AbstractTableModel{
     public int getIdBookRecord(int row){
         int i; //for loop
         if((model instanceof TableCopiesModel) && (row > -1)){
-            for(i = 0; i < this.rows.length; i++){
-                if(i != row) { this.rows[i].selected = false; }
-                else{ this.rows[i].selected = true; }
+            for(i = 0; i < this.rows.size(); i++){
+                if(i != row) { this.rows.get(i).selected = false; }
+                else{ this.rows.get(i).selected = true; }
             }
-            return ((TableCopiesModel)model).getIdRec(this.rows[row].index);
+            return ((TableCopiesModel)model).getIdRec(this.rows.get(row).index);
         }
         else { return -1; }
     }
@@ -169,14 +158,12 @@ public class SortFilterModel extends AbstractTableModel{
         if(model instanceof TableCopiesModel){
             ((TableCopiesModel)model).addArrayCopies(copies);
         }
-        this.rows = this.copyAddArray(copies.size(), rows);
     }
     
     public void addRow(CopyTable copy) throws Exception{
         if(model instanceof TableCopiesModel){
             ((TableCopiesModel)model).addRow(copy);
         }
-        this.rows = this.copyAddArray(1, rows);
     }
     
     public CopyTable getIArray(int row) throws Exception{
@@ -216,3 +203,4 @@ public class SortFilterModel extends AbstractTableModel{
         }
     }
 }
+

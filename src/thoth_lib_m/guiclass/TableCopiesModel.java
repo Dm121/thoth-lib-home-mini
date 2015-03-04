@@ -123,6 +123,14 @@ public class TableCopiesModel extends AbstractTableModel{
         return "";
     }
     
+    public CopyTable getIArray(int rowIndex){
+        return this.copies.get(rowIndex);
+    }
+    
+    public void setIArray(int rowIndex, CopyTable copy){
+        this.copies.set(rowIndex, copy);
+    }
+    
     public int getIdRec(int rowIndex){
         CopyTable copy = this.copies.get(rowIndex);
         return copy.getIdBook();
