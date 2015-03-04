@@ -134,6 +134,7 @@ public class CatalogJFrame extends JFrame{
                     table.getCopyTable().setRowSelectionAllowed(true);
                     table.getCopyTable().setRowSelectionInterval(sRow, sRow);
                 }
+                
             }
         });
         

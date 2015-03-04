@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTable;
 import thoth_lib_m.guiclass.CatalogJElements;
 /**
- *Событие для кнопки "Добавить книгу"
+ *Событие для кнопки "Создать новую запись"
  * @author Sirota Dmitry
  */
 public class NewButAction implements ActionListener{

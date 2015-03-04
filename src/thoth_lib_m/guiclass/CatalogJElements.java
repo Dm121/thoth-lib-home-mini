@@ -106,7 +106,7 @@ public class CatalogJElements {
         
         ImageIcon addIcon = new ImageIcon(getClass().getResource("img/book_add.png"));
         JButton addButton = new JButton(addIcon);
-        addButton.setToolTipText("Добавить книгу");
+        addButton.setToolTipText("Создать новую запись");
         catalogButton.add(addButton);
         this.getButtonsMenu().add(addButton);
         
@@ -118,7 +118,7 @@ public class CatalogJElements {
         
         ImageIcon saveIcon = new ImageIcon(getClass().getResource("img/book_save.png"));
         JButton saveButton = new JButton(saveIcon);
-        saveButton.setToolTipText("Сохранить все изменения");
+        saveButton.setToolTipText("Добавить книгу");
         catalogButton.add(saveButton);
         catalogButton.addSeparator();
         this.getButtonsMenu().add(saveButton);
