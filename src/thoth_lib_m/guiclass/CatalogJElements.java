@@ -36,6 +36,7 @@ public class CatalogJElements {
     private List<JTextField> textBook;
     private List<JTextField> textCopy;
     private List<JTextArea> textArray;
+    private List<JLabel> textCount;
     private JComboBox typeEdition;
     private JSpinner yearValue;
     private JLabel idBook;
@@ -59,6 +60,8 @@ public class CatalogJElements {
         textArray = new ArrayList<>();
         textArray.add(new JTextArea(4, COUNT_CHAR_TA));
         textArray.add(new JTextArea(4, COUNT_CHAR_TA));
+        //
+        textCount = new ArrayList<>();
         //
         typeEdition = new JComboBox();
         //
@@ -222,9 +225,10 @@ public class CatalogJElements {
         }
         this.getTypeEdition().setSize(WIDTH_TEXT, HEIGHT_ELEMENTS);
         //
-        JLabel authorsTitle = new JLabel("Авторы:");
+        JLabel authorsTitle = new JLabel("Авторы (250):");
         authorsTitle.setFont(fontLabel);
         authorsTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(authorsTitle);
         this.getTextBook().get(0).setFont(fontText);
         //
         //this.getAuthorsText().setFont(fontText);
@@ -232,24 +236,28 @@ public class CatalogJElements {
         //
         
         
-        JLabel numVTitle = new JLabel("Номер тома:");
+        JLabel numVTitle = new JLabel("Номер тома (20):");
         numVTitle.setFont(fontLabel);
         numVTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(numVTitle);
         this.getTextBook().get(1).setFont(fontText);
         //
-        JLabel titleTitle = new JLabel("Название:");
+        JLabel titleTitle = new JLabel("Название (200):");
         titleTitle.setFont(fontLabel);
         titleTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(titleTitle);
         this.getTextBook().get(2).setFont(fontText);
         //
-        JLabel publisherTitle = new JLabel("Издатель:");
+        JLabel publisherTitle = new JLabel("Издатель (120):");
         publisherTitle.setFont(fontLabel);
         publisherTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(publisherTitle);
         this.getTextBook().get(3).setFont(fontText);
         //
-        JLabel placeTitle = new JLabel("Место издания:");
+        JLabel placeTitle = new JLabel("Место издания (200):");
         placeTitle.setFont(fontLabel);
         placeTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(placeTitle);
         this.getTextBook().get(4).setFont(fontText);
         //
         JLabel yearTitle = new JLabel("Год издания:");
@@ -258,9 +266,10 @@ public class CatalogJElements {
         this.getYearValue().setFont(fontText);
         this.getYearValue().setSize(90, HEIGHT_ELEMENTS);
         //
-        JLabel infoTitle = new JLabel("Содержание и примечания:");
+        JLabel infoTitle = new JLabel("Содержание и примечания (400):");
         infoTitle.setFont(fontLabel);
         infoTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(infoTitle);
         this.getTextArray().get(0).setFont(fontText);
         //infoText.setMaximumSize(maxSize);
         //infoText.setAutoscrolls(true);
@@ -392,20 +401,23 @@ public class CatalogJElements {
         JPanel panelCopy = new JPanel();
         panelCopy.setLayout(gbl);
         //
-        JLabel bCTitle = new JLabel("Шкаф:");
+        JLabel bCTitle = new JLabel("Шкаф (20):");
         bCTitle.setFont(fontLabel);
         bCTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(bCTitle);
         this.getTextCopy().get(0).setFont(fontText);
         //
-        JLabel bShTitle = new JLabel("Полка:");
+        JLabel bShTitle = new JLabel("Полка (20):");
         bShTitle.setFont(fontLabel);
         bShTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
-        JTextField bShText = new JTextField(COUNT_CHAR);
+        this.getTextCount().add(bShTitle);
+        //JTextField bShText = new JTextField(COUNT_CHAR);
         this.getTextCopy().get(1).setFont(fontText);
         //
-        JLabel condTitle = new JLabel("Состояние книги:");
+        JLabel condTitle = new JLabel("Состояние книги (200):");
         condTitle.setFont(fontLabel);
         condTitle.setSize(WIDTH_LABEL, HEIGHT_ELEMENTS);
+        this.getTextCount().add(condTitle);
         this.getTextArray().get(1).setFont(fontText);
         this.getTextArray().get(1).setLineWrap(true);
         this.getTextArray().get(1).setWrapStyleWord(true);
@@ -570,6 +582,10 @@ public class CatalogJElements {
     
     public List<JTextArea> getTextArray(){
         return this.textArray;
+    }
+    
+    public List<JLabel> getTextCount(){
+        return this.textCount;
     }
     
     public JComboBox getTypeEdition(){

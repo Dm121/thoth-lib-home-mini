@@ -6,6 +6,7 @@
 
 package thoth_lib_m.guiclass;
 
+import java.util.List;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.*;
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.InfoSection;
 import thoth_lib_m.dataclass.Book;
@@ -53,6 +56,8 @@ public class CatalogJFrame extends JFrame{
         final int SECTION_WIDTH = 150;
         final int SECTION_HEIGHT = 100;
         final int MENU_HEIGHT = 25;
+        final int[] MAX_CHAR;
+        MAX_CHAR = new int[]{20, 120, 200, 250, 400};
         int sRow = 0;
         //JPanel mainPanel = new JPanel();
         //GridBagLayout gbl = new GridBagLayout();
@@ -96,9 +101,9 @@ public class CatalogJFrame extends JFrame{
         boxMain.add(menuButtonPanel);
         //event for Button of Menu - ButtonMenu
         NewButAction newButAction = new NewButAction(elem, 
-            this.getTable().getCopyTable());
+            this.getTable().getCopyTable(), this.getTabbedPane());
         elem.getButtonsMenu().get(0).addActionListener(newButAction);
-        
+                
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridLayout(1,1));
         tablePanel.setSize(this.getWidth(), TABLE_HEIGHT);
@@ -170,6 +175,7 @@ public class CatalogJFrame extends JFrame{
                                             b.getCopyBook().getBookShelf());
                         this.elem.getTextArray().get(1).setText(
                                             b.getCopyBook().getCondition());
+                        this.setTextCountBook();
                     }
                 }
             }
@@ -180,6 +186,47 @@ public class CatalogJFrame extends JFrame{
                 
         JScrollPane scroll = new JScrollPane(table.getCopyTable());
         tablePanel.add(scroll);
+        //event for JTextField of panelBook
+        TFCountAction textF1 = 
+                new TFCountAction(this.elem.getTextBook().get(0), MAX_CHAR[3],
+                                        this.elem.getTextCount().get(0));
+        this.elem.getTextBook().get(0).addKeyListener(textF1);
+        TFCountAction textF2 = 
+                new TFCountAction(this.elem.getTextBook().get(1), MAX_CHAR[0], 
+                                        this.elem.getTextCount().get(1));
+        this.elem.getTextBook().get(1).addKeyListener(textF2);
+        TFCountAction textF3 = 
+                new TFCountAction(this.elem.getTextBook().get(2), MAX_CHAR[2], 
+                                        this.elem.getTextCount().get(2));
+        this.elem.getTextBook().get(2).addKeyListener(textF3);
+        TFCountAction textF4 = 
+                new TFCountAction(this.elem.getTextBook().get(3), MAX_CHAR[1], 
+                                        this.elem.getTextCount().get(3));
+        this.elem.getTextBook().get(3).addKeyListener(textF4);
+        TFCountAction textF5 = 
+                new TFCountAction(this.elem.getTextBook().get(4), MAX_CHAR[2], 
+                                        this.elem.getTextCount().get(4));
+        this.elem.getTextBook().get(4).addKeyListener(textF5);
+        //
+        TACountAction textA1 = 
+                new TACountAction(this.elem.getTextArray().get(0), MAX_CHAR[4],
+                                        this.elem.getTextCount().get(5));
+        this.elem.getTextArray().get(0).addKeyListener(textA1);
+        //
+        TFCountAction textF6 = 
+                new TFCountAction(this.elem.getTextCopy().get(0), MAX_CHAR[0], 
+                                        this.elem.getTextCount().get(6));
+        this.elem.getTextCopy().get(0).addKeyListener(textF6);
+        TFCountAction textF7 = 
+                new TFCountAction(this.elem.getTextCopy().get(1), MAX_CHAR[0], 
+                                        this.elem.getTextCount().get(7));
+        this.elem.getTextCopy().get(1).addKeyListener(textF7);
+        //
+        TACountAction textA2 = 
+                new TACountAction(this.elem.getTextArray().get(1), MAX_CHAR[2],
+                                        this.elem.getTextCount().get(8));
+        this.elem.getTextArray().get(1).addKeyListener(textA2);
+        //
                 
         Box boxAddit = Box.createHorizontalBox();
         s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
@@ -216,6 +263,8 @@ public class CatalogJFrame extends JFrame{
                     this.elem.getTextCopy().get(1).setText("");
                     this.elem.getTextArray().get(0).setText("");
                     this.elem.getTextArray().get(1).setText("");
+                    //
+                    this.setTextCountBook();
                 }
             }catch(Exception err){
                 AdditClass.errorMes(err, "CatalogJFrame.createGUI");
@@ -266,5 +315,78 @@ public class CatalogJFrame extends JFrame{
         this.elem.getTextCopy().get(0).setText(b.getCopyBook().getBookCase());
         this.elem.getTextCopy().get(1).setText(b.getCopyBook().getBookShelf());
         this.elem.getTextArray().get(1).setText(b.getCopyBook().getCondition());
+        //
+        this.setTextCountBook();
+    }
+    
+    private void setTextCountBook(){
+        final int[] MAX_COUNT_CHAR;
+        MAX_COUNT_CHAR = new int[]{20, 120, 200, 250, 400};
+        //
+        this.elem.getTextCount().get(0).setText(this.getTitle(
+                this.elem.getTextCount().get(0).getText()) + 
+                (MAX_COUNT_CHAR[3] - 
+                        this.elem.getTextBook().get(0).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(1).setText(this.getTitle(
+                this.elem.getTextCount().get(1).getText()) + 
+                (MAX_COUNT_CHAR[0] - 
+                        this.elem.getTextBook().get(1).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(2).setText(this.getTitle(
+                this.elem.getTextCount().get(2).getText()) + 
+                (MAX_COUNT_CHAR[2] - 
+                        this.elem.getTextBook().get(2).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(3).setText(this.getTitle(
+                this.elem.getTextCount().get(3).getText()) + 
+                (MAX_COUNT_CHAR[1] - 
+                        this.elem.getTextBook().get(3).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(4).setText(this.getTitle(
+                this.elem.getTextCount().get(4).getText()) + 
+                (MAX_COUNT_CHAR[2] - 
+                        this.elem.getTextBook().get(4).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(5).setText(this.getTitle(
+                this.elem.getTextCount().get(5).getText()) + 
+                (MAX_COUNT_CHAR[4] - 
+                        this.elem.getTextArray().get(0).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(6).setText(this.getTitle(
+                this.elem.getTextCount().get(6).getText()) + 
+                (MAX_COUNT_CHAR[0] - 
+                        this.elem.getTextCopy().get(0).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(7).setText(this.getTitle(
+                this.elem.getTextCount().get(7).getText()) + 
+                (MAX_COUNT_CHAR[0] - 
+                        this.elem.getTextCopy().get(1).getText().length()) + 
+                "):");
+        this.elem.getTextCount().get(8).setText(this.getTitle(
+                this.elem.getTextCount().get(8).getText()) + 
+                (MAX_COUNT_CHAR[2] - 
+                        this.elem.getTextArray().get(1).getText().length()) + 
+                "):");
+    }
+    
+    
+    private String getTitle(String input){
+        String title = "";
+        try{
+            String regPattern = "^[a-zA-z0-9а-яА-Я \t]+\\ \\(";
+            Pattern pattern = Pattern.compile(regPattern, 
+                                                    Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(input);
+            if(matcher.find()){
+                int start = matcher.start();
+                int end = matcher.end();
+                title = input.substring(start, end);
+            }
+        }
+        catch(Exception e){
+            AdditClass.errorMes(e, "TFCountAction.getTitle");
+        }
+        return title;
     }
 }

@@ -108,6 +108,16 @@ public class SortFilterModel extends AbstractTableModel{
         this.flagSort = flag;
     }
     
+    /*
+    public Row[] getRows(){
+        return this.rows;
+    }
+    */
+    
+    public int getRowsLength(){
+        return this.rows.length;
+    }
+    
     /**
      *Получение значений из ячеек таблицы
      * @param row - индекс строки
