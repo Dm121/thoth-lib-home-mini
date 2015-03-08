@@ -6,6 +6,7 @@
 
 package thoth_lib_m.databaseclass;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import thoth_lib_m.AdditClass;
@@ -25,6 +26,12 @@ public abstract class DataBaseHelper {
         connect = new ConnectionSQLiteDB();
         connect.connDB("db/thoth_lhm_sqlite.db");
     }
+    
+    //
+    public Connection getConnectionDBH(){
+        return connect.getConnectionC();
+    }
+    //
     
     public void closeStatement(PreparedStatement ps){
         if(ps != null){

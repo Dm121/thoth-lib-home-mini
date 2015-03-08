@@ -8,7 +8,7 @@ package thoth_lib_m.databaseclass;
 
 import java.sql.*;
 import thoth_lib_m.AdditClass;
-import thoth_lib_m.dataclass.InfoSection;
+//simport thoth_lib_m.dataclass.InfoSection;
 
 /**
  *Подготовленные запросы Select для извлечения данных из
@@ -29,8 +29,11 @@ public class DataBaseSelect
     
     //private String selectQw;
     
+    private Statement s;
+    
     public DataBaseSelect() throws SQLException{
         super();
+        s = connect.getConnectionC().createStatement();
         //selectQw = "";
     }
     
@@ -68,12 +71,25 @@ public class DataBaseSelect
     public ResultSet selectData(String sql){
         ResultSet rs = null;
         //try-with-resources
-        try(Statement s = connect.getConnectionC().createStatement()) {
+        try{
             rs = s.executeQuery(sql);
         }
         catch(SQLException e){
             AdditClass.errorMes(e, "selectData");
         }
         return rs;
+    }
+    
+    public Statement getS(){
+        return this.s;
+    }
+    
+    public void closeS(Statement s){
+        try{
+            if(s != null){ s.close(); }
+        }
+        catch(SQLException e){
+            AdditClass.errorMes(e, "DataBaseSelect.closeS");
+        }
     }
 }

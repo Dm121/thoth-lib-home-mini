@@ -103,6 +103,9 @@ public class CatalogJFrame extends JFrame{
         NewButAction newButAction = new NewButAction(elem, 
             this.getTable().getCopyTable(), this.getTabbedPane());
         elem.getButtonsMenu().get(0).addActionListener(newButAction);
+        //
+        
+        //
                 
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridLayout(1,1));
@@ -272,7 +275,14 @@ public class CatalogJFrame extends JFrame{
         });
         boxAddit.add(new JScrollPane(s.getScrollSection()));
         boxAddit.add(new JScrollPane(tabbedPane));
-        
+        //
+        SaveDataButAction saveDataButAction = new SaveDataButAction(elem, 
+            s.getArrayISection(s.getSection().
+                                        getSelectedIndex()).getIdSection(),
+            this.table, this);
+        this.elem.getButtonsMenu().get(2).addActionListener(
+                                            saveDataButAction);
+        //
         
         this.add(boxMain, BorderLayout.NORTH);
         this.add(tablePanel, BorderLayout.CENTER);

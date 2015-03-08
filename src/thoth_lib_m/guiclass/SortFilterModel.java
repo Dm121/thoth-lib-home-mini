@@ -7,10 +7,11 @@
 package thoth_lib_m.guiclass;
 
 import java.util.List;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.table.*;
+import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.CopyTable;
 /**
  *Сортировка для строк основной таблицы,
@@ -170,6 +171,7 @@ public class SortFilterModel extends AbstractTableModel{
                 if(i != row) { this.rows[i].selected = false; }
                 else{ this.rows[i].selected = true; }
             }
+            //AdditClass.infoMes("" + row);
             return ((TableCopiesModel)model).getIdRec(this.rows[row].index);
         }
         else { return -1; }
