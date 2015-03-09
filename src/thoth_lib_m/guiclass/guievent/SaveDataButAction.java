@@ -26,6 +26,9 @@ public class SaveDataButAction implements ActionListener{
     private final int selctedSection;
     private TableCopies table;
     
+    //
+    //Создание книги в текущем разделе
+    //
     public SaveDataButAction(CatalogJElements elem,
             int selected, TableCopies t, CatalogJFrame f){
         this.frame = f;
@@ -40,7 +43,7 @@ public class SaveDataButAction implements ActionListener{
             insertData(this.elem, this.selctedSection, this.table, this.frame);
         }
         else{
-            updateData(this.elem, this.selctedSection, this.table);
+            updateData(this.elem, this.selctedSection, this.table, this.frame);
         }
     }
     
@@ -149,7 +152,127 @@ public class SaveDataButAction implements ActionListener{
     }
     
     private void updateData(CatalogJElements elem,
-            int selected, TableCopies t){
-        
+            int selected, TableCopies t, CatalogJFrame frame){
+        int i;   //for loop
+        final String invNumber = 
+            "select inv_book.inv_num " + 
+            "from inv_book, bo_book " +
+            "where bo_book.id_book = inv_book.id_book and " +
+            "bo_book.id_book = ";   //Указать idBook + ";"
+        String mess = "";
+        Book b = null;
+        CopyTable ctb = null;
+        DataBaseUpdate dbUpdate = null;
+        DataBaseSelect dbSelect = null;
+        PreparedStatement ps = null;
+        //
+        try{
+        //
+        try{
+            dbUpdate = new DataBaseUpdate();
+            dbSelect = new DataBaseSelect();
+            b = new Book(Integer.parseInt(elem.getIdBook().getText().trim()),
+                    (elem.getValTypeEdition() + 1), selected);
+            b.getMainData().setAuthors(elem.getTextBook().get(0).getText());
+            b.getAdditData().setNumVolume(elem.getTextBook().get(1).getText());
+            b.getMainData().setTitle(elem.getTextBook().get(2).getText());
+            b.getDateline().setPublisher(elem.getTextBook().get(3).getText());
+            b.getDateline().setPlace(elem.getTextBook().get(4).getText());
+            b.getDateline().setYear(elem.getValYearValue());
+            b.getAdditData().setNotes(elem.getTextArray().get(0).getText());
+        }
+        catch(NumberFormatException | SQLException errOne){
+            AdditClass.errorMes(errOne, "SaveDataButAction.updateData");
+        }
+        //
+        if((b != null) && (dbSelect != null)){
+            try(ResultSet rs = dbSelect.selectData(invNumber 
+                                                    + b.getIdBook() + ";")){
+                b.specifyCopyBook(rs.getInt(1));
+                b.getCopyBook().setBookCase(
+                                        elem.getTextCopy().get(0).getText());
+                b.getCopyBook().setBookShelf(
+                                        elem.getTextCopy().get(1).getText());
+                b.getCopyBook().setCondition(
+                                        elem.getTextArray().get(1).getText());
+            }
+            catch(Exception errTwo){
+                AdditClass.errorMes(errTwo, "SaveDataButAction.updateData");
+            }
+            finally{
+                dbSelect.closeS(dbSelect.getS());
+            }
+            //
+            try{
+                dbUpdate.getConnectionDBH().setTransactionIsolation(
+                                        Connection.TRANSACTION_SERIALIZABLE);
+                dbUpdate.getConnectionDBH().setAutoCommit(false);
+                ps = dbUpdate.getUpdateBook();
+                dbUpdate.updateBook(ps, b);
+                ps = dbUpdate.getUpdateInv();
+                dbUpdate.updateInv(ps, b);
+                dbUpdate.getConnectionDBH().commit();
+                /*
+                ps = dbUpdate.getUpdateBook();
+                if(ps != null){
+                    dbUpdate.updateBook(ps, b);
+                }
+                else{
+                    mess = "Получено значение null из метода " +
+                                "getUpdateBook() для ps.";
+                    AdditClass.warningMes(mess, "SaveDataButAction.updateData");
+                }
+                ps = dbUpdate.getUpdateInv();
+                if(ps != null){
+                    dbUpdate.updateInv(ps, b);
+                }
+                else{
+                    mess = "Получено значение null из метода " + 
+                                "getUpdateInv() для ps.";
+                    AdditClass.warningMes(mess, "SaveDataButAction.updateData");
+                }
+                */
+            }
+            catch(SQLException errThree){
+                AdditClass.errorMes(errThree, "SaveDataButAction.updateData");
+                dbUpdate.getConnectionDBH().rollback();
+            }
+            finally{
+                if(ps != null){ dbUpdate.closeStatement(ps); }
+                if(dbSelect != null){ dbSelect.closeConnection(); }
+                if(dbUpdate != null){ dbUpdate.closeConnection(); }
+            }
+            
+            try{
+                ctb = new CopyTable(b.getIdBook());
+                ctb.setAuthorsTable(b.getMainData().getAuthors());
+                ctb.setTitleTable(b.getMainData().getTitle());
+                ctb.setYearTable(b.getDateline().getYear());
+                ctb.setBookCaseTable(b.getCopyBook().getBookCase());
+                ctb.setBookShelfTable(b.getCopyBook().getBookShelf());
+                t.getSortTable().setIArray(
+                                    t.getCopyTable().getSelectedRow(), ctb);
+                t.getSortTable().getIdBookRecord(
+                                    t.getCopyTable().getSelectedRow());
+                t.getCopyTable().setRowSelectionAllowed(true);
+                t.getCopyTable().setRowSelectionInterval(
+                        t.getCopyTable().getSelectedRow(), 
+                        t.getCopyTable().getSelectedRow());
+                for(i = 0; i < frame.getBooks().size(); i++){
+                    if(b.getIdBook() == frame.getBooks().get(i).getIdBook()){
+                        frame.getBooks().set(i, b);
+                        break;
+                    }
+                }
+            }
+            catch(Exception errFour){
+                AdditClass.errorMes(errFour, "SaveDataButAction.updateData");
+            }
+        }
+        //
+        }
+        catch(SQLException e){
+            AdditClass.errorMes(e, "SaveDataButAction.updateData");
+        }
     }
 }

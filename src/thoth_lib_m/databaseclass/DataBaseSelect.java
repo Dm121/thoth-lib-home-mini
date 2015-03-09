@@ -29,7 +29,13 @@ public class DataBaseSelect
     
     //private String selectQw;
     
-    private Statement s;
+    private final static String invNumber = 
+        "select inv_book.inv_num " + 
+        "from inv_book, bo_book " +
+        "where bo_book.id_book = inv_book.id_book and " +
+        "bo_book.id_book = ?;";
+    
+    private Statement s = null;
     
     public DataBaseSelect() throws SQLException{
         super();
@@ -48,6 +54,19 @@ public class DataBaseSelect
         }
         return ps;
     }
+    
+    /*
+    public PreparedStatement getSelectInvNumber(){
+        PreparedStatement ps = null;
+        try{
+            ps = connect.getConnectionC().prepareStatement(invNumber);
+        }
+        catch(SQLException e){
+            AdditClass.errorMes(e, "DataBaseSelect.getSelectInvNumber");
+        }
+        return ps;
+    }
+    */
     
     public ResultSet selectBooks(PreparedStatement ps, int selectedSection){
         ResultSet rs = null;
@@ -80,7 +99,35 @@ public class DataBaseSelect
         return rs;
     }
     
+    //
+    /**
+     *Возвращает объект класса Statement для выполнения запросов.
+     * Объект инициализирован при вызове конструктора класса DataBaseSelect.
+     * Примечание: к объекту не должен быть применён метод close().
+     * @return s - объект класса Statement
+     */
     public Statement getS(){
+        return this.s;
+    }
+    //
+    
+    /**
+     *Возвращает объект класса Statement для выполнения запросов.
+     * Объект инициализируется при вызове метода.
+     * Примечание: метод лучше всего использовать, 
+     * если объект класса Statement (s) равен "null",
+     * или к нему применён метод close().
+     * @return s - объект класса Statement
+     */
+    public Statement getSNew(){
+        try{
+            if((s == null) || (s.isClosed())){
+                this.s = connect.getConnectionC().createStatement();
+            }
+        }
+        catch(SQLException e){
+            AdditClass.errorMes(e, "DataBaseSelect.getSNew");
+        }
         return this.s;
     }
     

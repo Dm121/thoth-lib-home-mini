@@ -129,6 +129,7 @@ public class TableCopiesModel extends AbstractTableModel{
     
     public void setIArray(int rowIndex, CopyTable copy){
         this.copies.set(rowIndex, copy);
+        this.fireTableDataChanged();
     }
     
     public int getIdRec(int rowIndex){
