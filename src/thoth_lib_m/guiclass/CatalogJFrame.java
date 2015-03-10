@@ -37,6 +37,7 @@ public class CatalogJFrame extends JFrame{
     private ArrayList<Book> books;
     private JTabbedPane tabbedPane;
     private CatalogJElements elem;
+    private SaveDataButAction saveDataButAction;
                
     public CatalogJFrame() throws Exception{
         super("Каталогизатор");
@@ -48,6 +49,7 @@ public class CatalogJFrame extends JFrame{
         tabbedPane = new JTabbedPane(
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         elem = new CatalogJElements();
+        saveDataButAction = null;
     }
     
     public void createGUI(Connection c)
@@ -269,6 +271,19 @@ public class CatalogJFrame extends JFrame{
                     //
                     this.setTextCountBook();
                 }
+                //
+                s.setSelectedS(s.getSection().getSelectedIndex());
+                if(this.saveDataButAction != null){
+                    this.elem.getButtonsMenu().get(2).removeActionListener(
+                                                        this.saveDataButAction);
+                }
+                this.saveDataButAction = new SaveDataButAction(elem, 
+                        s.getArrayISection(s.getSection().
+                                        getSelectedIndex()).getIdSection(),
+                                                            this.table, this);
+                this.elem.getButtonsMenu().get(2).addActionListener(
+                                            this.saveDataButAction);
+                //
             }catch(Exception err){
                 AdditClass.errorMes(err, "CatalogJFrame.createGUI");
             }
@@ -276,12 +291,12 @@ public class CatalogJFrame extends JFrame{
         boxAddit.add(new JScrollPane(s.getScrollSection()));
         boxAddit.add(new JScrollPane(tabbedPane));
         //
-        SaveDataButAction saveDataButAction = new SaveDataButAction(elem, 
-            s.getArrayISection(s.getSection().
+        this.saveDataButAction = new SaveDataButAction(elem, 
+                        s.getArrayISection(s.getSection().
                                         getSelectedIndex()).getIdSection(),
-            this.table, this);
+                                                            this.table, this);
         this.elem.getButtonsMenu().get(2).addActionListener(
-                                            saveDataButAction);
+                                            this.saveDataButAction);
         //
         
         this.add(boxMain, BorderLayout.NORTH);

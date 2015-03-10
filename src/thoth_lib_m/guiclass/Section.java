@@ -19,12 +19,13 @@ import thoth_lib_m.dataclass.InfoSection;
  * @author 1
  */
 public class Section {
-    final int nVisible = 8;
-    final DefaultListModel listModel;
+    private final int nVisible = 8;
+    private final DefaultListModel listModel;
     private JList section;
     private JScrollPane scrollSection;
     private String sql;
     private ArrayList<InfoSection> infoSection = new ArrayList();
+    private int selectedS;
     
     /*
     catch(Exception ex){
@@ -44,6 +45,7 @@ public class Section {
         section.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         section.setFont(fontItems);
         scrollSection = new JScrollPane(section);
+        selectedS = 1;
     }
     
     public boolean addDataList(Connection c) throws SQLException{
@@ -292,6 +294,28 @@ public class Section {
         //
         return err;
     }
+    
+    /**
+     *Возвращает номер текущего элемента списка.
+     * Значение устанавливается вручную
+     * (пример: <p>"s.setSelectedS = s.getSection.getSelectedIndex()",
+     * где s - объект класса Section).
+     * @return selectedS - номер текущего элемента списка
+     */
+    public int getSelectedS(){
+        return selectedS;
+    }
+    
+    /**
+     *Устанавливает номер текущего элемента списка
+     * (пример: <p>"s.setSelectedS = s.getSection.getSelectedIndex()",
+     * где s - объект класса Section).
+     * @param selected - значение номера текущего элемента списка
+     */
+    public void setSelectedS(int selected){
+        selectedS = selected;
+    }
+    
     
     public InfoSection getArrayISection(int index){
         return infoSection.get(index);

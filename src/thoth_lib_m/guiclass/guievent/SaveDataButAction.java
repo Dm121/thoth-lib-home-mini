@@ -33,12 +33,21 @@ public class SaveDataButAction implements ActionListener{
             int selected, TableCopies t, CatalogJFrame f){
         this.frame = f;
         this.elem = elem;
+        //
+        //AdditClass.infoMes("selected:" + selected);
+        //
         this.selctedSection = selected;
         this.table = t;
     }
     
     @Override
     public void actionPerformed(ActionEvent e){
+        //
+        /*
+        AdditClass.infoMes("selectedSection: " + this.selctedSection);
+        return;
+        */
+        //
         if(this.elem.getIdBook().getText().trim().equals("")){
             insertData(this.elem, this.selctedSection, this.table, this.frame);
         }
