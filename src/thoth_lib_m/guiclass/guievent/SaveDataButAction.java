@@ -60,6 +60,7 @@ public class SaveDataButAction implements ActionListener{
             int selected, TableCopies t, CatalogJFrame f){
         final String sqlOne = "select Max(id_book) from bo_book;";
         final String sqlTwo = "select Max(inv_num) from inv_book;";
+        int selectedRecord;
         Book b = null;
         CopyTable ctb = null;
         DataBaseInsert dbInsert = null;
@@ -156,10 +157,11 @@ public class SaveDataButAction implements ActionListener{
                 */
                 f.getBooks().add(b);
                 //t.getSortTable().sort(1);
+                selectedRecord = t.getSortTable().maxSelected(0);
                 t.getCopyTable().setRowSelectionAllowed(true);
                 t.getCopyTable().setRowSelectionInterval(
-                        t.getSortTable().maxSelected(1), 
-                        t.getSortTable().maxSelected(1));
+                        selectedRecord, 
+                        selectedRecord);
             }
         }
         catch(Exception e){
