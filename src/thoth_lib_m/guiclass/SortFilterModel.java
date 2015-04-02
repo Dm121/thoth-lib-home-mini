@@ -101,6 +101,24 @@ public class SortFilterModel extends AbstractTableModel{
         return sRow;
     }
     
+    public int maxSelected(int numColumnSort){
+        int i;      //for loop
+        int m;
+        int maxNumArray;
+        //
+        sort(numColumnSort);
+        m = this.rows[0].index;
+        maxNumArray = 0;
+        for(i = 1; i < this.rows.length; i++){
+            if(m < this.rows[i].index){
+                m = this.rows[i].index;
+                maxNumArray = i;
+            }
+        }
+        //
+        return maxNumArray;
+    } 
+    
     public boolean getFlagSort(){
         return this.flagSort;
     }

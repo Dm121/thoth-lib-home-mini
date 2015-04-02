@@ -148,11 +148,18 @@ public class SaveDataButAction implements ActionListener{
                 t.getSortTable().addRow(ctb);
                 t.getSortTable().getIdBookRecord(
                                     (t.getSortTable().getRowsLength() - 1));
+                /*
                 t.getCopyTable().setRowSelectionAllowed(true);
                 t.getCopyTable().setRowSelectionInterval(
                         t.getSortTable().getRowsLength() - 1, 
                         t.getSortTable().getRowsLength() - 1);
+                */
                 f.getBooks().add(b);
+                //t.getSortTable().sort(1);
+                t.getCopyTable().setRowSelectionAllowed(true);
+                t.getCopyTable().setRowSelectionInterval(
+                        t.getSortTable().maxSelected(1), 
+                        t.getSortTable().maxSelected(1));
             }
         }
         catch(Exception e){
