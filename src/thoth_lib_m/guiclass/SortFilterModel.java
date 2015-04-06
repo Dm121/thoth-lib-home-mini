@@ -117,7 +117,23 @@ public class SortFilterModel extends AbstractTableModel{
         }
         //
         return maxNumArray;
-    } 
+    }
+    
+    public int updateElem(int numColumnSort, int index){
+        int i;  //for loop
+        int updateSelected;
+        //
+        sort(numColumnSort);
+        updateSelected = 0;
+        for(i = 0; i < this.rows.length; i++){
+            if(this.rows[i].index == index){
+                updateSelected = i;
+                break;
+            }
+        }
+        //
+        return updateSelected;
+    }
     
     public boolean getFlagSort(){
         return this.flagSort;
@@ -135,6 +151,10 @@ public class SortFilterModel extends AbstractTableModel{
     
     public int getRowsLength(){
         return this.rows.length;
+    }
+    
+    public int getRowIndex(int numRow){
+        return this.rows[numRow].index;
     }
     
     /**
@@ -212,14 +232,14 @@ public class SortFilterModel extends AbstractTableModel{
     public CopyTable getIArray(int row) throws Exception{
         CopyTable copy = new CopyTable(-1);
         if(model instanceof TableCopiesModel){
-            copy = ((TableCopiesModel)model).getIArray(row);
+            copy = ((TableCopiesModel)model).getIArray(this.rows[row].index);
         }
         return copy;
     }
     
     public void setIArray(int row, CopyTable copy) throws Exception{
         if(model instanceof TableCopiesModel){
-            ((TableCopiesModel)model).setIArray(row, copy);
+            ((TableCopiesModel)model).setIArray(this.rows[row].index, copy);
         }
     }
     

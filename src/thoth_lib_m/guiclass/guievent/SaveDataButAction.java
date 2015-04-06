@@ -156,7 +156,6 @@ public class SaveDataButAction implements ActionListener{
                         t.getSortTable().getRowsLength() - 1);
                 */
                 f.getBooks().add(b);
-                //t.getSortTable().sort(1);
                 selectedRecord = t.getSortTable().maxSelected(0);
                 t.getCopyTable().setRowSelectionAllowed(true);
                 t.getCopyTable().setRowSelectionInterval(
@@ -172,6 +171,8 @@ public class SaveDataButAction implements ActionListener{
     private void updateData(CatalogJElements elem,
             int selected, TableCopies t, CatalogJFrame frame){
         int i;   //for loop
+        int updateIndex;
+        int selectedRecord;
         final String invNumber = 
             "select inv_book.inv_num " + 
             "from inv_book, bo_book " +
@@ -270,15 +271,31 @@ public class SaveDataButAction implements ActionListener{
                 ctb.setBookShelfTable(b.getCopyBook().getBookShelf());
                 t.getSortTable().setIArray(
                                     t.getCopyTable().getSelectedRow(), ctb);
+                //
+                //*
+                updateIndex = t.getSortTable().getRowIndex(
+                                            t.getCopyTable().getSelectedRow());
+                selectedRecord = t.getSortTable().updateElem(0, updateIndex);
+                t.getCopyTable().setRowSelectionAllowed(true);
+                t.getCopyTable().setRowSelectionInterval(
+                        selectedRecord, 
+                        selectedRecord);
+                //*/
+                //
+                
+                //
+                /*
                 t.getSortTable().getIdBookRecord(
                                     t.getCopyTable().getSelectedRow());
-                t.getCopyTable().setRowSelectionAllowed(true);
                 t.getCopyTable().setRowSelectionInterval(
                         t.getCopyTable().getSelectedRow(), 
                         t.getCopyTable().getSelectedRow());
+                */
+                //
                 for(i = 0; i < frame.getBooks().size(); i++){
                     if(b.getIdBook() == frame.getBooks().get(i).getIdBook()){
                         frame.getBooks().set(i, b);
+                        TextDataElemBook.getDataBook(b, elem);
                         break;
                     }
                 }
