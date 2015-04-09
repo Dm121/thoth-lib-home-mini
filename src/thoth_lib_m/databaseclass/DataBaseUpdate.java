@@ -36,7 +36,7 @@ public class DataBaseUpdate
     }
     
     public PreparedStatement getUpdateBook(){
-        PreparedStatement ps =null;
+        PreparedStatement ps = null;
         try{
             ps = connect.getConnectionC().prepareStatement(sql_update_book);
         }

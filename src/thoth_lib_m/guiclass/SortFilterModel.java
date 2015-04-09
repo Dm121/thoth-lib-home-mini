@@ -106,7 +106,13 @@ public class SortFilterModel extends AbstractTableModel{
         int m;
         int maxNumArray;
         //
-        sort(numColumnSort);
+        if(this.getFlagSort()){
+            sort(numColumnSort);
+        }
+        else{
+            reverseSort(numColumnSort);
+        }
+        //
         m = this.rows[0].index;
         maxNumArray = 0;
         for(i = 1; i < this.rows.length; i++){

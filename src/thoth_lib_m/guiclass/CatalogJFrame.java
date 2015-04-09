@@ -46,6 +46,10 @@ public class CatalogJFrame extends JFrame{
         this.books = TableCopies.listBooks(1);
         ArrayList<CopyTable> cpB = TableCopies.listCopies(this.books);
         table = new TableCopies(cpB);
+        //
+        table.getSortTable().sort(0);
+        table.getSortTable().setFlagSort(true);
+        //
         tabbedPane = new JTabbedPane(
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         elem = new CatalogJElements();
@@ -248,6 +252,10 @@ public class CatalogJFrame extends JFrame{
                 this.getTable().getSortTable().addArrayCopies(cpB);
                 this.getTable().getSortTable().setRowsM();
                 this.getTable().getCopyTable().repaint();
+                //
+                this.getTable().getSortTable().sort(0);
+                this.getTable().getSortTable().setFlagSort(true);
+                //
                 if(this.getBooks().size() > 0){
                     this.getDataBook(this.getBooks().get(0));
                     this.getTable().getCopyTable().setRowSelectionAllowed(true);

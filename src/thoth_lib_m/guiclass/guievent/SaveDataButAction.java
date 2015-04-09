@@ -272,7 +272,21 @@ public class SaveDataButAction implements ActionListener{
                 t.getSortTable().setIArray(
                                     t.getCopyTable().getSelectedRow(), ctb);
                 //
-                //*
+                selectedRecord = t.getCopyTable().getSelectedRow();
+                /*
+                if(t.getSortTable().getFlagSort()){
+                    t.getSortTable().sort(0);
+                }
+                else{
+                    t.getSortTable().reverseSort(0);
+                }
+                */
+                t.getCopyTable().repaint();
+                t.getCopyTable().setRowSelectionInterval(
+                        selectedRecord, 
+                        selectedRecord);
+                //
+                /*
                 updateIndex = t.getSortTable().getRowIndex(
                                             t.getCopyTable().getSelectedRow());
                 selectedRecord = t.getSortTable().updateElem(0, updateIndex);
@@ -280,7 +294,7 @@ public class SaveDataButAction implements ActionListener{
                 t.getCopyTable().setRowSelectionInterval(
                         selectedRecord, 
                         selectedRecord);
-                //*/
+                */
                 //
                 
                 //
