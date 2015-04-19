@@ -23,6 +23,22 @@ public class TextDataElemBook {
         //
     }
     
+    public static void emptyDataBook(CatalogJElements elem){
+        elem.setValIdB("");
+        elem.setValTypeEdition(0);
+        elem.getTextBook().get(0).setText("");
+        elem.getTextBook().get(1).setText("");
+        elem.getTextBook().get(2).setText("");
+        elem.getTextBook().get(3).setText("");
+        elem.getTextBook().get(4).setText("");
+        elem.setValYearValue(2015);
+        elem.getTextCopy().get(0).setText("");
+        elem.getTextCopy().get(1).setText("");
+        elem.getTextArray().get(0).setText("");
+        elem.getTextArray().get(1).setText("");
+        setTextCountBook(elem);
+    }
+    
     public static void getDataBook(Book book, CatalogJElements elem){
         Book b = book;
         elem.setValIdB(String.valueOf(b.getIdBook()));

@@ -38,6 +38,7 @@ public class CatalogJFrame extends JFrame{
     private JTabbedPane tabbedPane;
     private CatalogJElements elem;
     private SaveDataButAction saveDataButAction;
+    private DelDataButAction delDataButAction;
                
     public CatalogJFrame() throws Exception{
         super("Каталогизатор");
@@ -54,6 +55,7 @@ public class CatalogJFrame extends JFrame{
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         elem = new CatalogJElements();
         saveDataButAction = null;
+        delDataButAction = null;
     }
     
     public void createGUI(Connection c)
@@ -109,6 +111,8 @@ public class CatalogJFrame extends JFrame{
         NewButAction newButAction = new NewButAction(elem, 
             this.getTable().getCopyTable(), this.getTabbedPane());
         elem.getButtonsMenu().get(0).addActionListener(newButAction);
+        //
+        
         //
         
         //
@@ -188,6 +192,15 @@ public class CatalogJFrame extends JFrame{
                     }
                 }
             }
+            //
+            if(this.delDataButAction != null){
+                elem.getButtonsMenu().get(1).removeActionListener(
+                                                            delDataButAction);
+            }
+            this.delDataButAction = new DelDataButAction(
+                    this.elem, this, 
+                this.table.getCopyTable().getSelectedRow(), this.table);
+            elem.getButtonsMenu().get(1).addActionListener(delDataButAction);
             //
             //AdditClass.infoMes("" + numRow + "");
             //

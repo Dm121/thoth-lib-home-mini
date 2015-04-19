@@ -59,6 +59,25 @@ public class SortFilterModel extends AbstractTableModel{
         return r;
     }
     
+    private Row[] removeRow(Row[] array, int numRow, int sRowIndex){
+        Row[] r = new Row[array.length - 1];
+        int i;      //for loop
+        //
+        for(i = 0; i < r.length; i++){
+            if(i < numRow){
+                r[i] = array[i];
+            }
+            else{
+                r[i] = array[i + 1];
+            }
+            if(r[i].index > sRowIndex){
+                r[i].index = r[i].index - 1;
+            }
+        }
+        //
+        return r;
+    }
+    
     /**
      *Сортировка строк "от Хорстманна Кея и Корнелла Гари" 
      * @param numColumn - Столбец, значения которого подлежат сортировке
@@ -247,6 +266,18 @@ public class SortFilterModel extends AbstractTableModel{
         if(model instanceof TableCopiesModel){
             ((TableCopiesModel)model).setIArray(this.rows[row].index, copy);
         }
+    }
+    
+    /**
+     *Удаление указанной строки из таблицы
+     * @param row - номер удаляемой из таблицы строки
+     * @throws Exception
+     */
+    public void removeAtArray(int row) throws Exception{
+        if(model instanceof TableCopiesModel){
+            ((TableCopiesModel)model).removeAtArray(this.rows[row].index);
+        }
+        this.rows = this.removeRow(rows, row, this.rows[row].index);
     }
     
     public void clearTable(){

@@ -67,6 +67,13 @@ public class DataBaseDelete
                                         Connection.TRANSACTION_SERIALIZABLE);
             connect.getConnectionC().setAutoCommit(false);
             //
+            //При получении объектов подготовленных запросов
+            // типа PreparedStatement используется тоже соединение,
+            // полученное с помощью метода connect.getConnection(),
+            // что и в данном методе.
+            // connect - внутренняя переменная:
+            // protected ConnectionSQLiteDB connect;
+            // из класса DataBaseHelper
             ps = getPSInv();
             ps.setInt(1, idBook);
             ps.executeUpdate();

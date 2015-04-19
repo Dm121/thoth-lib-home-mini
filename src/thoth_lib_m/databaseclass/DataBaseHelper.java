@@ -13,7 +13,7 @@ import thoth_lib_m.AdditClass;
 
 /**
  *Абстрактный класс для установки соединения
- * при выполнении подготовленных запросов типа Insert, Update и Select
+ * при выполнении подготовленных запросов типа Insert, Update, Select и Delete
  * @author Sirota Dmitry
  */
 public abstract class DataBaseHelper {

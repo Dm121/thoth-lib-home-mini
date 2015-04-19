@@ -132,6 +132,11 @@ public class TableCopiesModel extends AbstractTableModel{
         this.fireTableDataChanged();
     }
     
+    public void removeAtArray(int rowIndex){
+        this.copies.remove(rowIndex);
+        this.fireTableDataChanged();
+    }
+    
     public int getIdRec(int rowIndex){
         CopyTable copy = this.copies.get(rowIndex);
         return copy.getIdBook();
