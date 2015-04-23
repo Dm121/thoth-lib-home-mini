@@ -11,6 +11,7 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import javax.swing.event.ListSelectionListener;
@@ -32,11 +33,11 @@ import thoth_lib_m.guiclass.guievent.*;
 public class CatalogJFrame extends JFrame{
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 650;
-    private TableCopies table;
+    private final TableCopies table;
     //int numRow;
     private ArrayList<Book> books;
-    private JTabbedPane tabbedPane;
-    private CatalogJElements elem;
+    private final JTabbedPane tabbedPane;
+    private final CatalogJElements elem;
     private SaveDataButAction saveDataButAction;
     private DelDataButAction delDataButAction;
                
@@ -78,7 +79,7 @@ public class CatalogJFrame extends JFrame{
                 elem.getPanelBook(c));
         this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
         this.getTabbedPane().addTab("Поиск", elem.getPanelSearch());
-        this.getDataBook(this.getBooks().get(0));
+        this.getDataBook(this.getBooks().get(0));       //1
         this.getTable().getCopyTable().setRowSelectionAllowed(true);
         this.getTable().getSortTable().getIdBookRecord(sRow);
         this.getTable().getCopyTable().setRowSelectionInterval(0, 0);
@@ -120,91 +121,25 @@ public class CatalogJFrame extends JFrame{
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new GridLayout(1,1));
         tablePanel.setSize(this.getWidth(), TABLE_HEIGHT);
-        table.getCopyTable().getTableHeader().addMouseListener(
-                                                new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-                //if(e.getClickCount() < 2) return;
-                
-                int sRow = 0;
-                
-                //Поиск столбца, на котором был щелчок
-                int tableColumn = table.getCopyTable().columnAtPoint(
-                                            e.getPoint());
-                
-                //Преобразование столбца в индекс модели
-                int modelColumn = table.getCopyTable().
-                                    convertColumnIndexToModel(tableColumn);
-                //
-                table.getCopyTable().clearSelection();
-                table.getSortTable().fireTableDataChanged();
-                //
-                //и выполнение сортировки
-                if(!table.getSortTable().getFlagSort()){
-                    sRow = table.getSortTable().sort(modelColumn);
-                    table.getSortTable().setFlagSort(true);
-                }
-                else{
-                    sRow = table.getSortTable().reverseSort(modelColumn);
-                    table.getSortTable().setFlagSort(false);
-                }
-                if(sRow > -1){
-                    table.getCopyTable().setRowSelectionAllowed(true);
-                    table.getCopyTable().setRowSelectionInterval(sRow, sRow);
-                }
-                
-            }
-        });
-        
+        //
+        //Class extends MouseAdapter
+        //MouseListener ml = new Class();
+        //.addMouseListener(ml);
+        //TableCopies table
+        MouseListener ml = new SortData(this.table); 
+        table.getCopyTable().getTableHeader().addMouseListener(ml);
+        //
+        //
+        //Class implements ListSelectionListener
+        //method: @Override public void valueChanged(ListSelectionEvent e){...}
+        //TableCopies table, CatalogJElements elem, CatalogJFrame frame (this)
+        //DelDataButAction delDataButAction
+        //elem.getButonsMenu().get(1)
+        SelectionTableRow str = new SelectionTableRow(this.table,
+                            this, this.elem, this.delDataButAction);
         ListSelectionModel lsm = table.getCopyTable().getSelectionModel();
-                lsm.addListSelectionListener((ListSelectionEvent e) -> {
-            int i;      //for loop
-            int numRow = table.getSortTable().getIdBookRecord(
-                    table.getCopyTable().getSelectedRow());
-            if(numRow > -1){
-                for(i = 0; i < this.getBooks().size(); i++){
-                    if(numRow == this.getBooks().get(i).getIdBook()){
-                        //
-                        Book b = this.getBooks().get(i);
-                        this.elem.setValIdB(String.valueOf(b.getIdBook()));
-                        this.elem.setValTypeEdition(b.getIdTypeBook() - 1);
-                        this.elem.getTextBook().get(0).setText(
-                                            b.getMainData().getAuthors());
-                        this.elem.getTextBook().get(1).setText(
-                                            b.getAdditData().getNumVolume());
-                        this.elem.getTextBook().get(2).setText(
-                                            b.getMainData().getTitle());
-                        this.elem.getTextBook().get(3).setText(
-                                            b.getDateline().getPublisher());
-                        this.elem.getTextBook().get(4).setText(
-                                            b.getDateline().getPlace());
-                        this.elem.setValYearValue(
-                                            b.getDateline().getYear());
-                        this.elem.getTextArray().get(0).setText(
-                                            b.getAdditData().getNotes());
-                        this.elem.getTextCopy().get(0).setText(
-                                            b.getCopyBook().getBookCase());
-                        this.elem.getTextCopy().get(1).setText(
-                                            b.getCopyBook().getBookShelf());
-                        this.elem.getTextArray().get(1).setText(
-                                            b.getCopyBook().getCondition());
-                        this.setTextCountBook();
-                    }
-                }
-            }
-            //
-            if(this.delDataButAction != null){
-                elem.getButtonsMenu().get(1).removeActionListener(
-                                                            delDataButAction);
-            }
-            this.delDataButAction = new DelDataButAction(
-                    this.elem, this, 
-                this.table.getCopyTable().getSelectedRow(), this.table);
-            elem.getButtonsMenu().get(1).addActionListener(delDataButAction);
-            //
-            //AdditClass.infoMes("" + numRow + "");
-            //
-        });
+                lsm.addListSelectionListener(str);
+        //
                 
         JScrollPane scroll = new JScrollPane(table.getCopyTable());
         tablePanel.add(scroll);
@@ -253,62 +188,18 @@ public class CatalogJFrame extends JFrame{
         Box boxAddit = Box.createHorizontalBox();
         s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
         s.addDataList(c);
-        s.getSection().addListSelectionListener((ListSelectionEvent e) -> {
-            int sRowS = 0;
-            try {
-                Integer selectedIndex = s.getSection().getSelectedIndex();
-                InfoSection ifS = s.getArrayISection(selectedIndex);
-                this.setBooks(TableCopies.listBooks(ifS.getIdSection()));
-                ArrayList<CopyTable> cpB = TableCopies.listCopies(
-                                                this.getBooks());
-                this.getTable().getSortTable().clearTable();
-                this.getTable().getSortTable().addArrayCopies(cpB);
-                this.getTable().getSortTable().setRowsM();
-                this.getTable().getCopyTable().repaint();
-                //
-                this.getTable().getSortTable().sort(0);
-                this.getTable().getSortTable().setFlagSort(true);
-                //
-                if(this.getBooks().size() > 0){
-                    this.getDataBook(this.getBooks().get(0));
-                    this.getTable().getCopyTable().setRowSelectionAllowed(true);
-                    this.getTable().getSortTable().getIdBookRecord(sRowS);
-                    this.getTable().getCopyTable().
-                                                setRowSelectionInterval(0, 0);
-                }
-                else{
-                    this.elem.setValIdB("");
-                    this.elem.setValTypeEdition(0);
-                    this.elem.getTextBook().get(0).setText("");
-                    this.elem.getTextBook().get(1).setText("");
-                    this.elem.getTextBook().get(2).setText("");
-                    this.elem.getTextBook().get(3).setText("");
-                    this.elem.getTextBook().get(4).setText("");
-                    this.elem.setValYearValue(2015);
-                    this.elem.getTextCopy().get(0).setText("");
-                    this.elem.getTextCopy().get(1).setText("");
-                    this.elem.getTextArray().get(0).setText("");
-                    this.elem.getTextArray().get(1).setText("");
-                    //
-                    this.setTextCountBook();
-                }
-                //
-                s.setSelectedS(s.getSection().getSelectedIndex());
-                if(this.saveDataButAction != null){
-                    this.elem.getButtonsMenu().get(2).removeActionListener(
-                                                        this.saveDataButAction);
-                }
-                this.saveDataButAction = new SaveDataButAction(elem, 
-                        s.getArrayISection(s.getSection().
-                                        getSelectedIndex()).getIdSection(),
-                                                            this.table, this);
-                this.elem.getButtonsMenu().get(2).addActionListener(
-                                            this.saveDataButAction);
-                //
-            }catch(Exception err){
-                AdditClass.errorMes(err, "CatalogJFrame.createGUI");
-            }
-        });
+        //
+        //Class implements ListSelectionListener
+        //method: @Override public void valueChanged(ListSelectionEvent e){...}
+        //TableCopies table
+        //CatalogJFrame frame (this)
+        //CatalogJElements elem
+        //Section s
+        //SaveDataButAction saveDataButAction
+        SelectionSection selS = new SelectionSection(
+            this.table, this, this.elem, s, this.saveDataButAction);
+        s.getSection().addListSelectionListener(selS);
+        //
         boxAddit.add(new JScrollPane(s.getScrollSection()));
         boxAddit.add(new JScrollPane(tabbedPane));
         //
@@ -347,6 +238,7 @@ public class CatalogJFrame extends JFrame{
         return this.tabbedPane;
     }
     
+    //*
     public void getDataBook(Book book){
         Book b = book;
         this.elem.setValIdB(String.valueOf(b.getIdBook()));
@@ -435,4 +327,51 @@ public class CatalogJFrame extends JFrame{
         }
         return title;
     }
+    //*/
+    
+    //
+                    /*
+                    this.elem.setValIdB(String.valueOf(b.getIdBook()));
+                    this.elem.setValTypeEdition(b.getIdTypeBook() - 1);
+                    this.elem.getTextBook().get(0).setText(
+                                        b.getMainData().getAuthors());
+                    this.elem.getTextBook().get(1).setText(
+                                        b.getAdditData().getNumVolume());
+                    this.elem.getTextBook().get(2).setText(
+                                        b.getMainData().getTitle());
+                    this.elem.getTextBook().get(3).setText(
+                                        b.getDateline().getPublisher());
+                    this.elem.getTextBook().get(4).setText(
+                                        b.getDateline().getPlace());
+                    this.elem.setValYearValue(
+                                        b.getDateline().getYear());
+                    this.elem.getTextArray().get(0).setText(
+                                        b.getAdditData().getNotes());
+                    this.elem.getTextCopy().get(0).setText(
+                                        b.getCopyBook().getBookCase());
+                    this.elem.getTextCopy().get(1).setText(
+                                        b.getCopyBook().getBookShelf());
+                    this.elem.getTextArray().get(1).setText(
+                                        b.getCopyBook().getCondition());
+                        this.setTextCountBook();
+                    */
+                    //
+                    //
+                    /*
+                    this.elem.setValIdB("");
+                    this.elem.setValTypeEdition(0);
+                    this.elem.getTextBook().get(0).setText("");
+                    this.elem.getTextBook().get(1).setText("");
+                    this.elem.getTextBook().get(2).setText("");
+                    this.elem.getTextBook().get(3).setText("");
+                    this.elem.getTextBook().get(4).setText("");
+                    this.elem.setValYearValue(2015);
+                    this.elem.getTextCopy().get(0).setText("");
+                    this.elem.getTextCopy().get(1).setText("");
+                    this.elem.getTextArray().get(0).setText("");
+                    this.elem.getTextArray().get(1).setText("");
+                    //
+                    this.setTextCountBook();
+                    */
+                    //
 }

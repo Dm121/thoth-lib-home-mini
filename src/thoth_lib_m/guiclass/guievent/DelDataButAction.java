@@ -84,8 +84,6 @@ public class DelDataButAction implements ActionListener{
                 }
             }
             //
-            //один элемент, первый, удаление -> ошибка
-            //
             try{
             if(((selectedNumRow == 0) && (frame.getBooks().size() > 1)) || 
                                             (frame.getBooks().size() == 1)){
