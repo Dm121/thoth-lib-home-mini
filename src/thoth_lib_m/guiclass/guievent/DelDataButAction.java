@@ -75,6 +75,10 @@ public class DelDataButAction implements ActionListener{
             catch(SQLException e){
                 AdditClass.errorMes(e, "DelDataButAction.deleteData");
             }
+            finally{
+                if(dbDelete != null) { dbDelete.closeConnection(); }
+            }
+            //
             table.getSortTable().removeAtArray(selectedNumRow);
             table.getCopyTable().repaint();
             for(i = 0; i < frame.getBooks().size(); i++){

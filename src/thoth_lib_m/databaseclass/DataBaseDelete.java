@@ -8,7 +8,7 @@ package thoth_lib_m.databaseclass;
 
 import java.sql.*;
 import thoth_lib_m.AdditClass;
-import thoth_lib_m.dataclass.Book;
+//import thoth_lib_m.dataclass.Book;
 
 /**
  *Подготовленные запросы Delete для удаления данных

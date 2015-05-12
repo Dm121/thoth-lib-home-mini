@@ -126,15 +126,14 @@ public class CatalogJElements {
         catalogButton.addSeparator();
         this.getButtonsMenu().add(saveButton);
         
-        /*
         //Изменить раздел
         ImageIcon changeIcon = new ImageIcon(getClass().getResource("img/section_folder_blue_cha.png"));
         JButton changeButton = new JButton(changeIcon);
         changeButton.setToolTipText("Изменить раздел");
         catalogButton.add(changeButton);
         catalogButton.addSeparator();
-        */
-        
+        this.getButtonsMenu().add(changeButton);
+                
         ImageIcon printIcon = new ImageIcon(getClass().getResource("img/list_printer.png"));
         JButton printButton = new JButton(printIcon);
         printButton.setToolTipText("Печать списка книг");

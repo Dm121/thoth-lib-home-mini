@@ -6,6 +6,7 @@
 
 package thoth_lib_m.guiclass;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
 import java.awt.*;
@@ -21,10 +22,10 @@ import thoth_lib_m.dataclass.InfoSection;
 public class Section {
     private final int nVisible = 8;
     private final DefaultListModel listModel;
-    private JList section;
-    private JScrollPane scrollSection;
+    private final JList section;
+    private final JScrollPane scrollSection;
     private String sql;
-    private ArrayList<InfoSection> infoSection = new ArrayList();
+    private final List<InfoSection> infoSection;
     private int selectedS;
     
     /*
@@ -38,6 +39,7 @@ public class Section {
     */
     
     public Section(){
+        this.infoSection = new ArrayList();
         Font fontItems = new Font("Verdana", Font.BOLD, 12);
         listModel = new DefaultListModel(); 
         section = new JList(listModel);

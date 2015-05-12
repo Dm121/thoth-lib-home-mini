@@ -135,8 +135,20 @@ public class CatalogJFrame extends JFrame{
         //TableCopies table, CatalogJElements elem, CatalogJFrame frame (this)
         //DelDataButAction delDataButAction
         //elem.getButonsMenu().get(1)
+        //
+        this.delDataButAction = new DelDataButAction(this.getElem(), this,
+                            this.getTable().getCopyTable().getSelectedRow(),
+                                                            this.getTable());
+        this.getElem().getButtonsMenu().get(1).addActionListener(
+                                            this.delDataButAction);
+        //
+        ChangeSecButAction chs = new ChangeSecButAction(this, 
+                    this.getTable().getSortTable().getIdBookRecord(
+                            this.getTable().getCopyTable().getSelectedRow()));
+        this.elem.getButtonsMenu().get(3).addActionListener(chs);
+        //
         SelectionTableRow str = new SelectionTableRow(this.table,
-                            this, this.elem, this.delDataButAction);
+                            this, this.elem, this.delDataButAction, chs);
         ListSelectionModel lsm = table.getCopyTable().getSelectionModel();
                 lsm.addListSelectionListener(str);
         //
@@ -215,6 +227,8 @@ public class CatalogJFrame extends JFrame{
         this.add(tablePanel, BorderLayout.CENTER);
         this.add(boxAddit, BorderLayout.SOUTH);
         //this.pack();
+        
+        
     }
     
     public void setShow(boolean visible){
@@ -232,6 +246,10 @@ public class CatalogJFrame extends JFrame{
     
     public void setBooks(ArrayList<Book> books){
         this.books = books;
+    }
+    
+    public CatalogJElements getElem(){
+        return this.elem;
     }
     
     public JTabbedPane getTabbedPane(){
