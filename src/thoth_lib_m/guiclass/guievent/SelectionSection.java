@@ -6,7 +6,9 @@
 
 package thoth_lib_m.guiclass.guievent;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import thoth_lib_m.AdditClass;
@@ -16,6 +18,8 @@ import thoth_lib_m.guiclass.TableCopies;
 import thoth_lib_m.guiclass.CatalogJFrame;
 import thoth_lib_m.guiclass.CatalogJElements;
 import thoth_lib_m.guiclass.Section;
+import thoth_lib_m.guiclass.guievent.section_event.DelSecButAction;
+import thoth_lib_m.guiclass.guievent.section_event.RenameSecButAction;
 
 /**
  *Просмотр содержимого выбранного библиотечного раздела
@@ -29,15 +33,18 @@ public class SelectionSection implements ListSelectionListener{
     private final CatalogJElements elem;
     private Section s;
     private SaveDataButAction saveDataButAction;
+    private List<ActionListener> butSection;
     
     public SelectionSection(TableCopies table,
             CatalogJFrame frame, CatalogJElements elem,
-            Section s, SaveDataButAction saveDataButAction){
+            Section s, SaveDataButAction saveDataButAction,
+            List<ActionListener> butSection){
         this.table = table;
         this.frame = frame;
         this.elem = elem;
         this.s = s;
         this.saveDataButAction = saveDataButAction;
+        this.butSection = butSection;
     }
     
     @Override
@@ -82,6 +89,23 @@ public class SelectionSection implements ListSelectionListener{
                                                         this.table, this.frame);
                 this.elem.getButtonsMenu().get(2).addActionListener(
                                             this.saveDataButAction);
+                //
+                if(this.butSection.get(0) != null){
+                    this.elem.getButtonsMenu().get(6).removeActionListener(
+                                                        this.butSection.get(0));
+        
+                }
+                this.butSection.set(0, new DelSecButAction(s));
+                this.elem.getButtonsMenu().get(6).addActionListener(
+                                                        this.butSection.get(0));
+                //
+                if(this.butSection.get(1) != null){
+                    this.elem.getButtonsMenu().get(7).removeActionListener(
+                                                        this.butSection.get(1));
+                }
+                this.butSection.set(1, new RenameSecButAction(s));
+                this.elem.getButtonsMenu().get(7).addActionListener(
+                                                        this.butSection.get(1));
                 //
             }catch(Exception err){
                 AdditClass.errorMes(err, "CatalogJFrame.createGUI");

@@ -16,8 +16,8 @@ import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.InfoSection;
 
 /**
- *
- * @author 1
+ *Класс предназначен для работы с библиотечными разделами
+ * @author Sirota Dmitry
  */
 public class Section {
     private final int nVisible = 8;
@@ -106,6 +106,7 @@ public class Section {
         else{
             try{
                 nameSection = (String)JOptionPane.showInputDialog("Введите название нового раздела: ");
+            if(nameSection != null){
                 if(nameSection.trim().equals("")){
                     nameSection = "Новый раздел";
                 }
@@ -129,6 +130,7 @@ public class Section {
                 //Выбрать самый последний элемент
                 section.setSelectedIndex(listModel.size() - 1);
                 //
+            }
             }
             catch(SQLException e){
                 String regex = ",";
@@ -264,6 +266,7 @@ public class Section {
                         (String)section.getSelectedValue(), 
                         "Укажите новое название элемента: ", 
                         JOptionPane.QUESTION_MESSAGE);
+                if(newName != null){
                     sqwu = c.createStatement();
                     sql = "update section " +
                         "set describe = '" + newName + "' " +
@@ -277,6 +280,7 @@ public class Section {
                     newName = "-->" + newName;
                     listModel.add(selectedIndex, newName);
                     section.setSelectedIndex(selectedIndex);
+                }
                 }
                 catch(SQLException e){
                     String regex = ",";
@@ -320,7 +324,10 @@ public class Section {
     
     
     public InfoSection getArrayISection(int index){
-        return infoSection.get(index);
+        if((index > -1) && (index < this.infoSection.size())){
+            return infoSection.get(index);
+        }
+        else{ return this.infoSection.get(0); }
     }
     
     public JList getSection(){

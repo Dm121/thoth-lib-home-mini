@@ -6,25 +6,26 @@
 
 package thoth_lib_m.guiclass;
 
-import java.util.List;
-import java.util.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.*;
+import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import thoth_lib_m.AdditClass;
-import thoth_lib_m.dataclass.InfoSection;
 import thoth_lib_m.dataclass.Book;
 import thoth_lib_m.dataclass.CopyTable;
+import thoth_lib_m.dataclass.InfoSection;
 import thoth_lib_m.guiclass.guievent.*;
+import thoth_lib_m.guiclass.guievent.section_event.*;
 
 /**
  *Главное окно модуля "Каталогизатор"
@@ -208,8 +209,15 @@ public class CatalogJFrame extends JFrame{
         //CatalogJElements elem
         //Section s
         //SaveDataButAction saveDataButAction
+        //
+        List<ActionListener> delAndRen = new ArrayList<>();
+            delAndRen.add(new DelSecButAction(s));
+            delAndRen.add(new RenameSecButAction(s));
+        this.elem.getButtonsMenu().get(6).addActionListener(delAndRen.get(0));
+        this.elem.getButtonsMenu().get(7).addActionListener(delAndRen.get(1));
+        //
         SelectionSection selS = new SelectionSection(
-            this.table, this, this.elem, s, this.saveDataButAction);
+            this.table, this, this.elem, s, this.saveDataButAction, delAndRen);
         s.getSection().addListSelectionListener(selS);
         //
         boxAddit.add(new JScrollPane(s.getScrollSection()));
@@ -221,6 +229,9 @@ public class CatalogJFrame extends JFrame{
                                                             this.table, this);
         this.elem.getButtonsMenu().get(2).addActionListener(
                                             this.saveDataButAction);
+        //
+        AddSecButAction addSection = new AddSecButAction(s);
+        this.elem.getButtonsMenu().get(5).addActionListener(addSection);
         //
         
         this.add(boxMain, BorderLayout.NORTH);

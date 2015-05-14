@@ -139,17 +139,21 @@ public class CatalogJElements {
         printButton.setToolTipText("Печать списка книг");
         catalogButton.add(printButton);
         catalogButton.addSeparator();
+        //
+        this.getButtonsMenu().add(printButton);
+        //
         
-        /*
         ImageIcon folderIcon = new ImageIcon(getClass().getResource("img/section_folder_blue_two.png"));
         JButton newSectionButton = new JButton(folderIcon);
         newSectionButton.setToolTipText("Добавить раздел");
         catalogButton.add(newSectionButton);
+        this.getButtonsMenu().add(newSectionButton);
                 
         ImageIcon folderDelIcon = new ImageIcon(getClass().getResource("img/section_folder_blue_del.png"));
         JButton delSectionButton = new JButton(folderDelIcon);
         delSectionButton.setToolTipText("Удалить раздел");
         catalogButton.add(delSectionButton);
+        this.getButtonsMenu().add(delSectionButton);
                 
         //Переименовать раздел
         ImageIcon renameIcon = new ImageIcon(getClass().getResource("img/section_folder_blue_ren.png"));
@@ -157,8 +161,8 @@ public class CatalogJElements {
         renameButton.setToolTipText("Переименовать раздел");
         catalogButton.add(renameButton);
         catalogButton.addSeparator();
-        */
-        
+        this.getButtonsMenu().add(renameButton);
+                
         //event for buttons        
         
         return catalogButton;
