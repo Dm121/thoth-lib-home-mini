@@ -39,6 +39,7 @@ public class CatalogJFrame extends JFrame{
     private ArrayList<Book> books;
     private final JTabbedPane tabbedPane;
     private final CatalogJElements elem;
+    private final SearchPane sp; 
     private SaveDataButAction saveDataButAction;
     private DelDataButAction delDataButAction;
                
@@ -56,6 +57,7 @@ public class CatalogJFrame extends JFrame{
         tabbedPane = new JTabbedPane(
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         elem = new CatalogJElements();
+        sp = new SearchPane(this);
         saveDataButAction = null;
         delDataButAction = null;
     }
@@ -79,7 +81,7 @@ public class CatalogJFrame extends JFrame{
         this.getTabbedPane().addTab("Библиографическое описание", 
                 elem.getPanelBook(c));
         this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
-        this.getTabbedPane().addTab("Поиск", elem.getPanelSearch());
+        this.getTabbedPane().addTab("Поиск", sp.getPanelSearch());
         this.getDataBook(this.getBooks().get(0));       //1
         this.getTable().getCopyTable().setRowSelectionAllowed(true);
         this.getTable().getSortTable().getIdBookRecord(sRow);
