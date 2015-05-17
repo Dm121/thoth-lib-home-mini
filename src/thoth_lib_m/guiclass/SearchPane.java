@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 import thoth_lib_m.AdditClass;
+import thoth_lib_m.dataclass.Book;
+import thoth_lib_m.dataclass.CopyTable;
 import thoth_lib_m.databaseclass.DataSearch;
 
 /**
@@ -111,10 +113,16 @@ public class SearchPane {
         this.frame = frame;
     }
     
+    public CatalogJFrame getCatalogJFrame(){
+        if(this.frame == null){
+            AdditClass.warningMes("Возвращено значение null.", 
+                            "SearchPane.getCatalogJFrame");
+        }
+        return this.frame;
+    }
+    
     public JPanel getPanelSearch(){
-        
-        
-        
+               
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbcc = new GridBagConstraints();
         JPanel panelSearch = new JPanel();
@@ -160,20 +168,46 @@ public class SearchPane {
             @Override
             public void actionPerformed(ActionEvent e){
                 DataSearch ds = null;
+                ResultSet rs = null;
+                String strQuery = "";
+                List<Book> b;
+                List<CopyTable> ctB;
                 try{
+                    if(!SearchPane.this.getKeyWords().get(0).getText()
+                            .trim().equalsIgnoreCase(SearchPane.WARNING_KW_ONE) 
+                        && !SearchPane.this.getKeyWords().get(0).getText()
+                                .trim().equals("")){
                     ds = new DataSearch();
                     //
-                    AdditClass.infoMes(ds.selectQuery(SearchPane.this), 
-                            "SearchPane.getPanelSearch");
+                    //AdditClass.infoMes(ds.selectQuery(SearchPane.this), 
+                    //        "SearchPane.getPanelSearch");
                     //
+                    strQuery = ds.selectQuery(SearchPane.this);
+                    rs = ds.selectData(strQuery);
+                    b = TableSearch.bookSearch(rs);
+                    SearchPane.this.getCatalogJFrame().setBooks(b);
+                    ctB = TableCopies.listCopies(b);
+                    TableSearch.fillTableSearch(
+                                    SearchPane.this.getCatalogJFrame(), ctB);
+                    }
+                    else{ 
+                        AdditClass.warningMes(
+                            "Заполните первое поле для поиска.",
+                            "SearchPane.getPanelSearch");
+                        SearchPane.this.getKeyWords().get(0).setBorder(
+                                BorderFactory.createLineBorder(Color.RED, 2));
+                    }
                 }
                 catch(SQLException err){
                     AdditClass.errorMes(err, "SearchPane.getPanelSearch");
                 }
                 finally{
-                   if(ds.getConnectionDBH() != null){
+                    if(rs != null){
+                       ds.closeResultSet(rs);
+                    }
+                    if((ds != null) && (ds.getConnectionDBH() != null)){
                        ds.closeConnection();
-                   }
+                    }
                 }
             }
         });

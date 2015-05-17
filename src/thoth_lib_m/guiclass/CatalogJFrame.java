@@ -36,7 +36,7 @@ public class CatalogJFrame extends JFrame{
     private static final int DEFAULT_HEIGHT = 650;
     private final TableCopies table;
     //int numRow;
-    private ArrayList<Book> books;
+    private List<Book> books;
     private final JTabbedPane tabbedPane;
     private final CatalogJElements elem;
     private final SearchPane sp; 
@@ -253,11 +253,11 @@ public class CatalogJFrame extends JFrame{
         return table;
     }
     
-    public ArrayList<Book> getBooks(){
+    public List<Book> getBooks(){
         return this.books;
     }
     
-    public void setBooks(ArrayList<Book> books){
+    public void setBooks(List<Book> books){
         this.books = books;
     }
     

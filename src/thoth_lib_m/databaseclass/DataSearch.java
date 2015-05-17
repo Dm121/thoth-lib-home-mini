@@ -125,4 +125,14 @@ public class DataSearch extends DataBaseSelect{
         return strQuery.toString();
     }
     
+    public void closeResultSet(ResultSet rs){
+        try{
+            if(rs != null){
+                rs.close();
+            }
+        }
+        catch(SQLException err){
+            AdditClass.errorMes(err, "DataSearch.closeResultSet");
+        }
+    }
 }
