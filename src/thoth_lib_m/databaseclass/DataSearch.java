@@ -103,7 +103,7 @@ public class DataSearch extends DataBaseSelect{
                         strQuery.append(" bo_book.year like '");
                         strQuery.append(sp.getKeyWords().get(i).getText());
                         strQuery.append("'");
-                    break;
+                        break;
                     }
                     case 4: {
                         strQuery.append(" inv_book.bookcase like '%");
