@@ -36,6 +36,16 @@ package thoth_lib_m.inout;
     }
     
     /**
+     *Свойство для добавления текстового содержимого 
+     * из объекта класса StringBuffer в файл 
+     * @param appendSB - объект класса StringBuffer с добавляемой
+     * информацией
+     */
+    public void setTextDoc(StringBuffer appendSB){
+        this.textDoc.append(appendSB);
+    }
+    
+    /**
      *Удаление всего содержимого из строки
      */
     public void clearTextDoc(){
