@@ -54,9 +54,11 @@ package thoth_lib_m.inout;
         this.textDoc.delete(first, last);
     }
     
+    /*
     /**
      *Абстрактный метод для записи содержимого в файл
      * @param pathToFile - путь к файлу
-     */
+     
     public abstract void outputData(String pathToFile);
+    */
 }

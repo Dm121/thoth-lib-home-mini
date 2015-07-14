@@ -36,7 +36,7 @@ public class CSSDoc extends DocumentContent{
      *Запись содержимого в файл print.css 
      * @param pathToFile - полный путь к файлу print.css
      */
-    @Override
+    //@Override
     public void outputData(String pathToFile){
         OutputDoc inout = new OutputDoc();
         String absoluteNameFile = pathToFile + "print.css";

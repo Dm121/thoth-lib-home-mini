@@ -35,7 +35,7 @@ public class HTMLDoc extends DocumentContent{
         super();
     }
     
-    //
+    //CSS-стили для HTML-документа
     private StringBuffer cssDoc(){
         StringBuffer strCSS = new StringBuffer();
         //
@@ -64,7 +64,7 @@ public class HTMLDoc extends DocumentContent{
         return strCSS;
     }
     
-    //
+    //JavaScript (функция печати print_())
     private StringBuffer jsDoc(){
         StringBuffer strJS = new StringBuffer();
         //
@@ -77,7 +77,7 @@ public class HTMLDoc extends DocumentContent{
         return strJS;
     }
     
-    //
+    //Кнопка в верхней части документа для его печати
     private String topButton(){
         StringBuffer strTopBut = new StringBuffer();
         //
@@ -92,7 +92,7 @@ public class HTMLDoc extends DocumentContent{
         return strTopBut.toString();
     }
     
-    //
+    //Кнопка в нижней части документа для его печати
     private String bottomButton(){
         StringBuffer strBottomBut = new StringBuffer();
         //
@@ -107,18 +107,18 @@ public class HTMLDoc extends DocumentContent{
         return strBottomBut.toString();
     }
     
-    //
+    //Заголовок таблицы (наименование библиотечного раздела)
     private String captionTable(String nameSection){
         String captionT = "<caption>" + nameSection + "</caption>\n";
         return captionT;
     }
     
-    //
+    //Свойство для получения знчений массива HTMLDoc.this.widthColumns
     private String[] getWidthColumns(){
         return this.widthColumns;
     }
     
-    //
+    //Строка с наименованиями столбцов таблицы
     private StringBuffer headerTable(){
         StringBuffer strHeaderT = new StringBuffer();
         //
@@ -168,7 +168,7 @@ public class HTMLDoc extends DocumentContent{
         return strHeaderT;
     }
     
-    //
+    //Формирование строк таблицы с данными библиотечных изданий
     private StringBuffer dataTable(int j, int countBooksOnPage, 
                                                     List<CopyTable> lC){
         StringBuffer dataT = new StringBuffer();
@@ -213,7 +213,7 @@ public class HTMLDoc extends DocumentContent{
         return dataT;
     }
     
-    //
+    //Номер страницы с таблицей
     private String footerPage(int numPage){
         StringBuffer cellNum = new StringBuffer();
         //
@@ -225,7 +225,7 @@ public class HTMLDoc extends DocumentContent{
         return cellNum.toString();
     }
     
-    //
+    //Формирование страниц с таблицами (с данными библиотечных изданий)
     private StringBuffer pagesTableHTML(String nameSection, 
                                         List<CopyTable> lC){
         //
@@ -269,8 +269,10 @@ public class HTMLDoc extends DocumentContent{
         return strPage;
     }
     
-    //
-    private void textHTMLDoc(String nameSection, List<CopyTable> lC){
+    //Формирование HTML-документа,
+    // метод возвращает содержимое формируемого HTML-документа
+    // в виде строки (свойство this.getTextDoc())
+    private String textHTMLDoc(String nameSection, List<CopyTable> lC){
         this.clearTextDoc();
         //
         this.setTextDoc("<!DOCTYPE html>\n");
@@ -288,26 +290,34 @@ public class HTMLDoc extends DocumentContent{
         this.setTextDoc("</body>\n");
         this.setTextDoc("</html>");
         //
+        return this.getTextDoc();
     }
     
     //
-    @Override
-    public void outputData(String pathToFile){
-        
-    }
-    
-    //
-    public boolean outputHTML(String nameSection, List<CopyTable> lC,
-                    String pathToFile){
+    //@Override
+    /**
+     *Запись содержимого в HTML-файл с именем типа list<_Date_Time> 
+     * @param pathToFile - путь к HTML-файлу
+     * @param nameSection - наименование печатаемого раздела
+     * @param lC - список с печатаемыми данными библиотечных изданий
+     * @return flag - true, если метод выполняется без ошибок, иначе false
+     */
+    public boolean outputData(String pathToFile,
+                    String nameSection, List<CopyTable> lC){
         boolean flag = false;
         //
+        String nameMethod = "HTMLDoc.outputData(String pathToFile, " +
+                "String nameSection, List<CopyTable> lC)";
+        OutputDoc inout = new OutputDoc();
+        String absoluteNameFile = pathToFile + "list" + inout.nameDateTime();
+        //
         try{
-            this.textHTMLDoc(nameSection, lC);
-            this.outputData(nameSection);
+            inout.outputFile(this.textHTMLDoc(nameSection, lC), 
+                                                        absoluteNameFile);
             flag = true;
         }
-        catch(Exception e){
-            AdditClass.errorMes(e, "HTMLDoc.outputHTML(...)");
+        catch(IOException e){
+            AdditClass.errorMes(e, nameMethod);
         }
         //
         return flag;
