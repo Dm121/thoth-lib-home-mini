@@ -35,18 +35,24 @@ public class CSSDoc extends DocumentContent{
     /**
      *Запись содержимого в файл print.css 
      * @param pathToFile - полный путь к файлу print.css
+     * @return flag - true, если метод выполняется без ошибок, иначе false
      */
     //@Override
-    public void outputData(String pathToFile){
+    public boolean outputData(String pathToFile){
+        boolean flag = false;
+        //
         OutputDoc inout = new OutputDoc();
         String absoluteNameFile = pathToFile + "print.css";
         String nameMethod = "CSSDoc.outputData(String pathToFile)";
         try{
             inout.outputFile(this.textPrintCSS(), absoluteNameFile);
+            flag = true;
         }
         catch(IOException e){
             AdditClass.errorMes(e, nameMethod);
         }
         this.clearTextDoc();
+        //
+        return flag;
     }
 }

@@ -37,6 +37,7 @@ public class OutputDoc {
         File dir = new File(nameDirectory);
         //
         try{
+            //...а если каталог существует, но нет css-файла
             if(!dir.exists()){
                 if(dir.mkdir()){
                     mess = "Каталог " + dir.getName() +" успешно создан.";
@@ -45,9 +46,14 @@ public class OutputDoc {
                 }
                 else{
                     mess = "Не получилось создать каталог " + 
-                                                        dir.getName() + ".";
+                                                        dir.getName() + ".\n" +
+                            "Возможно, что каталог уже существует.";
                     AdditClass.infoMes(mess, nameMethod);
                 }
+            }
+            //else - получить абсолютный путь к каталогу, если он уже существует
+            else{
+                absolutePath = dir.getAbsolutePath();
             }
         }
         catch(Exception e){

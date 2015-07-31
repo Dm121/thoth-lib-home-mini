@@ -10,7 +10,7 @@ package thoth_lib_m.inout;
  *Абстрактный класс для формирования содержимого на запись в файл 
  * @author Sirota Dmitry
  */
- abstract class DocumentContent {
+public abstract class DocumentContent {
     
     protected final StringBuffer textDoc;   //Содержимое файла
     
@@ -58,7 +58,8 @@ package thoth_lib_m.inout;
     /**
      *Абстрактный метод для записи содержимого в файл
      * @param pathToFile - путь к файлу
+    void
      
-    public abstract void outputData(String pathToFile);
+    public abstract boolean outputData(String pathToFile);
     */
 }
