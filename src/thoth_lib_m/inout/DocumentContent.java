@@ -50,7 +50,10 @@ public abstract class DocumentContent {
      */
     public void clearTextDoc(){
         int first = 0;
-        int last = this.textDoc.length() - 1;
+        int last = this.textDoc.length();
+        if(last > 0){
+            last = last - 1;
+        }
         this.textDoc.delete(first, last);
     }
     

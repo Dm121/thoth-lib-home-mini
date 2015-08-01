@@ -79,7 +79,7 @@ public class QueryPrint extends DataSearch{
                 "join bo_book on section.id_section = bo_book.id_section " +
                 "join inv_book on bo_book.id_book = inv_book.id_book " +
                 "where section.id_section = " + idSection + " " +
-                "order by 1, 2, 3;";
+                "order by bo_book.authors, bo_book.title, bo_book.year;";
         return str_query;
     }
     
@@ -109,7 +109,7 @@ public class QueryPrint extends DataSearch{
                 "inv_book.bookcase, inv_book.bookshelf " +
                 "from bo_book " +
                 "join inv_book on bo_book.id_book = inv_book.id_book " +
-                "order by 1, 2, 3;";
+                "order by bo_book.authors, bo_book.title, bo_book.year;";
         return str_query;
     }
     

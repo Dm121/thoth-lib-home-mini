@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Example_print</title>
+<style>
+.t{
+margin-top: 20.9px;
+}
+th{
+font-size: 12pt;
+text-align: center;
+}
+td{
+font-size: 12pt;
+text-align: left;
+word-break: break-all;
+}
+.num{
+font-size: 14pt;
+text-align: center;
+font-weight: bold;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+<script type="text/javascript">
+function print_(){
+window.print();
+}
+</script>
+</head>
+<body>
+<form name="formTop">
+<input type="button" name="butTop" value="Печать" class="but" onclick="print_();"></input>
+</form>
+<table border="0px" width="793px" cellpadding="10" cellspacing="0">
+<tr>
+<td height="1090,519px" valign="top">
+<table border="1px" width="100%" cellpadding="3" cellspacing="0">
+<caption>Библиотека</caption>
+<tr>
+<th width="30%">Авторы</th>
+<th width="40%">Название</th>
+<th width="10%">Год изд.</th>
+<th width="10%">Шкаф</th>
+<th width="10%">Полка</th>
+</tr>
+<tr>
+<td width="30%">Дж.Р.Р.Толкин</td>
+<td width="40%">Хоббит или туда и обратно</td>
+<td width="10%">1993</td>
+<td width="10%">1</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%"></td>
+<td width="40%">Новый Завет и Псалтирь</td>
+<td width="10%">2012</td>
+<td width="10%">4</td>
+<td width="10%">5</td>
+</tr>
+<tr>
+<td width="30%"></td>
+<td width="40%">Косово поле - 1389</td>
+<td width="10%">2014</td>
+<td width="10%">3</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%">Некрасов Н.А.</td>
+<td width="40%">Стихи и рассказы</td>
+<td width="10%">1997</td>
+<td width="10%">1</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%">Hello and Goodbye </td>
+<td width="40%">BrT</td>
+<td width="10%">2015</td>
+<td width="10%">1</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%">Tom Bombadil</td>
+<td width="40%">Book of North</td>
+<td width="10%">1997</td>
+<td width="10%">1</td>
+<td width="10%">1</td>
+</tr>
+<tr>
+<td width="30%">21</td>
+<td width="40%">21</td>
+<td width="10%">2015</td>
+<td width="10%">2</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%">"Hello" and 'Goodbye'</td>
+<td width="40%">Истории Тома Бомбадила</td>
+<td width="10%">1987</td>
+<td width="10%">1</td>
+<td width="10%">3</td>
+</tr>
+<tr>
+<td width="30%">Hello and Goodbye</td>
+<td width="40%">Толкин и его миры</td>
+<td width="10%">2012</td>
+<td width="10%">4</td>
+<td width="10%">3</td>
+</tr>
+<tr>
+<td width="30%">Tim Beroen</td>
+<td width="40%">Book of West and East</td>
+<td width="10%">2008</td>
+<td width="10%">1</td>
+<td width="10%">2</td>
+</tr>
+<tr>
+<td width="30%">А.П. Чехов</td>
+<td width="40%">Рассказы</td>
+<td width="10%">1965</td>
+<td width="10%">4</td>
+<td width="10%">5</td>
+</tr>
+<tr>
+<td width="30%">1</td>
+<td width="40%">1</td>
+<td width="10%">2015</td>
+<td width="10%">1</td>
+<td width="10%">1</td>
+</tr>
+<tr>
+<td width="30%">1212</td>
+<td width="40%">221444</td>
+<td width="10%">2013</td>
+<td width="10%"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="30%"></td>
+<td width="40%"></td>
+<td width="10%">2015</td>
+<td width="10%"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="30%"></td>
+<td width="40%"></td>
+<td width="10%">2015</td>
+<td width="10%"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="30%">N.K.Sergeev, P.T.Vaslov, R.T.Vaskov</td>
+<td width="40%">Libraries today and Internet</td>
+<td width="10%">2015</td>
+<td width="10%">2</td>
+<td width="10%">1</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="num" height="21px">
+page: 1
+</td>
+</tr>
+</table>
+<form name="formBottom">
+<input type="button" name="butBottom" value="Печать" class="but" onclick="print_();"></input>
+</form>
+</body>
+</html>

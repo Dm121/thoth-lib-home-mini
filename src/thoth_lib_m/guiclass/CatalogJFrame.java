@@ -116,7 +116,10 @@ public class CatalogJFrame extends JFrame{
             this.getTable().getCopyTable(), this.getTabbedPane());
         elem.getButtonsMenu().get(0).addActionListener(newButAction);
         //
-        
+        PrintButAction printButAction = new PrintButAction(s, 
+                                                        CatalogJFrame.this);
+        this.getElem().getButtonsMenu().get(4).addActionListener(
+                                                        printButAction);
         //
         
         //

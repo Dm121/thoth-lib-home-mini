@@ -76,7 +76,7 @@ public class OutputDoc {
         partName = "_" + curDateTime.get(Calendar.DAY_OF_MONTH) + 
                 (curDateTime.get(Calendar.MONTH) + 1) +
                 curDateTime.get(Calendar.YEAR) + "_" +
-                curDateTime.get(Calendar.HOUR_OF_DAY) +
+                curDateTime.get(Calendar.HOUR_OF_DAY) +     //-1 - Summer Time
                 curDateTime.get(Calendar.MINUTE) +
                 curDateTime.get(Calendar.SECOND);
         //

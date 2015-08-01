@@ -45,6 +45,9 @@ public class PrintButAction implements ActionListener{
         //
         ExportWin exportFrame = new ExportWin(this.frame);
         exportFrame.createGUI();
+        if(!exportFrame.getResClose()){
+            exportFrame.setResultDialog(-1);
+        }
         //
         try{
             switch(exportFrame.getResultDialog()){

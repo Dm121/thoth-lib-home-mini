@@ -22,10 +22,11 @@ import javax.swing.border.TitledBorder;
  */
 public class ExportWin extends JDialog {
     
-    private static final int WIDTH_DEFAULT = 400;
-    private static final int HEIGHT_DEFAULT = 300;
+    private static final int WIDTH_DEFAULT = 200;
+    private static final int HEIGHT_DEFAULT = 150;
     //
     private int resultDialog;
+    private boolean resClose;
     
     //Конструктор с параметрами
     public ExportWin(JFrame frame){
@@ -33,6 +34,7 @@ public class ExportWin extends JDialog {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setSize(WIDTH_DEFAULT, HEIGHT_DEFAULT);
         this.resultDialog = -1;
+        this.resClose = false;
     }
     
     //Свойство для получения значения выбора параметра экспорта/печати
@@ -43,6 +45,16 @@ public class ExportWin extends JDialog {
     //Свойство для установки значения параметра экспорта/выбора
     public void setResultDialog(int res){
         this.resultDialog = res;
+    }
+    
+    //Свойство для получения значения закрытия (выхода из) окна экспорта/выбора
+    public boolean getResClose(){
+        return this.resClose;
+    }
+    
+    //Свойство для установки значения закрытия (выхода из) окна экспорта/выбора 
+    public void setResClose(boolean resB){
+        this.resClose = resB;
     }
     
     //Создание интерфейса и вывод окна
@@ -64,6 +76,7 @@ public class ExportWin extends JDialog {
         exportBut.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+                ExportWin.this.setResClose(true);           //1
                 ExportWin.this.setVisible(false);
             }
         });
@@ -132,6 +145,7 @@ public class ExportWin extends JDialog {
         panelExport.add(cancelBut);
         //
         this.add(panelExport);
+        this.setResClose(false);
         this.setVisible(true);
     }
     

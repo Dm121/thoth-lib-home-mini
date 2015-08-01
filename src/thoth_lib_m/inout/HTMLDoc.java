@@ -174,7 +174,7 @@ public class HTMLDoc extends DocumentContent{
         StringBuffer dataT = new StringBuffer();
         int i;          //for loop
         //
-        for(i = 0; i < countBooksOnPage; i++){
+        for(i = 0; (((j + i) < lC.size()) && (i < countBooksOnPage)) ; i++){
             dataT.append("<tr>\n");
             //
             dataT.append("<td width=\"");
@@ -279,7 +279,9 @@ public class HTMLDoc extends DocumentContent{
         this.setTextDoc("<html>\n");
         this.setTextDoc("<head>\n");
         this.setTextDoc("<meta charset=\"utf-8\">\n");
-	this.setTextDoc("<title>Example_print</title>\n");
+	this.setTextDoc("<title>Thoth_lib_m_");
+        this.setTextDoc(nameSection);
+        this.setTextDoc("_print</title>\n");
         this.setTextDoc(this.cssDoc());
         this.setTextDoc(this.jsDoc());
         this.setTextDoc("</head>\n");
@@ -309,7 +311,8 @@ public class HTMLDoc extends DocumentContent{
         String nameMethod = "HTMLDoc.outputData(String pathToFile, " +
                 "String nameSection, List<CopyTable> lC)";
         OutputDoc inout = new OutputDoc();
-        String absoluteNameFile = pathToFile + "list" + inout.nameDateTime();
+        String absoluteNameFile = pathToFile + 
+                "list" + inout.nameDateTime() + ".html";
         //
         try{
             inout.outputFile(this.textHTMLDoc(nameSection, lC), 
