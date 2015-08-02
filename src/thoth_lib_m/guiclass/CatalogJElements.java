@@ -83,12 +83,24 @@ public class CatalogJElements {
         catalogMenu.setSize(frame.getSize().width, HEIGHT_MENU);
         
         JMenu fileMenu = new JMenu("Файл");
-        JMenuItem saveMenu = new JMenuItem("Сохранить изменения");
+        //JMenuItem saveMenu = new JMenuItem("Сохранить изменения");
+        JMenuItem aboutMenu = new JMenuItem("О программе");
         JMenuItem exitMenu = new JMenuItem("Выход");
-        fileMenu.add(saveMenu);
+        //fileMenu.add(saveMenu);
+        fileMenu.add(aboutMenu);
         fileMenu.addSeparator();
         fileMenu.add(exitMenu);
         catalogMenu.add(fileMenu);
+        
+        aboutMenu.addActionListener(new ActionListener(){
+           
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JDialog aboutProgram = new AboutProgram(frame);
+                ((AboutProgram)aboutProgram).createGUI();
+            }
+            
+        });
         
         exitMenu.addActionListener(new ActionListener(){
             @Override
