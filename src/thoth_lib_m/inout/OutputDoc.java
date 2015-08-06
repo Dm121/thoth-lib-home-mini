@@ -8,6 +8,7 @@ package thoth_lib_m.inout;
 
 import java.util.Calendar;
 import java.io.*;
+import java.nio.charset.Charset;
 import thoth_lib_m.AdditClass;
 
 /**
@@ -100,7 +101,10 @@ public class OutputDoc {
         String nameMethod = "OutputDoc.outputFile(String output, " + 
                 "String nameFile)";
         File f = new File(nameFile);
-        FileWriter fw = null;
+        final Charset UTF = Charset.forName("UTF-8");
+        //FileWriter fw = null;
+        FileOutputStream fos = null;
+        OutputStreamWriter osw = null;
         BufferedWriter bw = null;
         PrintWriter pw = null;
         //
@@ -111,15 +115,26 @@ public class OutputDoc {
         }
         else{
             try{
-                fw = new FileWriter(f);
-                bw = new BufferedWriter(fw);
+                //fw = new FileWriter(f);
+                fos = new FileOutputStream(f);
+                osw = new OutputStreamWriter(fos, UTF);
+                bw = new BufferedWriter(osw);
                 pw = new PrintWriter(bw);
                 //
                 for(i = 0; i < printStr.length; i++){
                     pw.println(printStr[i]);
                 }
+                /*
+                for(String pStr : printStr){
+                    String encoding = new String(pStr.getBytes("UTF-8"), "UTF-8");
+                    pw.println(encoding);
+                }
+                */
                 //
                 flag = true;
+            }
+            catch (FileNotFoundException e){
+                AdditClass.errorMes(e, nameMethod);
             }
             catch(IOException e){
                 AdditClass.errorMes(e, nameMethod);

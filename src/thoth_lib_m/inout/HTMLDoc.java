@@ -278,7 +278,8 @@ public class HTMLDoc extends DocumentContent{
         this.setTextDoc("<!DOCTYPE html>\n");
         this.setTextDoc("<html>\n");
         this.setTextDoc("<head>\n");
-        this.setTextDoc("<meta charset=\"utf-8\">\n");
+        this.setTextDoc("<meta http-equiv=\"content-type\" ");
+        this.setTextDoc("content=\"text/html\" charset=\"utf-8\">\n");
 	this.setTextDoc("<title>Thoth_lib_m_");
         this.setTextDoc(nameSection);
         this.setTextDoc("_print</title>\n");

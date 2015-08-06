@@ -32,8 +32,8 @@ import thoth_lib_m.guiclass.guievent.section_event.*;
  * @author Sirota Dmitry
  */
 public class CatalogJFrame extends JFrame{
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 650;
+    private static final int DEFAULT_WIDTH = 850;
+    private static final int DEFAULT_HEIGHT = 680;
     private final TableCopies table;
     //int numRow;
     private List<Book> books;
@@ -361,51 +361,4 @@ public class CatalogJFrame extends JFrame{
         }
         return title;
     }
-    //*/
-    
-    //
-                    /*
-                    this.elem.setValIdB(String.valueOf(b.getIdBook()));
-                    this.elem.setValTypeEdition(b.getIdTypeBook() - 1);
-                    this.elem.getTextBook().get(0).setText(
-                                        b.getMainData().getAuthors());
-                    this.elem.getTextBook().get(1).setText(
-                                        b.getAdditData().getNumVolume());
-                    this.elem.getTextBook().get(2).setText(
-                                        b.getMainData().getTitle());
-                    this.elem.getTextBook().get(3).setText(
-                                        b.getDateline().getPublisher());
-                    this.elem.getTextBook().get(4).setText(
-                                        b.getDateline().getPlace());
-                    this.elem.setValYearValue(
-                                        b.getDateline().getYear());
-                    this.elem.getTextArray().get(0).setText(
-                                        b.getAdditData().getNotes());
-                    this.elem.getTextCopy().get(0).setText(
-                                        b.getCopyBook().getBookCase());
-                    this.elem.getTextCopy().get(1).setText(
-                                        b.getCopyBook().getBookShelf());
-                    this.elem.getTextArray().get(1).setText(
-                                        b.getCopyBook().getCondition());
-                        this.setTextCountBook();
-                    */
-                    //
-                    //
-                    /*
-                    this.elem.setValIdB("");
-                    this.elem.setValTypeEdition(0);
-                    this.elem.getTextBook().get(0).setText("");
-                    this.elem.getTextBook().get(1).setText("");
-                    this.elem.getTextBook().get(2).setText("");
-                    this.elem.getTextBook().get(3).setText("");
-                    this.elem.getTextBook().get(4).setText("");
-                    this.elem.setValYearValue(2015);
-                    this.elem.getTextCopy().get(0).setText("");
-                    this.elem.getTextCopy().get(1).setText("");
-                    this.elem.getTextArray().get(0).setText("");
-                    this.elem.getTextArray().get(1).setText("");
-                    //
-                    this.setTextCountBook();
-                    */
-                    //
 }

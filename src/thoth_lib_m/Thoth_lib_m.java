@@ -28,12 +28,6 @@ public class Thoth_lib_m {
             ConnectionSQLiteDB sqliteDB = new ConnectionSQLiteDB();
             sqliteDB.connDB("db/thoth_lhm_sqlite.db");
             //
-            //DefaultTableModel myModel = new DefaultTableModel();
-            //JTable table = new JTable(myModel);
-            //TableRowSorter<TableModel> sorter = 
-            //        new TableRowSorter<TableModel>(table.getModel());
-            
-            //
             CatalogJFrame window = new CatalogJFrame();
             window.createGUI(sqliteDB.getConnectionC());
             window.setShow(true);

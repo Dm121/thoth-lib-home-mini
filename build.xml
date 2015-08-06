@@ -7,9 +7,82 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="Thoth_lib_m" default="default" basedir=".">
+<project name="Thoth_lib_m" default="all_default" basedir=".">
     <description>Builds, tests, and runs the project Thoth_lib_m.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <!--!Необходимо удалить скомпилированные файлы *.class и папки build и class-->
+    <!--!Необходимо перенести jar-архив Thoth_lib_m.jar в папку Thoth_lib_m-->
+    <!--!но сначала надо скопировать папку db с Базой Данных (БД) в папку Thoth_lib_m-->
+    <!--!но сначала надо скопировать папку lib с необходимыми библиотеками в папку Thoth_lib_m-->
+    <!--!для этого сначала надо создать папку Thoth_lib_m //1-->
+    <!--!но сначала надо собрать jar-архив из файлов *.class и изображений(*.png, *jpg) - команда jar-->
+    <!--!для этого сначала надо скомпилировать файлы *.java в файлы *.class - компилятор Java javac -->
+    <!--!для этого сначала надо создать каталоги build и class (build\class) //1-->
+
+	<property file="ant.properties"/>
+	<tstamp>
+		<format property="TODAY_RU" pattern="dd-MM-YYYY hh:mm aa" locale="ru,RU"/>
+	</tstamp>
+	
+	<target name="make.dirs" description="Make directories of program">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${release}"/>
+		<echo>Success_create_directory!</echo>
+	</target>
+	
+	<target name="compile.file" description="compile *.java files" depends="make.dirs">
+		<javac srcdir="${src}" destdir="${classes}" encoding="UTF-8"/>
+		<echo>Success_compile!</echo>
+	</target>
+	
+	<target name="copy.img" description="Copy images in program" depends="compile.file">
+		<copy todir="${image}">
+			<fileset dir="img"/>
+		</copy>
+		<echo>Success_copy_images!</echo>
+	</target>
+	
+	<target name="create.jar" description="Create jar-archive" depends="copy.img">
+		<jar destfile="${release}/Thoth_lib_m.jar"
+				basedir="${classes}">
+			<manifest>
+				<attribute name="Manifest-Version" value="${vermnmf}"/>
+				<attribute name="Created-By" value="${developers}"/>
+				<attribute name="Main-Class" value="${mainclass}"/>
+				<attribute name="Class-Path" value="${libpath}"/>
+				<section name="program">
+					<attribute name="Implementation-Title" value="${nameprog}"/>
+					<attribute name="Specification-Version" value="${verprog}"/>
+					<attribute name="Implementation-Version" value="${verprog} ${TODAY_RU}"/>
+				</section>
+			</manifest>
+		</jar>
+		<echo>Success_create_jar-archive!</echo>
+	</target>
+	
+	<target name="copy.dirs" description="Move directories with database and libraries" depends="create.jar">
+		<copy todir="${lib.release}">
+			<fileset dir="lib"/>
+		</copy>
+		<copy todir="${db.release}">
+			<fileset dir="db"/>
+		</copy>
+		<echo>Success_copy_library_and_database!</echo>
+	</target>
+	
+	<target name="all_default" description="Do the entire build" depends="copy.dirs">
+		<echo>I'm building my software.</echo>
+		<echo>Success!</echo>
+	</target>
+	
+	<target name="clean" description="Clean up">
+		<echo>I'm cleaning up.</echo>
+		<delete dir="${build}"/>
+		<echo>Success_clean!</echo>
+	</target>
+    
     <!--
 
     There exist several targets which are by default empty and which can be 

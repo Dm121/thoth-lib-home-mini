@@ -158,7 +158,8 @@ public class SearchPane {
             
         });
         //
-        ImageIcon imgSearch = new ImageIcon("img/book_search_but.png");
+        ImageIcon imgSearch = new ImageIcon(getClass().getResource(
+                                                    "img/book_search_but.png"));
         JButton buttonSearch = new JButton("Искать", imgSearch);
         buttonSearch.setSize(100, 40);
         buttonSearch.setToolTipText("Искать книгу");
