@@ -22,17 +22,24 @@ public abstract class DataBaseHelper {
     protected ConnectionSQLiteDB connect;
     //
     
+	//Конструктор по умолчанию
     public DataBaseHelper() throws SQLException{
         connect = new ConnectionSQLiteDB();
         connect.connDB("db/thoth_lhm_sqlite.db");
     }
     
     //
+	/**
+	 *Получение соединения
+	 */
     public Connection getConnectionDBH(){
         return connect.getConnectionC();
     }
     //
     
+	/**
+	 *Закрытие Statement -> изменить аргумент на Statement
+	 */
     public void closeStatement(PreparedStatement ps){
         if(ps != null){
             try{
@@ -44,6 +51,9 @@ public abstract class DataBaseHelper {
         }
     }
     
+	/**
+	 *Закрытие соединения
+	 */
     public void closeConnection(){
         if(connect.getConnectionC() != null){
             connect.closeDB(connect.getConnectionC());

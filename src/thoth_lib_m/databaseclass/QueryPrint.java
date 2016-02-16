@@ -68,7 +68,7 @@ public class QueryPrint extends DataSearch{
     /**
      *Формирование запроса для выбора данных изданий,
      * хранящихся в библиотечном разделе с идентификатором idSection 
-     * @param idSection - идентификтор библиотечного раздела
+     * @param idSection - идентификатор библиотечного раздела
      * @return str_query - строка запроса Select
      */
     public String listSectionCur(int idSection){
@@ -88,7 +88,7 @@ public class QueryPrint extends DataSearch{
      * библиотечного раздела с идентификатором idSection.
      * Из указанного раздела производится выборка данных книг
      * по запросу, сформированному методом listSectionCur(int idSection)
-     * @param idSection - идентификатр библиотечного раздела
+     * @param idSection - идентификатор библиотечного раздела
      * @return str_query - строка запроса Select
      */
     public String nameSection(int idSection){

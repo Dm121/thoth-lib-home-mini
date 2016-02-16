@@ -37,12 +37,18 @@ public class DataBaseSelect
     
     private Statement s = null;
     
+	//Конструктор по умолчанию
     public DataBaseSelect() throws SQLException{
         super();
         s = connect.getConnectionC().createStatement();
         //selectQw = "";
     }
     
+	/**
+	 *Получение подготовленного запроса для выборки данных
+	 * (библиографических и инвентарных) о книгах из базы данных (БД)
+	 * по номеру раздела, в котором издания располагаются (хранятся)
+	 */
     public PreparedStatement getSelectSection(){
         PreparedStatement ps = null;
         try{
@@ -68,6 +74,11 @@ public class DataBaseSelect
     }
     */
     
+	/**
+	 *Выполнение подготовленного запроса по выборке
+	 * библиографических и инвентарных данных о книгах из БД
+	 * по номеру раздела, в котором полученные издания хранятся
+	 */
     public ResultSet selectBooks(PreparedStatement ps, int selectedSection){
         ResultSet rs = null;
         try{
@@ -84,8 +95,8 @@ public class DataBaseSelect
      *Для одиночных Select запросов.
      * Принимает в качестве параметра строку с запросом.
      * Возвращает результат выполнения запроса типа Select.
-     * @param sql
-     * @return rs
+     * @param sql - строка с запросом на выборку данных
+     * @return rs - ссылка на объект ResultSet с результатом выборки данных
      */
     public ResultSet selectData(String sql){
         ResultSet rs = null;
@@ -131,6 +142,9 @@ public class DataBaseSelect
         return this.s;
     }
     
+	/**
+	 *Закрытие объекта типа Statement
+	 */
     public void closeS(Statement s){
         try{
             if(s != null){ s.close(); }

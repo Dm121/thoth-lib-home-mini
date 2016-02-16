@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="experimentproject">
+  <ClassDiagramComponents>
+    <Class name="ClassOne" package="experimentproject" visibility="public" xPosition="374.0" yPosition="318.0">
+      <Fields>
+        <Field name="isTrue" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="isTrue" returnType="boolean" visibility="public"/>
+        <Method name="isTrueTwo" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ClassThree" package="experimentproject" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="isTrue" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ClassTwo" package="experimentproject" visibility="public" xPosition="532.0" yPosition="165.0">
+      <Fields>
+        <Field name="isFalse" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="isTrue" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="IExperiment" package="experimentproject" visibility="public" xPosition="920.0" yPosition="165.0">
+      <Methods>
+        <Method name="isTrue" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Class name="ClassExtends" package="experimentproject" visibility="package" xPosition="187.0" yPosition="174.0">
+      <Fields>
+        <Field name="flag" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="classNew" returnType="void" visibility="public"/>
+        <Method name="isTrueNew" returnType="boolean" visibility="public"/>
+        <Method name="sayHi" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="experimentproject.ClassExtends" target="experimentproject.ClassTwo"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="experimentproject.ClassThree" target="experimentproject.IExperiment"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="experimentproject.ClassOne" target="experimentproject.IExperiment"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="experimentproject.ClassTwo" target="experimentproject.IExperiment"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

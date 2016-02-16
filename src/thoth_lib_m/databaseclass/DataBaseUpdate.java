@@ -31,10 +31,15 @@ public class DataBaseUpdate
     
     //
     
+	//Конструктор по умолчанию
     public DataBaseUpdate() throws SQLException{
         super();
     }
     
+	/**
+	 *Получение подготовленного запроса для обновления
+	 * библиографических данных книги в базе данных (БД)
+	 */
     public PreparedStatement getUpdateBook(){
         PreparedStatement ps = null;
         try{
@@ -47,6 +52,10 @@ public class DataBaseUpdate
         return ps;
     }
     
+	/**
+	 *Получение подготовленного запроса для обновления
+	 * инвентарных данных экземпляра книги в БД
+	 */
     public PreparedStatement getUpdateInv(){
         PreparedStatement ps = null;
         try{
@@ -59,6 +68,10 @@ public class DataBaseUpdate
         return ps;
     }
     
+	/**
+	 *Выполнение подготовленного запроса для обновления
+	 * библиографических данных книги в БД
+	 */
     public boolean updateBook(PreparedStatement ps, Book book){
         boolean flag = false;
         try{
@@ -80,6 +93,10 @@ public class DataBaseUpdate
         return flag;
     }
     
+	/**
+	 *Выполнение подготовленного запроса для обновления
+	 * инвентарных данных книги в БД
+	 */
     public boolean updateInv(PreparedStatement ps, Book book){
         boolean flag = false;
         try{

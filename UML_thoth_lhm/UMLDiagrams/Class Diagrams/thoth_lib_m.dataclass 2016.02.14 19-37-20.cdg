@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="thoth_lib_m.dataclass">
+  <ClassDiagramComponents>
+    <Class name="AdditData" package="thoth_lib_m.dataclass" visibility="public" xPosition="560.0" yPosition="40.0">
+      <Fields>
+        <Field name="numVolume" type="String" visibility="private"/>
+        <Field name="notes" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="num"/>
+          <Argument type="String" name="notes"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNumVolume" returnType="String" visibility="public"/>
+        <Method name="setNumVolume" returnType="void" visibility="public">
+          <Argument type="String" name="num"/>
+        </Method>
+        <Method name="getNotes" returnType="String" visibility="public"/>
+        <Method name="setNotes" returnType="void" visibility="public">
+          <Argument type="String" name="notes"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Book" package="thoth_lib_m.dataclass" visibility="public" xPosition="130.0" yPosition="459.0">
+      <Fields>
+        <Field name="idTypeBook" type="int" visibility="private"/>
+        <Field name="idSection" type="int" visibility="private"/>
+        <Field name="mainData" type="MainData" visibility="package"/>
+        <Field name="dateline" type="Dateline" visibility="package"/>
+        <Field name="additData" type="AdditData" visibility="package"/>
+        <Field name="copy" type="CopyBook" visibility="package"/>
+        <Field name="flagNewBook" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idBook"/>
+          <Argument type="int" name="idType"/>
+          <Argument type="int" name="idSection"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdTypeBook" returnType="int" visibility="public"/>
+        <Method name="setTypeBook" returnType="void" visibility="public">
+          <Argument type="int" name="idType"/>
+        </Method>
+        <Method name="getIdSection" returnType="int" visibility="public"/>
+        <Method name="setIdSection" returnType="void" visibility="public">
+          <Argument type="int" name="idSection"/>
+        </Method>
+        <Method name="getMainData" returnType="MainData" visibility="public"/>
+        <Method name="getDateline" returnType="Dateline" visibility="public"/>
+        <Method name="getAdditData" returnType="AdditData" visibility="public"/>
+        <Method name="specifyCopyBook" returnType="void" visibility="public">
+          <Argument type="int" name="invNum"/>
+        </Method>
+        <Method name="getCopyBook" returnType="CopyBook" visibility="public"/>
+        <Method name="getStatusRecord" returnType="boolean" visibility="public"/>
+        <Method name="setStatusRecord" returnType="void" visibility="public">
+          <Argument type="boolean" name="flag"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CopyBook" package="thoth_lib_m.dataclass" visibility="public" xPosition="748.0" yPosition="1014.0">
+      <Fields>
+        <Field name="invNum" type="int" visibility="private"/>
+        <Field name="condition" type="String" visibility="private"/>
+        <Field name="bookCase" type="String" visibility="private"/>
+        <Field name="bookShelf" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idBook"/>
+          <Argument type="int" name="invNum"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="int" name="idBook"/>
+          <Argument type="int" name="invNum"/>
+          <Argument type="String" name="condition"/>
+          <Argument type="String" name="bookCase"/>
+          <Argument type="String" name="bookShelf"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getInvNum" returnType="int" visibility="public"/>
+        <Method name="getCondition" returnType="String" visibility="public"/>
+        <Method name="setCondition" returnType="void" visibility="public">
+          <Argument type="String" name="condition"/>
+        </Method>
+        <Method name="getBookCase" returnType="String" visibility="public"/>
+        <Method name="setBookCase" returnType="void" visibility="public">
+          <Argument type="String" name="bookCase"/>
+        </Method>
+        <Method name="getBookShelf" returnType="String" visibility="public"/>
+        <Method name="setBookShelf" returnType="void" visibility="public">
+          <Argument type="String" name="bookShelf"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CopyTable" package="thoth_lib_m.dataclass" visibility="public" xPosition="1192.0" yPosition="487.0">
+      <Fields>
+        <Field name="authors" type="String" visibility="private"/>
+        <Field name="title" type="String" visibility="private"/>
+        <Field name="year" type="int" visibility="private"/>
+        <Field name="bC" type="String" visibility="private"/>
+        <Field name="bSh" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idBookRec"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getAuthorsTable" returnType="String" visibility="public"/>
+        <Method name="setAuthorsTable" returnType="void" visibility="public">
+          <Argument type="String" name="authors"/>
+        </Method>
+        <Method name="getTitleTable" returnType="String" visibility="public"/>
+        <Method name="setTitleTable" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+        </Method>
+        <Method name="getYearTable" returnType="int" visibility="public"/>
+        <Method name="setYearTable" returnType="void" visibility="public">
+          <Argument type="int" name="year"/>
+        </Method>
+        <Method name="getBookCaseTable" returnType="String" visibility="public"/>
+        <Method name="setBookCaseTable" returnType="void" visibility="public">
+          <Argument type="String" name="bookCase"/>
+        </Method>
+        <Method name="getBookShelfTable" returnType="String" visibility="public"/>
+        <Method name="setBookShelfTable" returnType="void" visibility="public">
+          <Argument type="String" name="bookShelf"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Dateline" package="thoth_lib_m.dataclass" visibility="public" xPosition="112.0" yPosition="1057.0">
+      <Fields>
+        <Field name="publisher" type="String" visibility="private"/>
+        <Field name="place" type="String" visibility="private"/>
+        <Field name="year" type="int" visibility="private"/>
+        <Field name="filterYear" type="String" visibility="package"/>
+        <Field name="filterYearTwo" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="publisher"/>
+          <Argument type="String" name="place"/>
+          <Argument type="int" name="year"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPublisher" returnType="String" visibility="public"/>
+        <Method name="setPublisher" returnType="void" visibility="public">
+          <Argument type="String" name="publisher"/>
+        </Method>
+        <Method name="getPlace" returnType="String" visibility="public"/>
+        <Method name="setPlace" returnType="void" visibility="public">
+          <Argument type="String" name="place"/>
+        </Method>
+        <Method name="getYear" returnType="int" visibility="public"/>
+        <Method name="setYear" returnType="void" visibility="public">
+          <Argument type="int" name="year"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FieldID" package="thoth_lib_m.dataclass" visibility="public" isAbstract="true" xPosition="763.0" yPosition="612.0">
+      <Fields>
+        <Field name="idBook" type="int" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdBook" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="InfoSection" package="thoth_lib_m.dataclass" visibility="public" xPosition="1118.0" yPosition="102.0">
+      <Fields>
+        <Field name="idSection" type="int" visibility="private"/>
+        <Field name="describe" type="String" visibility="private"/>
+        <Field name="aboveSection" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="des"/>
+          <Argument type="int" name="abId"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdSection" returnType="int" visibility="public"/>
+        <Method name="getDescribe" returnType="String" visibility="public"/>
+        <Method name="setDescribe" returnType="void" visibility="public">
+          <Argument type="String" name="des"/>
+        </Method>
+        <Method name="getAboveSection" returnType="int" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="MainData" package="thoth_lib_m.dataclass" visibility="public" xPosition="112.0" yPosition="3.0">
+      <Fields>
+        <Field name="authors" type="String" visibility="private"/>
+        <Field name="title" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="authors"/>
+          <Argument type="String" name="title"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getAuthors" returnType="String" visibility="public"/>
+        <Method name="setAuthors" returnType="void" visibility="public">
+          <Argument type="String" name="authors"/>
+        </Method>
+        <Method name="getTitle" returnType="String" visibility="public"/>
+        <Method name="setTitle" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="copy" source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.CopyBook" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="dateline" source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.Dateline" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.FieldID"/>
+    <UseRelation source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.Dateline" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="thoth_lib_m.dataclass.CopyBook" target="thoth_lib_m.dataclass.FieldID"/>
+    <IsRelation name="is" source="thoth_lib_m.dataclass.CopyTable" target="thoth_lib_m.dataclass.FieldID"/>
+    <UseRelation source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.AdditData" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="additData" source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.AdditData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.MainData" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.CopyBook" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="mainData" source="thoth_lib_m.dataclass.Book" target="thoth_lib_m.dataclass.MainData" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

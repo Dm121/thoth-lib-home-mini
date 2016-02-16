@@ -23,7 +23,7 @@ public abstract class DocumentContent {
      *Свойство для получения содержимого файла
      * @return строка с содержимым файла
      */
-        public String getTextDoc(){
+    public String getTextDoc(){
         return this.textDoc.toString();
     }
     

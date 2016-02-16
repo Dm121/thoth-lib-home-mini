@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="thoth_lib_m.inout">
+  <ClassDiagramComponents>
+    <Class name="CSSDoc" package="thoth_lib_m.inout" visibility="public" xPosition="218.0" yPosition="403.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="textPrintCSS" returnType="String" visibility="public"/>
+        <Method name="outputData" returnType="boolean" visibility="public">
+          <Argument type="String" name="pathToFile"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DocumentContent" package="thoth_lib_m.inout" visibility="public" isAbstract="true" xPosition="213.0" yPosition="72.0">
+      <Fields>
+        <Field name="textDoc" type="StringBuffer" visibility="protected" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getTextDoc" returnType="String" visibility="public"/>
+        <Method name="setTextDoc" returnType="void" visibility="public">
+          <Argument type="String" name="appendStr"/>
+        </Method>
+        <Method name="setTextDoc" returnType="void" visibility="public">
+          <Argument type="StringBuffer" name="appendSB"/>
+        </Method>
+        <Method name="clearTextDoc" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="HTMLDoc" package="thoth_lib_m.inout" visibility="public" xPosition="578.0" yPosition="403.0">
+      <Fields>
+        <Field name="widthColumns" type="String[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="cssDoc" returnType="StringBuffer" visibility="private"/>
+        <Method name="jsDoc" returnType="StringBuffer" visibility="private"/>
+        <Method name="topButton" returnType="String" visibility="private"/>
+        <Method name="bottomButton" returnType="String" visibility="private"/>
+        <Method name="captionTable" returnType="String" visibility="private">
+          <Argument type="String" name="nameSection"/>
+        </Method>
+        <Method name="getWidthColumns" returnType="String[]" visibility="private"/>
+        <Method name="headerTable" returnType="StringBuffer" visibility="private"/>
+        <Method name="dataTable" returnType="StringBuffer" visibility="private">
+          <Argument type="int" name="j"/>
+          <Argument type="int" name="countBooksOnPage"/>
+          <Argument type="List&lt;CopyTable&gt;" name="lC"/>
+        </Method>
+        <Method name="footerPage" returnType="String" visibility="private">
+          <Argument type="int" name="numPage"/>
+        </Method>
+        <Method name="pagesTableHTML" returnType="StringBuffer" visibility="private">
+          <Argument type="String" name="nameSection"/>
+          <Argument type="List&lt;CopyTable&gt;" name="lC"/>
+        </Method>
+        <Method name="textHTMLDoc" returnType="String" visibility="private">
+          <Argument type="String" name="nameSection"/>
+          <Argument type="List&lt;CopyTable&gt;" name="lC"/>
+        </Method>
+        <Method name="outputData" returnType="boolean" visibility="public">
+          <Argument type="String" name="pathToFile"/>
+          <Argument type="String" name="nameSection"/>
+          <Argument type="List&lt;CopyTable&gt;" name="lC"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OutputDoc" package="thoth_lib_m.inout" visibility="public" xPosition="999.0" yPosition="100.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="createDir" returnType="String" visibility="public">
+          <Argument type="String" name="nameDirectory"/>
+        </Method>
+        <Method name="nameDateTime" returnType="String" visibility="protected"/>
+        <Method name="outputFile" returnType="boolean" visibility="public">
+          <Argument type="String" name="output"/>
+          <Argument type="String" name="nameFile"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="thoth_lib_m.inout.CSSDoc" target="thoth_lib_m.inout.DocumentContent"/>
+    <IsRelation name="is" source="thoth_lib_m.inout.HTMLDoc" target="thoth_lib_m.inout.DocumentContent"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

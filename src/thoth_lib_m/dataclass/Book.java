@@ -15,13 +15,20 @@ public class Book extends FieldID{
     private int idTypeBook;
     private int idSection;
     
-    MainData mainData;
-    Dateline dateline;
-    AdditData additData;
-    CopyBook copy;
+    MainData mainData;		//Сведения об авторах и названии
+    Dateline dateline;		//Сведения об издателе, месте и годе издания
+    AdditData additData;	//Дополнительные сведения
+    CopyBook copy;			//Сведения об экземпляре издания
     
     private boolean flagNewBook;
     
+    /**
+     *Конструктор с параметрами. Создаёт экземпляр книги 
+     * с указанным id, типом издания, секцией расположения
+     * @param idBook - id издания
+     * @param idType - тип издания
+     * @param idSection - id раздела (секции) расположения
+     */
     public Book(int idBook, int idType, int idSection){
         super(idBook);
         this.idTypeBook = idType;
@@ -32,34 +39,63 @@ public class Book extends FieldID{
         this.flagNewBook = true;
     }
     
+    /**
+     *Возвращает тип издания
+     */
     public int getIdTypeBook(){
         return this.idTypeBook;
     }
     
+    /**
+     *Устанавливает тип издания
+     */
     public void setTypeBook(int idType){
         this.idTypeBook = idType;
     }
     
+    /**
+     *Возвращает id раздела (секции) расположения
+     */
     public int getIdSection(){
         return this.idSection;
     }
     
+    /**
+     *Устанавливает id раздела (секции) расположения
+     */
     public void setIdSection(int idSection){
         this.idSection = idSection;
     }
     
+    /**
+     *Возвращает объект с основными сведениями об издании:
+     * авторами и названием издания
+     */
     public MainData getMainData(){
         return this.mainData;
     }
     
+    /**
+     *Возвращает объект со сведениями об издателе,
+     * месте и годе издания 
+     */
     public Dateline getDateline(){
         return this.dateline;
     }
     
+    /**
+     *Возвращает объект с дополнительными сведениями об издании:
+     * номером тома и примечаниями
+     */
     public AdditData getAdditData(){
         return this.additData;
     }
     
+    /**
+     *Инициализирует запись в инвентарной книге
+     * @param invNum - номер записи об экземпляре издания
+     * в инвентарной книге
+     */
     public void specifyCopyBook(int invNum){
         this.copy = new CopyBook(this.idBook, invNum);
         //
@@ -67,6 +103,9 @@ public class Book extends FieldID{
         //
     }
     
+    /**
+     *Возвращает объект со сведениями об экземпляре издания
+     */
     public CopyBook getCopyBook(){
         if(this.copy == null){
             JOptionPane.showMessageDialog(null, 
@@ -78,14 +117,26 @@ public class Book extends FieldID{
         return this.copy;
     }
     
+    /**
+     *Возвращает значение поля this.flagNewBook 
+     * @return 
+     */
     public boolean getStatusRecord(){
         return this.flagNewBook;
     }
     
+    /**
+     *Устанавливает значение пля this.flagNewBook
+     * @param flag 
+     */
     public void setStatusRecord(boolean flag){
         this.flagNewBook = flag;
     }
     
+    /**
+     *Возвращает строку с информацией об издании
+     * @return 
+     */
     @Override
     public String toString(){
         String copyNull;

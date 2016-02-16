@@ -20,10 +20,15 @@ public class ChangeSectionUpdate
                                                 + "set id_section=? "
                                                 + "where id_book=?;";
     
+	//Конструктор по умолчанию
     public ChangeSectionUpdate() throws SQLException{
         super();
     }
     
+	/**
+	 *Метод для выполнения запроса по изменению раздела
+	 * для указанного издания
+	 */
     public boolean changeSection(int idBook, int idSection){
         boolean flag = false;
         //

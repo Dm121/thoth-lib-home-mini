@@ -23,10 +23,15 @@ public class DataBaseDelete
     private final static String sql_delete_inv = 
             "delete from inv_book where id_book = ?;";
     
+	//Конструктор по умолчанию
     public DataBaseDelete() throws SQLException{
         super();
     }
     
+	/**
+	 *Получение объекта с подготовленным запросом 
+	 * для удаления библиографических данных книги  
+	 */
     public PreparedStatement getPSBook(){
         PreparedStatement ps = null;
         try{
@@ -38,6 +43,10 @@ public class DataBaseDelete
         return ps;
     }
     
+	/**
+	 *Получение объекта с подготовленным запросом
+	 * для удаления инвентарных данных о книге
+	 */
     public PreparedStatement getPSInv(){
         PreparedStatement ps = null;
         try{
@@ -50,11 +59,11 @@ public class DataBaseDelete
     }
     
     /**
-     *Метод позвляет удалить данные о книге
+     *Метод позволяет удалить данные о книге
      * и её экземплярах (T - используется транзакция)
-     * @param idBook идентификтор удаляемой книги
-     * @return err - результат выполненяи метода
-     * (true - метод завершиля с ошибкой,
+     * @param idBook идентификатор удаляемой книги
+     * @return err - результат выполнения метода
+     * (true - метод завершился с ошибкой,
      * false - метод выполнился правильно)
      * @throws java.sql.SQLException
      */
@@ -99,11 +108,11 @@ public class DataBaseDelete
     }
     
     /**
-     *Метод позвляет удалить данные о книге
+     *Метод позволяет удалить данные о книге
      * и её экземплярах (M - транзакции не используются)
-     * @param idBook идентификтор удаляемой книги
-     * @return err - результат выполненяи метода 
-     * (true - метод завершиля с ошибкой, 
+     * @param idBook идентификатор удаляемой книги
+     * @return err - результат выполнения метода 
+     * (true - метод завершился с ошибкой, 
      * false - метод выполнился правильно)
      * @throws java.sql.SQLException
      */
@@ -137,8 +146,8 @@ public class DataBaseDelete
     /**
      *Метод для выполнения произвольных запросов на удаление Delete
      * @param sql_delete_query строка запроса на удаление
-     * @return err - результат выполненяи метода
-     * (true - метод завершиля с ошибкой,
+     * @return err - результат выполнения метода
+     * (true - метод завершился с ошибкой,
      * false - метод выполнился правильно)
      */
     public boolean deleteQuery(String sql_delete_query){

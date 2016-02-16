@@ -18,9 +18,10 @@ import thoth_lib_m.AdditClass;
  * @author Sirota Dmitry
  */
 public class ConnectionSQLiteDB extends ConnectionDB{
-    Connection c;
-    boolean err;
+    Connection c;	//не private или protected
+    boolean err;	//аналогично
     
+	//Конструктор по умолчанию
     public ConnectionSQLiteDB(){
         c = null;
         err = true;
@@ -29,7 +30,7 @@ public class ConnectionSQLiteDB extends ConnectionDB{
     @Override
     public boolean connDB(String paramConnection){
         try{
-        Class.forName("org.sqlite.JDBC");
+        Class.forName("org.sqlite.JDBC");		//создание объекта драйвера СУБД
         c = DriverManager.getConnection("jdbc:sqlite:" + paramConnection);
         err = false;
         }

@@ -16,6 +16,13 @@ public class InfoSection implements Serializable {
     private String describe;
     private int aboveSection;
     
+    /**
+     *Конструктор с параметрами. Создаёт объект, хранящий сведения
+     * о книжном разделе: id раздела, название раздела и номер (id) над-раздела
+     * @param id - id книжного раздела
+     * @param des - название раздела
+     * @param abId - номер (id) над-раздела
+     */
     public InfoSection(int id, String des, int abId){
         this.idSection = id;
         if(des.trim().equals("")){
@@ -27,24 +34,46 @@ public class InfoSection implements Serializable {
         this.aboveSection = abId;
     }
     
+    /**
+     *Возвращает id книжного раздела 
+     * @return 
+     */
     public int getIdSection(){
         return idSection;        
     }
     
+    /**
+     *Возращает название книжного раздела 
+     * @return 
+     */
     public String getDescribe(){
         return describe;
     }
     
+    /**
+     *Устанавливает название книжного раздела
+     * @param des 
+     */
     public void setDescribe(String des){
         if(!des.trim().equals("")){
             describe = des;
         }
     }
     
+    /**
+     *Возвращает номер (id) над-раздела, в рамках которого был
+     * создан текущий подраздел
+     * @return 
+     */
     public int getAboveSection(){
         return aboveSection;
     }
     
+    /**
+     *Возращает строковое представление объекта, хранящего сведения
+     * о книжном разделе
+     * @return 
+     */
     @Override
     public String toString(){
         return "Раздел \"" + describe + "\" " +
