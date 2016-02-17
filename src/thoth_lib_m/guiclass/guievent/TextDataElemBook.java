@@ -23,7 +23,7 @@ public class TextDataElemBook {
         //
     }
     
-    public static void emptyDataBook(CatalogJElements elem){
+    public synchronized static void emptyDataBook(CatalogJElements elem){
         elem.setValIdB("");
         elem.setValTypeEdition(0);
         elem.getTextBook().get(0).setText("");
@@ -39,7 +39,8 @@ public class TextDataElemBook {
         setTextCountBook(elem);
     }
     
-    public static void getDataBook(Book book, CatalogJElements elem){
+    public synchronized static void getDataBook(
+                                            Book book, CatalogJElements elem){
         Book b = book;
         elem.setValIdB(String.valueOf(b.getIdBook()));
         elem.setValTypeEdition(b.getIdTypeBook() - 1);

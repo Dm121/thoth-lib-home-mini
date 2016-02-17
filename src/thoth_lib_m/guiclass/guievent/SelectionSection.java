@@ -31,9 +31,9 @@ public class SelectionSection implements ListSelectionListener{
     private final TableCopies table;
     private final CatalogJFrame frame;
     private final CatalogJElements elem;
-    private Section s;
+    private final Section s;
     private SaveDataButAction saveDataButAction;
-    private List<ActionListener> butSection;
+    private final List<ActionListener> butSection;
     
     public SelectionSection(TableCopies table,
             CatalogJFrame frame, CatalogJElements elem,

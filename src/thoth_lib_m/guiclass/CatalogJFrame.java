@@ -37,6 +37,7 @@ public class CatalogJFrame extends JFrame{
     private final TableCopies table;
     //int numRow;
     private List<Book> books;
+    private List<CopyTable> cpB;
     private final JTabbedPane tabbedPane;
     private final CatalogJElements elem;
     private final SearchPane sp; 
@@ -44,11 +45,11 @@ public class CatalogJFrame extends JFrame{
     private DelDataButAction delDataButAction;
                
     public CatalogJFrame() throws Exception{
-        super("Каталогизатор");
+        super("Домашняя библиотека v1.2.0.0 - Каталогизатор");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.books = TableCopies.listBooks(1);
-        ArrayList<CopyTable> cpB = TableCopies.listCopies(this.books);
+        this.setListBookTable(TableCopies.listCopies(this.books));
         table = new TableCopies(cpB);
         //
         table.getSortTable().sort(0);
@@ -62,6 +63,14 @@ public class CatalogJFrame extends JFrame{
         delDataButAction = null;
     }
     
+    private List<CopyTable> getListBookTable(){
+        return this.cpB;
+    }
+    
+    private void setListBookTable(List<CopyTable> listBookTable){
+        this.cpB = listBookTable;
+    }
+    
     public void createGUI(Connection c)
         throws SQLException, Exception{
         final int TABLE_HEIGHT = 300;
@@ -71,9 +80,6 @@ public class CatalogJFrame extends JFrame{
         final int[] MAX_CHAR;
         MAX_CHAR = new int[]{20, 120, 200, 250, 400};
         int sRow = 0;
-        //JPanel mainPanel = new JPanel();
-        //GridBagLayout gbl = new GridBagLayout();
-        //GridBagConstraints gbcc = new GridBagConstraints();
         this.setLayout(new BorderLayout());
         
         Section s = new Section();
@@ -82,6 +88,7 @@ public class CatalogJFrame extends JFrame{
                 elem.getPanelBook(c));
         this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
         this.getTabbedPane().addTab("Поиск", sp.getPanelSearch());
+        
         this.getDataBook(this.getBooks().get(0));       //1
         this.getTable().getCopyTable().setRowSelectionAllowed(true);
         this.getTable().getSortTable().getIdBookRecord(sRow);
