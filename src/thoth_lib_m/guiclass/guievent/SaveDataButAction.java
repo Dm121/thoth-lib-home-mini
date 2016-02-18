@@ -6,6 +6,7 @@
 
 package thoth_lib_m.guiclass.guievent;
 
+import thoth_lib_m.guiclass.TextDataElemBook;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.*;

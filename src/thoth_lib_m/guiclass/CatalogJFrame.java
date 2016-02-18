@@ -35,7 +35,6 @@ public class CatalogJFrame extends JFrame{
     private static final int DEFAULT_WIDTH = 850;
     private static final int DEFAULT_HEIGHT = 680;
     private final TableCopies table;
-    //int numRow;
     private List<Book> books;
     private List<CopyTable> cpB;
     private final JTabbedPane tabbedPane;
@@ -50,15 +49,15 @@ public class CatalogJFrame extends JFrame{
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.books = TableCopies.listBooks(1);
         this.setListBookTable(TableCopies.listCopies(this.books));
-        table = new TableCopies(cpB);
+        this.table = new TableCopies(this.cpB);
         //
-        table.getSortTable().sort(0);
-        table.getSortTable().setFlagSort(true);
+        this.table.getSortTable().sort(0);
+        this.table.getSortTable().setFlagSort(true);
         //
-        tabbedPane = new JTabbedPane(
+        this.tabbedPane = new JTabbedPane(
                     JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-        elem = new CatalogJElements();
-        sp = new SearchPane(this);
+        this.elem = new CatalogJElements();
+        this.sp = new SearchPane(this);
         saveDataButAction = null;
         delDataButAction = null;
     }
@@ -80,48 +79,54 @@ public class CatalogJFrame extends JFrame{
         final int[] MAX_CHAR;
         MAX_CHAR = new int[]{20, 120, 200, 250, 400};
         int sRow = 0;
+        int numRow;
         this.setLayout(new BorderLayout());
         
         Section s = new Section();
          
         this.getTabbedPane().addTab("Библиографическое описание", 
-                elem.getPanelBook(c));
-        this.getTabbedPane().addTab("Данные книги", elem.getPanelCopy());
-        this.getTabbedPane().addTab("Поиск", sp.getPanelSearch());
-        
-        this.getDataBook(this.getBooks().get(0));       //1
+                this.elem.getPanelBook(c));
+        this.getTabbedPane().addTab("Данные книги", this.elem.getPanelCopy());
+        this.getTabbedPane().addTab("Поиск", this.sp.getPanelSearch());
+        numRow = this.getTable().getSortTable().getIdBookRecord(sRow);
+        for(sRow = 0; sRow < this.getBooks().size(); sRow++){
+            if(numRow == this.getBooks().get(sRow).getIdBook()){
+                TextDataElemBook.getDataBook(
+                                this.getBooks().get(sRow), this.elem);       //1
+                break;
+            }
+        }
         this.getTable().getCopyTable().setRowSelectionAllowed(true);
-        this.getTable().getSortTable().getIdBookRecord(sRow);
+        
         this.getTable().getCopyTable().setRowSelectionInterval(0, 0);
-        //
-        /*
-        gbcc.anchor = GridBagConstraints.NORTHWEST;
-        gbcc.fill = GridBagConstraints.NONE;
-        gbcc.gridheight = 1;
-        gbcc.gridwidth = GridBagConstraints.REMAINDER;
-        gbcc.gridx = 0;
-        gbcc.gridy = 0;
-        gbcc.insets = new Insets(0, 0, 0, 0);
-        gbcc.ipadx = 0;
-        gbcc.ipady = 0;
-        gbcc.weightx = 0.0;
-        gbcc.weighty = 0.0;
-        */
         //
         Box boxMain = Box.createVerticalBox();
         boxMain.setAlignmentX(Box.LEFT_ALIGNMENT);
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(1,1));
-        menuPanel.add(elem.createMenu(this));
+        menuPanel.add(this.elem.createMenu(this));
         JPanel menuButtonPanel = new JPanel();
         menuButtonPanel.setLayout(new GridLayout(1,1));
-        menuButtonPanel.add(elem.createButtonMenu());
+        menuButtonPanel.add(this.elem.createButtonMenu());
         boxMain.add(menuPanel);
         boxMain.add(menuButtonPanel);
         //event for Button of Menu - ButtonMenu
         NewButAction newButAction = new NewButAction(elem, 
             this.getTable().getCopyTable(), this.getTabbedPane());
         elem.getButtonsMenu().get(0).addActionListener(newButAction);
+        //
+        //Class implements ListSelectionListener
+        //method: @Override public void valueChanged(ListSelectionEvent e){...}
+        //TableCopies table, CatalogJElements elem, CatalogJFrame frame (this)
+        //DelDataButAction delDataButAction
+        //elem.getButonsMenu().get(1)
+        //
+        this.delDataButAction = new DelDataButAction(this.getElem(), this,
+                            this.getTable().getCopyTable().getSelectedRow(),
+                                                            this.getTable());
+        this.getElem().getButtonsMenu().get(1).addActionListener(
+                                            this.delDataButAction);
+        
         //
         PrintButAction printButAction = new PrintButAction(s, 
                                                         CatalogJFrame.this);
@@ -142,19 +147,7 @@ public class CatalogJFrame extends JFrame{
         MouseListener ml = new SortData(this.table); 
         table.getCopyTable().getTableHeader().addMouseListener(ml);
         //
-        //
-        //Class implements ListSelectionListener
-        //method: @Override public void valueChanged(ListSelectionEvent e){...}
-        //TableCopies table, CatalogJElements elem, CatalogJFrame frame (this)
-        //DelDataButAction delDataButAction
-        //elem.getButonsMenu().get(1)
-        //
-        this.delDataButAction = new DelDataButAction(this.getElem(), this,
-                            this.getTable().getCopyTable().getSelectedRow(),
-                                                            this.getTable());
-        this.getElem().getButtonsMenu().get(1).addActionListener(
-                                            this.delDataButAction);
-        //
+        
         ChangeSecButAction chs = new ChangeSecButAction(this, 
                     this.getTable().getSortTable().getIdBookRecord(
                             this.getTable().getCopyTable().getSelectedRow()));

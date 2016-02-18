@@ -48,9 +48,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of setShow method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
     @Test
-    public void testSetShow() {
+    public void testSetShow() throws Exception{
         System.out.println("setShow");
         boolean visible = false;
         CatalogJFrame instance = new CatalogJFrame();
@@ -128,17 +129,4 @@ public class CatalogJFrameTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getDataBook method, of class CatalogJFrame.
-     */
-    @Test
-    public void testGetDataBook() {
-        System.out.println("getDataBook");
-        Book book = null;
-        CatalogJFrame instance = new CatalogJFrame();
-        instance.getDataBook(book);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

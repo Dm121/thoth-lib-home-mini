@@ -231,8 +231,11 @@ public class SortFilterModel extends AbstractTableModel{
         int i; //for loop
         if((model instanceof TableCopiesModel) && (row > -1)){
             for(i = 0; i < this.rows.length; i++){
+                /*
                 if(i != row) { this.rows[i].selected = false; }
                 else{ this.rows[i].selected = true; }
+                */
+                this.rows[i].selected = i == row;
             }
             //AdditClass.infoMes("" + row);
             return ((TableCopiesModel)model).getIdRec(this.rows[row].index);

@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package thoth_lib_m.guiclass.guievent;
+package thoth_lib_m.guiclass;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.Book;
-import thoth_lib_m.guiclass.CatalogJElements;
+//import thoth_lib_m.guiclass.CatalogJElements;
 
 /**
  *Класс для отображения данных книги в текстовых полях 

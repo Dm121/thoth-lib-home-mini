@@ -12,7 +12,6 @@ import java.sql.*;
 import thoth_lib_m.AdditClass;
 import thoth_lib_m.dataclass.CopyTable;
 import thoth_lib_m.dataclass.Book;
-import thoth_lib_m.guiclass.guievent.TextDataElemBook;
 //import thoth_lib_m.guiclass.CatalogJFrame;
 
 /**

@@ -6,6 +6,7 @@
 
 package thoth_lib_m.guiclass.guievent;
 
+import thoth_lib_m.guiclass.TextDataElemBook;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import thoth_lib_m.dataclass.Book;

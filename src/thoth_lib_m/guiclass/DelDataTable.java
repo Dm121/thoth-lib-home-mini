@@ -7,7 +7,6 @@
 package thoth_lib_m.guiclass;
 
 import thoth_lib_m.AdditClass;
-import thoth_lib_m.guiclass.guievent.TextDataElemBook;
 
 /**
  *Действия с таблицей при удалении или переносе из одного раздела 

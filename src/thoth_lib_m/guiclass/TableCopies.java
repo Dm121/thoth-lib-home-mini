@@ -26,17 +26,17 @@ public class TableCopies {
         
     public TableCopies(List<CopyTable> list) throws Exception{
         Font font = new Font("Calibri", Font.PLAIN, 16);
-        modelCopies = new TableCopiesModel(list);
-        sorter = new SortFilterModel(modelCopies);
-        table = new JTable(sorter);
-        table.setFont(font);
-        table.getColumnModel().getColumn(0).setPreferredWidth(200);
-        table.getColumnModel().getColumn(1).setPreferredWidth(380);
-        table.getColumnModel().getColumn(2).setPreferredWidth(80);
-        table.getColumnModel().getColumn(3).setPreferredWidth(60);
-        table.getColumnModel().getColumn(4).setPreferredWidth(60);
-        table.setDefaultRenderer(String.class, new StringRenderer());
-        table.getTableHeader().setReorderingAllowed(false);
+        this.modelCopies = new TableCopiesModel(list);
+        this.sorter = new SortFilterModel(this.modelCopies);
+        this.table = new JTable(this.sorter);
+        this.table.setFont(font);
+        this.table.getColumnModel().getColumn(0).setPreferredWidth(200);
+        this.table.getColumnModel().getColumn(1).setPreferredWidth(380);
+        this.table.getColumnModel().getColumn(2).setPreferredWidth(80);
+        this.table.getColumnModel().getColumn(3).setPreferredWidth(60);
+        this.table.getColumnModel().getColumn(4).setPreferredWidth(60);
+        this.table.setDefaultRenderer(String.class, new StringRenderer());
+        this.table.getTableHeader().setReorderingAllowed(false);
     }
     
     public static ArrayList<Book> listBooks(int selectedSection)
@@ -118,10 +118,10 @@ public class TableCopies {
     }
     
     public SortFilterModel getSortTable(){
-        return sorter;
+        return this.sorter;
     }
     
     public JTable getCopyTable(){
-        return table;
+        return this.table;
     }
 }
