@@ -97,9 +97,12 @@ public class ExportWin extends JDialog {
         this.setResultDialog(1);
         JRadioButton rButL = new JRadioButton("Вся библиотека");
         rButL.setFont(fontP);
+        //JRadioButton rButResultSearch = new JRadioButton("Текущий результат");
         bg.add(rButS);
+        //bg.add(rButResultSearch);
         bg.add(rButL);
         boxRBut.add(rButS);
+        //boxRBut.add(rButResultSearch);
         boxRBut.add(rButL);
         boxRBut.setBorder(new TitledBorder("Экспорт в HTML:"));
         //
@@ -116,6 +119,15 @@ public class ExportWin extends JDialog {
                 ExportWin.this.setResultDialog(2);
             }
         });
+        //
+        /*
+        rButResultSearch.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ExportWin.this.setResultDialog(3);
+            }
+        });
+        */
         //
         gbcc.anchor = GridBagConstraints.NORTHWEST;
         gbcc.fill = GridBagConstraints.NONE;

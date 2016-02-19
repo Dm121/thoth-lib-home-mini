@@ -304,7 +304,7 @@ public class Section {
     /**
      *Возвращает номер текущего элемента списка.
      * Значение устанавливается вручную
-     * (пример: <p>"s.setSelectedS = s.getSection.getSelectedIndex()",
+     * (пример: <p>"s.setSelectedS(s.getSection().getSelectedIndex())",
      * где s - объект класса Section).
      * @return selectedS - номер текущего элемента списка
      */

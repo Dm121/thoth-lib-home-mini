@@ -97,6 +97,12 @@ public class PrintButAction implements ActionListener{
                     }
                     break;
                 }
+                /*
+                case 3:{
+                    
+                    break;
+                }
+                */
                 case -1:{
                     mess = "Отмена операции \"Экспорт/Печать\"";
                     AdditClass.infoMes(mess, nameMethod);

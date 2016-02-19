@@ -22,22 +22,24 @@ import thoth_lib_m.dataclass.CopyTable;
  */
 public class SaveDataButAction implements ActionListener{
     
-    private CatalogJFrame frame;
-    private CatalogJElements elem;
-    private final int selctedSection;
-    private TableCopies table;
+    private final CatalogJFrame frame;
+    private final CatalogJElements elem;
+    //private final int selectedSection;
+    private final Section section;
+    private final TableCopies table;
     
     //
     //Создание книги в текущем разделе
     //
     public SaveDataButAction(CatalogJElements elem,
-            int selected, TableCopies t, CatalogJFrame f){
+            Section s, TableCopies t, CatalogJFrame f){
         this.frame = f;
         this.elem = elem;
         //
         //AdditClass.infoMes("selected:" + selected);
         //
-        this.selctedSection = selected;
+        //this.selctedSection = selected;
+        this.section = s;
         this.table = t;
     }
     
@@ -49,11 +51,14 @@ public class SaveDataButAction implements ActionListener{
         return;
         */
         //
+        int selectedSection = section.getArrayISection(section.getSection().
+                                        getSelectedIndex()).getIdSection();
+        //
         if(this.elem.getIdBook().getText().trim().equals("")){
-            insertData(this.elem, this.selctedSection, this.table, this.frame);
+            insertData(this.elem, selectedSection, this.table, this.frame);
         }
         else{
-            updateData(this.elem, this.selctedSection, this.table, this.frame);
+            updateData(this.elem, selectedSection, this.table, this.frame);
         }
     }
     

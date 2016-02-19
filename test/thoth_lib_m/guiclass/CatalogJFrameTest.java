@@ -11,12 +11,16 @@ import java.util.List;
 import javax.swing.JTabbedPane;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import thoth_lib_m.dataclass.Book;
+import thoth_lib_m.databaseclass.ConnectionDB;
+import thoth_lib_m.databaseclass.ConnectionSQLiteDB;
 
 /**
- *
+ *Тесты для GUI и Database
  * @author 1
  */
 public class CatalogJFrameTest {
@@ -24,8 +28,15 @@ public class CatalogJFrameTest {
     public CatalogJFrameTest() {
     }
     
+    @Before
+    public void setUp(){
+        
+    }
+    
     @BeforeClass
     public static void setUpClass() {
+        ConnectionDB sqliteDB = new ConnectionSQLiteDB();
+        sqliteDB.connDB("db/thoth_lhm_sqlite.db");
     }
     
     @AfterClass
@@ -50,7 +61,7 @@ public class CatalogJFrameTest {
      * Test of setShow method, of class CatalogJFrame.
      * @throws java.lang.Exception
      */
-    @Test
+    //@Test
     public void testSetShow() throws Exception{
         System.out.println("setShow");
         boolean visible = false;
@@ -62,9 +73,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of getTable method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
-    @Test
-    public void testGetTable() {
+    //@Test
+    public void testGetTable() throws Exception{
         System.out.println("getTable");
         CatalogJFrame instance = new CatalogJFrame();
         TableCopies expResult = null;
@@ -76,9 +88,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of getBooks method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
-    @Test
-    public void testGetBooks() {
+    //@Test
+    public void testGetBooks() throws Exception {
         System.out.println("getBooks");
         CatalogJFrame instance = new CatalogJFrame();
         List<Book> expResult = null;
@@ -90,9 +103,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of setBooks method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
-    @Test
-    public void testSetBooks() {
+    //@Test
+    public void testSetBooks() throws Exception{
         System.out.println("setBooks");
         List<Book> books = null;
         CatalogJFrame instance = new CatalogJFrame();
@@ -103,9 +117,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of getElem method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
-    @Test
-    public void testGetElem() {
+    //@Test
+    public void testGetElem() throws Exception{
         System.out.println("getElem");
         CatalogJFrame instance = new CatalogJFrame();
         CatalogJElements expResult = null;
@@ -117,9 +132,10 @@ public class CatalogJFrameTest {
 
     /**
      * Test of getTabbedPane method, of class CatalogJFrame.
+     * @throws java.lang.Exception
      */
-    @Test
-    public void testGetTabbedPane() {
+    //@Test
+    public void testGetTabbedPane() throws Exception{
         System.out.println("getTabbedPane");
         CatalogJFrame instance = new CatalogJFrame();
         JTabbedPane expResult = null;

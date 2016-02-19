@@ -20,20 +20,23 @@ import thoth_lib_m.databaseclass.ChangeSectionUpdate;
 public class ChangeSecButAction implements ActionListener{
     
     private final CatalogJFrame frame;
-    private int idSelectBook;
+    //private int idSelectBook;
     //private Connection c;
     //private final Section s;
     
-    public ChangeSecButAction(CatalogJFrame frame, int idSelectBook){
+    public ChangeSecButAction(CatalogJFrame frame){
         super();
         //this.s = s;
         //this.c = c;
         this.frame = frame;
-        this.idSelectBook = idSelectBook;
+        //this.idSelectBook = idSelectBook;
     }
     
     @Override
     public void actionPerformed(ActionEvent e){
+        int idSelectBook = this.frame.getTable().getSortTable().getIdBookRecord(
+                        this.frame.getTable().getCopyTable().getSelectedRow());
+        //
         ChangeSectionUpdate chsupd;
         DelDataTable ddt = new DelDataTable(this.frame);
         SelectionSectionFrame selSecFrame = 
@@ -43,7 +46,7 @@ public class ChangeSecButAction implements ActionListener{
                 (selSecFrame.getIdSelectedSection() > 0)){
             try{
                 chsupd = new ChangeSectionUpdate();
-                if(chsupd.changeSection(this.idSelectBook, 
+                if(chsupd.changeSection(idSelectBook, 
                                         selSecFrame.getIdSelectedSection())){
                     ddt.deleteDataT();
                 }

@@ -83,6 +83,44 @@ public class OutputDoc {
         //
         return partName;
     }
+        
+    /**
+     *Часть _Дата_Время имени нового файла со списком библиотечных изданий
+     * в формате ГГГГММДД-ЧЧММСС
+     * @return partName - часть имени файла типа _Дата_Время
+     * в формате ГГГГММДД-ЧЧММСС
+     */
+    protected String nameDateTimeNew(){
+        StringBuffer partName = new StringBuffer();
+        //
+        Calendar curDateTime = Calendar.getInstance();
+        //
+        partName.append("_");
+        partName.append(curDateTime.get(Calendar.YEAR));
+	if(curDateTime.get(Calendar.DAY_OF_MONTH) < 10){
+            partName.append("0");
+        }
+	partName.append(curDateTime.get(Calendar.DAY_OF_MONTH));
+	if((curDateTime.get(Calendar.MONTH) + 1) < 10){
+            partName.append("0");
+        }
+        partName.append((curDateTime.get(Calendar.MONTH) + 1));
+        partName.append("_");
+        if(curDateTime.get(Calendar.HOUR_OF_DAY) < 10){
+            partName.append("0");
+        }
+        partName.append(curDateTime.get(Calendar.HOUR_OF_DAY));    //-1 - Summer Time
+        if(curDateTime.get(Calendar.MINUTE) < 10){
+            partName.append("0");
+        }
+        partName.append(curDateTime.get(Calendar.MINUTE));
+        if(curDateTime.get(Calendar.SECOND) < 10){
+            partName.append("0");
+        }
+        partName.append(curDateTime.get(Calendar.SECOND));
+        //
+        return partName.toString();
+    }
     
     /**
      *Запись строки output в файл с именем nameFile

@@ -33,19 +33,18 @@ public class SelectionSection implements ListSelectionListener{
     private final CatalogJFrame frame;
     private final CatalogJElements elem;
     private final Section s;
-    private SaveDataButAction saveDataButAction;
+    //private SaveDataButAction saveDataButAction;
     private final List<ActionListener> butSection;
     
     public SelectionSection(TableCopies table,
             CatalogJFrame frame, CatalogJElements elem,
-            Section s, SaveDataButAction saveDataButAction,
-            List<ActionListener> butSection){
+            Section s, List<ActionListener> butSection){
         this.table = table;
         this.frame = frame;
         this.elem = elem;
         this.s = s;
-        this.saveDataButAction = saveDataButAction;
-        this.butSection = butSection;
+        //this.saveDataButAction = saveDataButAction;
+        this.butSection = butSection;       //why was used????
     }
     
     @Override
@@ -79,6 +78,7 @@ public class SelectionSection implements ListSelectionListener{
                     TextDataElemBook.emptyDataBook(this.elem);
                 }
                 //
+                /*
                 this.s.setSelectedS(s.getSection().getSelectedIndex());
                 if(this.saveDataButAction != null){
                     this.elem.getButtonsMenu().get(2).removeActionListener(
@@ -90,7 +90,10 @@ public class SelectionSection implements ListSelectionListener{
                                                         this.table, this.frame);
                 this.elem.getButtonsMenu().get(2).addActionListener(
                                             this.saveDataButAction);
+                */
                 //
+                //why was used????
+                /*
                 if(this.butSection.get(0) != null){
                     this.elem.getButtonsMenu().get(6).removeActionListener(
                                                         this.butSection.get(0));
@@ -107,6 +110,7 @@ public class SelectionSection implements ListSelectionListener{
                 this.butSection.set(1, new RenameSecButAction(s));
                 this.elem.getButtonsMenu().get(7).addActionListener(
                                                         this.butSection.get(1));
+                */
                 //
             }catch(Exception err){
                 AdditClass.errorMes(err, "CatalogJFrame.createGUI");

@@ -24,14 +24,14 @@ public class DelDataButAction implements ActionListener{
     
     private final CatalogJElements elem;
     private final CatalogJFrame frame;
-    private final int selectedRow;
+    //private final int selectedRow;
     private final TableCopies table;
     
     public DelDataButAction(CatalogJElements elem, CatalogJFrame frame,
-                    int selectedRow, TableCopies table){
+                    TableCopies table){
         this.elem = elem;
         this.frame = frame;
-        this.selectedRow = selectedRow;
+        //this.selectedRow = selectedRow;
         this.table = table;
     }
     
@@ -39,7 +39,7 @@ public class DelDataButAction implements ActionListener{
     public void actionPerformed(ActionEvent e){
         //
         try{
-            deleteData(this.elem, this.frame, this.selectedRow, this.table);
+            deleteData(this.elem, this.frame, this.table);
         }
         catch(Exception err){
             AdditClass.errorMes(err, "DelDataButAction.actionPerformed");
@@ -48,7 +48,7 @@ public class DelDataButAction implements ActionListener{
     }
     
     private void deleteData(CatalogJElements elem, CatalogJFrame frame,
-                    int selectedRow, TableCopies table)
+                    TableCopies table)
                             throws Exception{
         DataBaseDelete dbDelete = null;
         int i;      //for loop
@@ -57,11 +57,11 @@ public class DelDataButAction implements ActionListener{
         int idSelectedBook;
         //int selectedIndex;
         int selectedNumRow;
-        idSelectedBook = table.getSortTable().getIdBookRecord(selectedRow);
         //
         //selectedIndex = table.getSortTable().getRowIndex(selectedRow);
         //
-        selectedNumRow = selectedRow;
+        selectedNumRow = table.getCopyTable().getSelectedRow();
+        idSelectedBook = table.getSortTable().getIdBookRecord(selectedNumRow);
         //
         selDataDel = JOptionPane.showConfirmDialog(frame, 
                 "Удалить данные выбранного издания?", 
@@ -74,7 +74,8 @@ public class DelDataButAction implements ActionListener{
                 dbDelete.deleteBookT(idSelectedBook);
             }
             catch(SQLException e){
-                AdditClass.errorMes(e, "DelDataButAction.deleteData");
+                AdditClass.errorMes(e, DelDataButAction.class.getName() + 
+                                                                ".deleteData");
             }
             finally{
                 if(dbDelete != null) { dbDelete.closeConnection(); }

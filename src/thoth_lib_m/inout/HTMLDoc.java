@@ -313,7 +313,7 @@ public class HTMLDoc extends DocumentContent{
                 "String nameSection, List<CopyTable> lC)";
         OutputDoc inout = new OutputDoc();
         String absoluteNameFile = pathToFile + 
-                "list" + inout.nameDateTime() + ".html";
+                "list" + inout.nameDateTimeNew() + ".html";
         //
         try{
             inout.outputFile(this.textHTMLDoc(nameSection, lC), 

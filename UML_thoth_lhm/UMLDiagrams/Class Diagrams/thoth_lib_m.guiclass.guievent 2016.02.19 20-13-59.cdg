@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="thoth_lib_m.guiclass.guievent">
+  <ClassDiagramComponents>
+    <Class name="ChangeSecButAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="frame" type="CatalogJFrame" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CatalogJFrame" name="frame"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DelDataButAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="elem" type="CatalogJElements" visibility="private" isFinal="true"/>
+        <Field name="frame" type="CatalogJFrame" visibility="private" isFinal="true"/>
+        <Field name="table" type="TableCopies" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="CatalogJFrame" name="frame"/>
+          <Argument type="TableCopies" name="table"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="deleteData" returnType="void" visibility="private">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="CatalogJFrame" name="frame"/>
+          <Argument type="TableCopies" name="table"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewButAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="elem" type="CatalogJElements" visibility="private"/>
+        <Field name="table" type="JTable" visibility="private"/>
+        <Field name="tab" type="JTabbedPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="JTable" name="table"/>
+          <Argument type="JTabbedPane" name="tab"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="setTextCountBook" returnType="void" visibility="private"/>
+        <Method name="getTitle" returnType="String" visibility="private">
+          <Argument type="String" name="input"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PrintButAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="frame" type="JFrame" visibility="private" isFinal="true"/>
+        <Field name="s" type="Section" visibility="private"/>
+        <Field name="pathToHTMLFile" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Section" name="s"/>
+          <Argument type="JFrame" name="frame"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="getPathToHTMLFile" returnType="String" visibility="public"/>
+        <Method name="setPathToHTMLFile" returnType="void" visibility="private">
+          <Argument type="String" name="path"/>
+        </Method>
+        <Method name="createDirAndCSS" returnType="boolean" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="SaveDataButAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="frame" type="CatalogJFrame" visibility="private"/>
+        <Field name="elem" type="CatalogJElements" visibility="private"/>
+        <Field name="selctedSection" type="int" visibility="private" isFinal="true"/>
+        <Field name="table" type="TableCopies" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="int" name="selected"/>
+          <Argument type="TableCopies" name="t"/>
+          <Argument type="CatalogJFrame" name="f"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="insertData" returnType="void" visibility="private">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="int" name="selected"/>
+          <Argument type="TableCopies" name="t"/>
+          <Argument type="CatalogJFrame" name="f"/>
+        </Method>
+        <Method name="updateData" returnType="void" visibility="private">
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="int" name="selected"/>
+          <Argument type="TableCopies" name="t"/>
+          <Argument type="CatalogJFrame" name="frame"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="AddSecButAction" package="thoth_lib_m.guiclass.guievent.section_event" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="s" type="Section" visibility="private"/>
+        <Field name="connect" type="ConnectionSQLiteDB" visibility="private"/>
+        <Field name="sql_conn" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Section" name="s"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DelSecButAction" package="thoth_lib_m.guiclass.guievent.section_event" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="s" type="Section" visibility="private"/>
+        <Field name="connect" type="ConnectionSQLiteDB" visibility="private"/>
+        <Field name="sql_conn" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Section" name="s"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RenameSecButAction" package="thoth_lib_m.guiclass.guievent.section_event" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="s" type="Section" visibility="private"/>
+        <Field name="connect" type="ConnectionSQLiteDB" visibility="private"/>
+        <Field name="sql_conn" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Section" name="s"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SelectionSection" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="table" type="TableCopies" visibility="private" isFinal="true"/>
+        <Field name="frame" type="CatalogJFrame" visibility="private" isFinal="true"/>
+        <Field name="elem" type="CatalogJElements" visibility="private" isFinal="true"/>
+        <Field name="s" type="Section" visibility="private" isFinal="true"/>
+        <Field name="saveDataButAction" type="SaveDataButAction" visibility="private"/>
+        <Field name="butSection" type="List&lt;ActionListener&gt;" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="TableCopies" name="table"/>
+          <Argument type="CatalogJFrame" name="frame"/>
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="Section" name="s"/>
+          <Argument type="SaveDataButAction" name="saveDataButAction"/>
+          <Argument type="List&lt;ActionListener&gt;" name="butSection"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="valueChanged" returnType="void" visibility="public">
+          <Argument type="ListSelectionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SelectionTableRow" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="table" type="TableCopies" visibility="private" isFinal="true"/>
+        <Field name="frame" type="CatalogJFrame" visibility="private" isFinal="true"/>
+        <Field name="elem" type="CatalogJElements" visibility="private" isFinal="true"/>
+        <Field name="delDataButAction" type="DelDataButAction" visibility="private"/>
+        <Field name="changeSecButAction" type="ChangeSecButAction" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="TableCopies" name="table"/>
+          <Argument type="CatalogJFrame" name="frame"/>
+          <Argument type="CatalogJElements" name="elem"/>
+          <Argument type="DelDataButAction" name="delDataButAction"/>
+          <Argument type="ChangeSecButAction" name="changeSecButAction"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="valueChanged" returnType="void" visibility="public">
+          <Argument type="ListSelectionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SortData" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="table" type="TableCopies" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="TableCopies" name="table"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouseClicked" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="TACountAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="textArea" type="JTextArea" visibility="private"/>
+        <Field name="maxCountChar" type="int" visibility="private" isFinal="true"/>
+        <Field name="l" type="JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="JTextArea" name="text"/>
+          <Argument type="int" name="countChar"/>
+          <Argument type="JLabel" name="l"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="keyPressed" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="keyReleased" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="getTitle" returnType="String" visibility="private">
+          <Argument type="String" name="input"/>
+        </Method>
+        <Method name="keyTyped" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="TFCountAction" package="thoth_lib_m.guiclass.guievent" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="textField" type="JTextField" visibility="private"/>
+        <Field name="maxCountChar" type="int" visibility="private" isFinal="true"/>
+        <Field name="l" type="JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="JTextField" name="text"/>
+          <Argument type="int" name="countChar"/>
+          <Argument type="JLabel" name="l"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="keyPressed" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="keyReleased" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="getTitle" returnType="String" visibility="private">
+          <Argument type="String" name="input"/>
+        </Method>
+        <Method name="keyTyped" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="saveDataButAction" source="thoth_lib_m.guiclass.guievent.SelectionSection" target="thoth_lib_m.guiclass.guievent.SaveDataButAction" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="changeSecButAction" source="thoth_lib_m.guiclass.guievent.SelectionTableRow" target="thoth_lib_m.guiclass.guievent.ChangeSecButAction" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="delDataButAction" source="thoth_lib_m.guiclass.guievent.SelectionTableRow" target="thoth_lib_m.guiclass.guievent.DelDataButAction" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

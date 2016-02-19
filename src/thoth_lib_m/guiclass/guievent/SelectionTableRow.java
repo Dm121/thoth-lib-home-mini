@@ -22,19 +22,17 @@ public class SelectionTableRow implements ListSelectionListener{
     private final TableCopies table;
     private final CatalogJFrame frame;
     private final CatalogJElements elem;
-    private DelDataButAction delDataButAction;
-    private ChangeSecButAction changeSecButAction;
+    //private DelDataButAction delDataButAction;
+    //private ChangeSecButAction changeSecButAction;
     
     public SelectionTableRow(TableCopies table, 
-            CatalogJFrame frame, CatalogJElements elem,
-            DelDataButAction delDataButAction,
-            ChangeSecButAction changeSecButAction){
+            CatalogJFrame frame, CatalogJElements elem){
         
         this.table = table;
         this.frame = frame;
         this.elem = elem;
-        this.delDataButAction = delDataButAction;
-        this.changeSecButAction = changeSecButAction;
+        //this.delDataButAction = delDataButAction;
+        //this.changeSecButAction = changeSecButAction;
         
     }
     
@@ -54,6 +52,7 @@ public class SelectionTableRow implements ListSelectionListener{
             }
         }
         //
+        /*
         if(this.delDataButAction != null){
             this.elem.getButtonsMenu().get(1).removeActionListener(
                                                         delDataButAction);
@@ -62,9 +61,11 @@ public class SelectionTableRow implements ListSelectionListener{
                 this.elem, this.frame, 
             this.table.getCopyTable().getSelectedRow(), this.table);
         this.elem.getButtonsMenu().get(1).addActionListener(delDataButAction);
+        */
         //
         //AdditClass.infoMes("" + numRow + "");
         //
+        /*
         if(this.changeSecButAction != null){
             this.elem.getButtonsMenu().get(3).removeActionListener(
                                                         changeSecButAction);
@@ -73,6 +74,7 @@ public class SelectionTableRow implements ListSelectionListener{
             this.frame.getTable().getSortTable().getIdBookRecord(
                     this.frame.getTable().getCopyTable().getSelectedRow()));
         this.elem.getButtonsMenu().get(3).addActionListener(changeSecButAction);
+        */
         //
         
     }

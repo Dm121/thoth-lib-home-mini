@@ -97,10 +97,9 @@ public class CatalogJFrame extends JFrame{
             }
         }
         this.getTable().getCopyTable().setRowSelectionAllowed(true);
-        
         this.getTable().getCopyTable().setRowSelectionInterval(0, 0);
         //
-        Box boxMain = Box.createVerticalBox();
+        Box boxMain = Box.createVerticalBox();          //North
         boxMain.setAlignmentX(Box.LEFT_ALIGNMENT);
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(1,1));
@@ -110,10 +109,25 @@ public class CatalogJFrame extends JFrame{
         menuButtonPanel.add(this.elem.createButtonMenu());
         boxMain.add(menuPanel);
         boxMain.add(menuButtonPanel);
-        //event for Button of Menu - ButtonMenu
+        //
+        JPanel tablePanel = new JPanel();               //Center
+        tablePanel.setLayout(new GridLayout(1,1));
+        tablePanel.setSize(this.getWidth(), TABLE_HEIGHT);
+        //
+        JScrollPane scroll = new JScrollPane(this.table.getCopyTable());
+        tablePanel.add(scroll);
+        //                
+        Box boxAddit = Box.createHorizontalBox();       //South
+        s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
+        s.addDataList(c);
+        //
+        boxAddit.add(new JScrollPane(s.getScrollSection()));
+        boxAddit.add(new JScrollPane(this.tabbedPane));
+        //events
+        //events for Button of Menu - ButtonMenu
         NewButAction newButAction = new NewButAction(elem, 
             this.getTable().getCopyTable(), this.getTabbedPane());
-        elem.getButtonsMenu().get(0).addActionListener(newButAction);
+        this.getElem().getButtonsMenu().get(0).addActionListener(newButAction);
         //
         //Class implements ListSelectionListener
         //method: @Override public void valueChanged(ListSelectionEvent e){...}
@@ -122,46 +136,58 @@ public class CatalogJFrame extends JFrame{
         //elem.getButonsMenu().get(1)
         //
         this.delDataButAction = new DelDataButAction(this.getElem(), this,
-                            this.getTable().getCopyTable().getSelectedRow(),
                                                             this.getTable());
         this.getElem().getButtonsMenu().get(1).addActionListener(
                                             this.delDataButAction);
-        
+        //
+        this.saveDataButAction = new SaveDataButAction(this.getElem(), s,
+                                                            this.table, this);
+        this.getElem().getButtonsMenu().get(2).addActionListener(
+                                            this.saveDataButAction);
+        //
+        ChangeSecButAction chs = new ChangeSecButAction(this);
+        this.getElem().getButtonsMenu().get(3).addActionListener(chs);
         //
         PrintButAction printButAction = new PrintButAction(s, 
                                                         CatalogJFrame.this);
         this.getElem().getButtonsMenu().get(4).addActionListener(
                                                         printButAction);
         //
-        
+        AddSecButAction addSection = new AddSecButAction(s);
+        this.elem.getButtonsMenu().get(5).addActionListener(addSection);
         //
-                
-        JPanel tablePanel = new JPanel();
-        tablePanel.setLayout(new GridLayout(1,1));
-        tablePanel.setSize(this.getWidth(), TABLE_HEIGHT);
+        List<ActionListener> delAndRen = new ArrayList<>();
+            delAndRen.add(new DelSecButAction(s));
+            delAndRen.add(new RenameSecButAction(s));
+        this.elem.getButtonsMenu().get(6).addActionListener(delAndRen.get(0));
+        this.elem.getButtonsMenu().get(7).addActionListener(delAndRen.get(1));
+        //
+        //Other events
+        //
+        //Class implements ListSelectionListener
+        //method: @Override public void valueChanged(ListSelectionEvent e){...}
+        //TableCopies table
+        //CatalogJFrame frame (this)
+        //CatalogJElements elem
+        //Section s
+        //SaveDataButAction saveDataButAction
+        //
+        SelectionSection selS = new SelectionSection(
+                                    this.table, this, this.elem, s, delAndRen);
+        s.getSection().addListSelectionListener(selS);
+        //
+        SelectionTableRow str = new SelectionTableRow(this.table,
+                                                            this, this.elem);
+        ListSelectionModel lsm = this.table.getCopyTable().getSelectionModel();
+                lsm.addListSelectionListener(str);
         //
         //Class extends MouseAdapter
         //MouseListener ml = new Class();
         //.addMouseListener(ml);
         //TableCopies table
         MouseListener ml = new SortData(this.table); 
-        table.getCopyTable().getTableHeader().addMouseListener(ml);
-        //
-        
-        ChangeSecButAction chs = new ChangeSecButAction(this, 
-                    this.getTable().getSortTable().getIdBookRecord(
-                            this.getTable().getCopyTable().getSelectedRow()));
-        this.elem.getButtonsMenu().get(3).addActionListener(chs);
-        //
-        SelectionTableRow str = new SelectionTableRow(this.table,
-                            this, this.elem, this.delDataButAction, chs);
-        ListSelectionModel lsm = table.getCopyTable().getSelectionModel();
-                lsm.addListSelectionListener(str);
-        //
-                
-        JScrollPane scroll = new JScrollPane(table.getCopyTable());
-        tablePanel.add(scroll);
-        //event for JTextField of panelBook
+        this.table.getCopyTable().getTableHeader().addMouseListener(ml);
+        //events for JTextField-s and JTextArea-s of panelBook
         TFCountAction textF1 = 
                 new TFCountAction(this.elem.getTextBook().get(0), MAX_CHAR[3],
                                         this.elem.getTextCount().get(0));
@@ -201,50 +227,12 @@ public class CatalogJFrame extends JFrame{
                 new TACountAction(this.elem.getTextArray().get(1), MAX_CHAR[2],
                                         this.elem.getTextCount().get(8));
         this.elem.getTextArray().get(1).addKeyListener(textA2);
+        //adding all elements on main window (frame)
         //
-                
-        Box boxAddit = Box.createHorizontalBox();
-        s.getScrollSection().setSize(SECTION_WIDTH, SECTION_HEIGHT);
-        s.addDataList(c);
-        //
-        //Class implements ListSelectionListener
-        //method: @Override public void valueChanged(ListSelectionEvent e){...}
-        //TableCopies table
-        //CatalogJFrame frame (this)
-        //CatalogJElements elem
-        //Section s
-        //SaveDataButAction saveDataButAction
-        //
-        List<ActionListener> delAndRen = new ArrayList<>();
-            delAndRen.add(new DelSecButAction(s));
-            delAndRen.add(new RenameSecButAction(s));
-        this.elem.getButtonsMenu().get(6).addActionListener(delAndRen.get(0));
-        this.elem.getButtonsMenu().get(7).addActionListener(delAndRen.get(1));
-        //
-        SelectionSection selS = new SelectionSection(
-            this.table, this, this.elem, s, this.saveDataButAction, delAndRen);
-        s.getSection().addListSelectionListener(selS);
-        //
-        boxAddit.add(new JScrollPane(s.getScrollSection()));
-        boxAddit.add(new JScrollPane(tabbedPane));
-        //
-        this.saveDataButAction = new SaveDataButAction(elem, 
-                        s.getArrayISection(s.getSection().
-                                        getSelectedIndex()).getIdSection(),
-                                                            this.table, this);
-        this.elem.getButtonsMenu().get(2).addActionListener(
-                                            this.saveDataButAction);
-        //
-        AddSecButAction addSection = new AddSecButAction(s);
-        this.elem.getButtonsMenu().get(5).addActionListener(addSection);
-        //
-        
         this.add(boxMain, BorderLayout.NORTH);
         this.add(tablePanel, BorderLayout.CENTER);
         this.add(boxAddit, BorderLayout.SOUTH);
         //this.pack();
-        
-        
     }
     
     public void setShow(boolean visible){
@@ -273,6 +261,7 @@ public class CatalogJFrame extends JFrame{
     }
     
     //*
+    /*
     public void getDataBook(Book book){
         Book b = book;
         this.elem.setValIdB(String.valueOf(b.getIdBook()));
@@ -361,4 +350,5 @@ public class CatalogJFrame extends JFrame{
         }
         return title;
     }
+    */
 }
