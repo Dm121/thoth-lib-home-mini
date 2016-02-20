@@ -6,18 +6,18 @@
 
 package thoth_lib_m.guiclass.guievent;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.nio.file.DirectoryStream;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import thoth_lib_m.AdditClass;
+import thoth_lib_m.dataclass.CopyTable;
 import thoth_lib_m.guiclass.CatalogJFrame;
 import thoth_lib_m.guiclass.Section;
 import thoth_lib_m.guiclass.ExportWin;
@@ -122,10 +122,13 @@ public class PrintButAction implements ActionListener{
                     //task2 - to print result of search query
                     if(this.createDirAndCSS()){
                         mess = "Текущий результат";
+                        List<CopyTable> listBooks = this.getCurrentListTable();
+                        this.shellSort(listBooks);
                         if(!this.getPathToHTMLFile().trim().equals("")){
                             htmlDoc.outputData(this.getPathToHTMLFile(), mess, 
-                                    ((CatalogJFrame)this.frame).
-                                                getTable().getListCopyTable());
+                                                                    listBooks);
+                            //((CatalogJFrame)this.frame).
+                            //getTable().getListCopyTable()
                             //
                             //opening of directory
                             try{
@@ -263,6 +266,61 @@ public class PrintButAction implements ActionListener{
                                     "отображения файлов " + 
                                     "со списками изданий.\n(" + 
                                     err.getMessage() + ")\n");
+        }
+    }
+    
+    /**
+     *Создаёт список из текущих данных, содержащихся в таблице 
+     * @return Список из текущих данных, содержащихся в таблице
+     */
+    private List<CopyTable> getCurrentListTable(){
+        int i;      //for loop
+        List<CopyTable> listBooks = new ArrayList<CopyTable>();
+        CopyTable copy;
+        JTable table = ((CatalogJFrame)this.frame).getTable().getCopyTable();
+        //
+        for(i = 0; i < table.getRowCount(); i++){
+            copy = new CopyTable((i + 1));
+            copy.setAuthorsTable(table.getValueAt(i, 0).toString());
+            copy.setTitleTable(table.getValueAt(i, 1).toString());
+            copy.setYearTable(Integer.valueOf(table.getValueAt(i, 2).
+                                                                toString()));
+            copy.setBookCaseTable(table.getValueAt(i, 3).toString());
+            copy.setBookShelfTable(table.getValueAt(i, 4).toString());
+            listBooks.add(copy);
+        }
+        //
+        return listBooks;
+    }
+    
+    /**
+     *Из книги Роберта Лафоре(-а) "Структуры данных и алгоритмы Java",
+     * 2-ое издание, 2013 год, ПИТЕР (стр. 306) - Сортировка Шелла
+     * @param listBooks - Список из объектов типа CopyTable, которые сортируются
+     * по автору
+     */
+    private void shellSort(List<CopyTable> listBooks){
+        int inner, outer;
+        CopyTable temp;
+        int h = 1;                      //вычисление исходного значения h
+        while(h <= listBooks.size() / 3){
+            h = h * 3 + 1;              //(1, 4, 13, 40, 121, ...)
+        }
+        while(h > 0){                   //последовательное уменьшение h до 1
+            //h-сортировка файла
+            for(outer = h; outer < listBooks.size(); outer++){
+                temp = listBooks.get(outer);
+                inner = outer;
+                //
+                while((inner > (h - 1)) && (
+                        listBooks.get(inner - h).getAuthorsTable().
+                        compareToIgnoreCase(temp.getAuthorsTable()) >= 0)){
+                    listBooks.set(inner, listBooks.get(inner - h));
+                    inner = inner - h;
+                }
+                listBooks.set(inner, temp);
+            }
+            h = (h - 1) / 3;
         }
     }
 }
