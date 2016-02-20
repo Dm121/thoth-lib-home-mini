@@ -23,7 +23,7 @@ import javax.swing.border.TitledBorder;
 public class ExportWin extends JDialog {
     
     private static final int WIDTH_DEFAULT = 200;
-    private static final int HEIGHT_DEFAULT = 150;
+    private static final int HEIGHT_DEFAULT = 170;
     //
     private int resultDialog;
     private boolean resClose;
@@ -97,12 +97,14 @@ public class ExportWin extends JDialog {
         this.setResultDialog(1);
         JRadioButton rButL = new JRadioButton("Вся библиотека");
         rButL.setFont(fontP);
-        //JRadioButton rButResultSearch = new JRadioButton("Текущий результат");
+        //(*1)
+        JRadioButton rButResultSearch = new JRadioButton("Текущий результат");
+        rButResultSearch.setFont(fontP);
         bg.add(rButS);
-        //bg.add(rButResultSearch);
+        bg.add(rButResultSearch);
         bg.add(rButL);
         boxRBut.add(rButS);
-        //boxRBut.add(rButResultSearch);
+        boxRBut.add(rButResultSearch);
         boxRBut.add(rButL);
         boxRBut.setBorder(new TitledBorder("Экспорт в HTML:"));
         //
@@ -120,14 +122,12 @@ public class ExportWin extends JDialog {
             }
         });
         //
-        /*
         rButResultSearch.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 ExportWin.this.setResultDialog(3);
             }
         });
-        */
         //
         gbcc.anchor = GridBagConstraints.NORTHWEST;
         gbcc.fill = GridBagConstraints.NONE;

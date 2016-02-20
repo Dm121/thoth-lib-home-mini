@@ -7,11 +7,18 @@
 package thoth_lib_m.guiclass.guievent;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.DirectoryStream;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.JFrame;
 import thoth_lib_m.AdditClass;
+import thoth_lib_m.guiclass.CatalogJFrame;
 import thoth_lib_m.guiclass.Section;
 import thoth_lib_m.guiclass.ExportWin;
 import thoth_lib_m.databaseclass.QueryPrint;
@@ -27,7 +34,7 @@ public class PrintButAction implements ActionListener{
     private Section s;
     private String pathToHTMLFile;
     
-    public PrintButAction(Section s, JFrame frame){
+    public PrintButAction(Section s, CatalogJFrame frame){
         super();
         this.s = s;
         this.frame = frame;
@@ -61,6 +68,13 @@ public class PrintButAction implements ActionListener{
                         if(!this.getPathToHTMLFile().trim().equals("")){
                             htmlDoc.outputData(this.getPathToHTMLFile(), 
                                     qp.getNameS(), qp.getBooksPrint());
+                            //
+                            try{
+                                this.openDirOrFile(this.getPathToHTMLFile());
+                            }
+                            catch(IOException err){
+                                AdditClass.errorMes(err, nameMethod);
+                            }
                         }
                         else{
                             mess = "Не удалось получить путь к каталогу " +
@@ -83,6 +97,13 @@ public class PrintButAction implements ActionListener{
                         if(!this.getPathToHTMLFile().trim().equals("")){
                             htmlDoc.outputData(this.getPathToHTMLFile(), 
                                     mess, qp.getBooksPrint());
+                            //
+                            try{
+                                this.openDirOrFile(this.getPathToHTMLFile());
+                            }
+                            catch(IOException err){
+                                AdditClass.errorMes(err, nameMethod);
+                            }
                         }
                         else{
                             mess = "Не удалось получить путь к каталогу " +
@@ -97,12 +118,36 @@ public class PrintButAction implements ActionListener{
                     }
                     break;
                 }
-                /*
                 case 3:{
-                    
+                    //task2 - to print result of search query
+                    if(this.createDirAndCSS()){
+                        mess = "Текущий результат";
+                        if(!this.getPathToHTMLFile().trim().equals("")){
+                            htmlDoc.outputData(this.getPathToHTMLFile(), mess, 
+                                    ((CatalogJFrame)this.frame).
+                                                getTable().getListCopyTable());
+                            //
+                            //opening of directory
+                            try{
+                                this.openDirOrFile(this.getPathToHTMLFile());
+                            }
+                            catch(IOException err){
+                                AdditClass.errorMes(err, nameMethod);
+                            }
+                        }
+                        else{
+                            mess = "Не удалось получить путь к каталогу " +
+                                    "для создаваемого файла";
+                            AdditClass.infoMes(mess, nameMethod);
+                        }
+                    }
+                    else{
+                        mess = "Не удалось создать каталог и/или css-файл " + 
+                                "для создаваемых html-файлов";
+                        AdditClass.infoMes(mess, nameMethod);
+                    }
                     break;
                 }
-                */
                 case -1:{
                     mess = "Отмена операции \"Экспорт/Печать\"";
                     AdditClass.infoMes(mess, nameMethod);
@@ -112,9 +157,12 @@ public class PrintButAction implements ActionListener{
                     mess = "Выход за границы допустимых значений.\n" +
                             "Допустимые значения: \n" +
                             "1: Экспорт списка книг текущего раздела " + 
-                            " в html-файл.\n" +
+                            "в html-файл.\n" +
                             "2: Экспорт списка книг всей библиотеки " +
-                            " в html-файл.\n" +
+                            "в html-файл.\n" +
+                            "3: Экспорт текущего (например, полученного " +
+                            "в результате поискового запроса) списка книг " +
+                            "в html-файл.\n" +
                             "-1: Отмена операции \"Экспорт/Печать\".";
                     AdditClass.infoMes(mess, nameMethod);
                     break;
@@ -194,5 +242,27 @@ public class PrintButAction implements ActionListener{
         //else { flag = false; }
         //
         return flag;
+    }
+    
+    /**
+     *Открывает файл (или каталог) с помощью ассоциированного с ним приложения
+     * @param pathTo - путь к файлу или каталогу
+     * @throws IOException 
+     */
+    private void openDirOrFile(String pathTo) throws IOException{
+        File dir;
+        Desktop desk;
+        //
+        try{
+            dir = new File(pathTo);
+            desk = Desktop.getDesktop();
+            desk.open(dir);
+        }
+        catch(IOException err){
+            throw new IOException("Ошибка при открытии окна для " +
+                                    "отображения файлов " + 
+                                    "со списками изданий.\n(" + 
+                                    err.getMessage() + ")\n");
+        }
     }
 }

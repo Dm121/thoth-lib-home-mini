@@ -124,4 +124,10 @@ public class TableCopies {
     public JTable getCopyTable(){
         return this.table;
     }
+    
+    //Возвращает список с данными изданий, содержащимися в таблице JTable
+    // (this.table) для печати (экспорта данных)
+    public List<CopyTable> getListCopyTable(){
+        return this.modelCopies.getCopies();
+    }
 }
