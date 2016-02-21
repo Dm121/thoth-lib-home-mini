@@ -170,7 +170,9 @@ public class TableCopiesModel extends AbstractTableModel{
     }
     
     //Возвращает список с данными изданий, содержащимися в таблице JTable (*1)
+    /*
     public List<CopyTable> getCopies(){
         return this.copies;
     }
+    */
 }

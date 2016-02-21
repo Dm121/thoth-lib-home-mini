@@ -22,24 +22,24 @@ public abstract class DataBaseHelper {
     protected ConnectionSQLiteDB connect;
     //
     
-	//Конструктор по умолчанию
+    //Конструктор по умолчанию
     public DataBaseHelper() throws SQLException{
-        connect = new ConnectionSQLiteDB();
-        connect.connDB("db/thoth_lhm_sqlite.db");
+        this.connect = new ConnectionSQLiteDB();
+        this.connect.connDB("db/thoth_lhm_sqlite.db");
     }
     
     //
-	/**
-	 *Получение соединения
-	 */
+    /**
+     *Получение соединения
+     */
     public Connection getConnectionDBH(){
-        return connect.getConnectionC();
+        return this.connect.getConnectionC();
     }
     //
     
-	/**
-	 *Закрытие Statement -> изменить аргумент на Statement
-	 */
+    /**
+     *Закрытие Statement -> изменить аргумент на Statement
+     */
     public void closeStatement(PreparedStatement ps){
         if(ps != null){
             try{
@@ -51,12 +51,12 @@ public abstract class DataBaseHelper {
         }
     }
     
-	/**
-	 *Закрытие соединения
-	 */
+    /**
+     *Закрытие соединения
+     */
     public void closeConnection(){
-        if(connect.getConnectionC() != null){
-            connect.closeDB(connect.getConnectionC());
+        if(this.connect.getConnectionC() != null){
+            this.connect.closeDB(this.connect.getConnectionC());
         }
     }
 }

@@ -15,10 +15,10 @@ public class Book extends FieldID{
     private int idTypeBook;
     private int idSection;
     
-    MainData mainData;		//Сведения об авторах и названии
-    Dateline dateline;		//Сведения об издателе, месте и годе издания
-    AdditData additData;	//Дополнительные сведения
-    CopyBook copy;			//Сведения об экземпляре издания
+    private final MainData mainData;//Сведения об авторах и названии
+    private final Dateline dateline;//Сведения об издателе, месте и годе издания
+    private final AdditData additData;	//Дополнительные сведения
+    private CopyBook copy;      	//Сведения об экземпляре издания
     
     private boolean flagNewBook;
     

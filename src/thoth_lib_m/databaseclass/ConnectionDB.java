@@ -15,24 +15,25 @@ import javax.sql.rowset.CachedRowSet;
  * @author Sirota Dmitry
  */
 public abstract class ConnectionDB {
-	/**
-	 *Создание подключения, true - удачно, иначе - false
-	 */
+	
+    /**
+     *Создание подключения, true - удачно, иначе - false
+     */
     public abstract boolean connDB(String paramConnection);
     
-	/**
-	 *"Попытка" автоматического создания соединения
-	 * и получения необходимого набора строк - ???? - использется ли
-	 */
-	public abstract boolean connCacheDB(CachedRowSet rowset, String paramConn);
+    /**
+     *"Попытка" автоматического создания соединения
+     * и получения необходимого набора строк - ???? - использется ли
+     */
+    public abstract boolean connCacheDB(CachedRowSet rowset, String paramConn);
     
-	/**
-	 *Закрытие соединения
-	 */
-	public abstract boolean closeDB(Connection c);
+    /**
+     *Закрытие соединения
+     */
+    public abstract boolean closeDB(Connection c);
     
-	/**
-	 *Получение соединения
-	 */
-	//public abstract Connection getConnectionC();
+    /**
+     *Получение соединения
+     */
+    //public abstract Connection getConnectionC();
 }

@@ -31,15 +31,15 @@ public class DataBaseInsert
     
     //
     
-	//Конструктор по умолчанию
+    //Конструктор по умолчанию
     public DataBaseInsert() throws SQLException{
         super();
     }
     
-	/**
-	 *Получение подготовленного запроса для добавления
-	 * библиографических данных книги в базу данных (БД)
-	 */
+    /**
+     *Получение подготовленного запроса для добавления
+     * библиографических данных книги в базу данных (БД)
+     */
     public PreparedStatement getInsertBook(){
         PreparedStatement ps = null;
         try{
@@ -52,10 +52,10 @@ public class DataBaseInsert
         return ps;
     }
     
-	/**
-	 *Получение подготовленного запроса для добавления
-	 * инвентарных данных об экземпляре книги в БД
-	 */
+    /**
+     *Получение подготовленного запроса для добавления
+     * инвентарных данных об экземпляре книги в БД
+     */
     public PreparedStatement getInsertInv(){
         PreparedStatement ps = null;
         try{
@@ -68,10 +68,10 @@ public class DataBaseInsert
         return ps;
     }
     
-	/**
-	 *Выполнение подготовленного запроса по добавлению
-	 * библиографических данных книги в БД
-	 */
+    /**
+     *Выполнение подготовленного запроса по добавлению
+     * библиографических данных книги в БД
+     */
     public boolean insertBook(PreparedStatement ps, Book book){
         boolean flag = false;
         try{
@@ -94,10 +94,10 @@ public class DataBaseInsert
         return flag;
     }
     
-	/**
-	 *Выполнение подготовленного запроса по добавлению
-	 * инвентарных данных об экземпляре книги в БД
-	 */
+    /**
+     *Выполнение подготовленного запроса по добавлению
+     * инвентарных данных об экземпляре книги в БД
+     */
     public boolean insertCopy(PreparedStatement ps, Book copyBook){
         boolean flag = false;
         try{

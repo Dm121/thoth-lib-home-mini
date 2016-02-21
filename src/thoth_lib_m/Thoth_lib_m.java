@@ -33,7 +33,7 @@ public class Thoth_lib_m {
             window.setShow(true);
             //
             sqliteDB.closeDB(sqliteDB.getConnectionC());
-            JOptionPane.showMessageDialog(null, "Success!");
+            //JOptionPane.showMessageDialog(null, "Success!");
         }
         catch(Exception e){
             AdditClass.errorMes(e, "Error: UnSucces");

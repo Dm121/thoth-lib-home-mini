@@ -18,21 +18,21 @@ import thoth_lib_m.AdditClass;
  * @author Sirota Dmitry
  */
 public class ConnectionSQLiteDB extends ConnectionDB{
-    Connection c;	//не private или protected
-    boolean err;	//аналогично
+    protected Connection c;	//не private или protected
+    protected boolean err;	//аналогично
     
-	//Конструктор по умолчанию
+    //Конструктор по умолчанию
     public ConnectionSQLiteDB(){
-        c = null;
-        err = true;
+        this.c = null;
+        this.err = true;
     }
     
     @Override
     public boolean connDB(String paramConnection){
         try{
         Class.forName("org.sqlite.JDBC");		//создание объекта драйвера СУБД
-        c = DriverManager.getConnection("jdbc:sqlite:" + paramConnection);
-        err = false;
+        this.c = DriverManager.getConnection("jdbc:sqlite:" + paramConnection);
+        this.err = false;
         }
         catch(SQLException e){
             JOptionPane.showMessageDialog(null, 
@@ -40,7 +40,7 @@ public class ConnectionSQLiteDB extends ConnectionDB{
                             "Метод: connDB: " + e.getMessage(), 
                             "Ошибка (Error)", 
                             JOptionPane.ERROR_MESSAGE);
-            err = true;
+            this.err = true;
         }
         catch(ClassNotFoundException e){
             JOptionPane.showMessageDialog(null, 
@@ -50,15 +50,15 @@ public class ConnectionSQLiteDB extends ConnectionDB{
                             "Метод: connDB: " + e.getMessage(), 
                             "Ошибка (Error)", 
                             JOptionPane.ERROR_MESSAGE);
-            err = true;
+            this.err = true;
         }
-        return err;
+        return this.err;
     }
     
     //
     @Override
     public boolean connCacheDB(CachedRowSet rowset, String paramConn){
-        err = false;
+        this.err = false;
         try{
             rowset.setUrl("jdbc:sqlite:" + paramConn);
             rowset.setUsername("");
@@ -71,15 +71,15 @@ public class ConnectionSQLiteDB extends ConnectionDB{
                             AdditClass.splitString(regex, 
                                     Arrays.toString(e.getStackTrace())), 
                     "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
-            err = true;
+            this.err = true;
         }
-        return err;
+        return this.err;
     }
     //
     
     @Override
     public boolean closeDB(Connection c){
-        err = false;
+        this.err = false;
         try{
             if(c != null) { c.close(); } 
             //
@@ -95,16 +95,13 @@ public class ConnectionSQLiteDB extends ConnectionDB{
                     "Ошибка при завершении соединения с Базой Данных.\n" +
                             "Метод: closeDB: " + e.getMessage(),
                     "Ошибка (Error): ", JOptionPane.ERROR_MESSAGE);
-            err = true;
+            this.err = true;
         }
-        return err;
+        return this.err;
     }
     
     //@Override
     public Connection getConnectionC(){
-        return c;
+        return this.c;
     }
-    
-    //@Override
-    
 }

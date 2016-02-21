@@ -20,17 +20,17 @@ import thoth_lib_m.guiclass.SearchPane;
  */
 public class DataSearch extends DataBaseSelect{
     
-	/**
-	 *Конструктор по умолчанию
-	 */
+    /**
+     *Конструктор по умолчанию
+     */
     public DataSearch() throws SQLException{
         super();
     }
     
-	/**
-	 *Метод для формирования поискового запроса
-	 * из данных, полученных из элементов вкладки "Поиск"
-	 */
+    /**
+     *Метод для формирования поискового запроса
+     * из данных, полученных из элементов вкладки "Поиск"
+     */
     public String selectQuery(SearchPane sp){
         int i;      //for loop
         StringBuffer strQuery = new StringBuffer();
@@ -132,9 +132,9 @@ public class DataSearch extends DataBaseSelect{
         return strQuery.toString();
     }
     
-	/**
-	 *Закрытие объекта ResultSet с результатами запроса после их обработки
-	 */
+    /**
+     *Закрытие объекта ResultSet с результатами запроса после их обработки
+     */
     public void closeResultSet(ResultSet rs){
         try{
             if(rs != null){

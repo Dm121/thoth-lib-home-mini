@@ -127,7 +127,9 @@ public class TableCopies {
     
     //Возвращает список с данными изданий, содержащимися в таблице JTable
     // (this.table) для печати (экспорта данных)
+    /*
     public List<CopyTable> getListCopyTable(){
         return this.modelCopies.getCopies();
     }
+    */
 }

@@ -37,18 +37,18 @@ public class DataBaseSelect
     
     private Statement s = null;
     
-	//Конструктор по умолчанию
+    //Конструктор по умолчанию
     public DataBaseSelect() throws SQLException{
         super();
         s = connect.getConnectionC().createStatement();
         //selectQw = "";
     }
     
-	/**
-	 *Получение подготовленного запроса для выборки данных
-	 * (библиографических и инвентарных) о книгах из базы данных (БД)
-	 * по номеру раздела, в котором издания располагаются (хранятся)
-	 */
+    /**
+     *Получение подготовленного запроса для выборки данных
+     * (библиографических и инвентарных) о книгах из базы данных (БД)
+     * по номеру раздела, в котором издания располагаются (хранятся)
+     */
     public PreparedStatement getSelectSection(){
         PreparedStatement ps = null;
         try{
@@ -74,11 +74,11 @@ public class DataBaseSelect
     }
     */
     
-	/**
-	 *Выполнение подготовленного запроса по выборке
-	 * библиографических и инвентарных данных о книгах из БД
-	 * по номеру раздела, в котором полученные издания хранятся
-	 */
+    /**
+     *Выполнение подготовленного запроса по выборке
+     * библиографических и инвентарных данных о книгах из БД
+     * по номеру раздела, в котором полученные издания хранятся
+     */
     public ResultSet selectBooks(PreparedStatement ps, int selectedSection){
         ResultSet rs = null;
         try{
@@ -142,9 +142,9 @@ public class DataBaseSelect
         return this.s;
     }
     
-	/**
-	 *Закрытие объекта типа Statement
-	 */
+    /**
+     *Закрытие объекта типа Statement
+     */
     public void closeS(Statement s){
         try{
             if(s != null){ s.close(); }

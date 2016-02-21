@@ -97,14 +97,14 @@ public class OutputDoc {
         //
         partName.append("_");
         partName.append(curDateTime.get(Calendar.YEAR));
-	if(curDateTime.get(Calendar.DAY_OF_MONTH) < 10){
-            partName.append("0");
-        }
-	partName.append(curDateTime.get(Calendar.DAY_OF_MONTH));
 	if((curDateTime.get(Calendar.MONTH) + 1) < 10){
             partName.append("0");
         }
         partName.append((curDateTime.get(Calendar.MONTH) + 1));
+        if(curDateTime.get(Calendar.DAY_OF_MONTH) < 10){
+            partName.append("0");
+        }
+	partName.append(curDateTime.get(Calendar.DAY_OF_MONTH));
         partName.append("_");
         if(curDateTime.get(Calendar.HOUR_OF_DAY) < 10){
             partName.append("0");

@@ -23,15 +23,15 @@ public class DataBaseDelete
     private final static String sql_delete_inv = 
             "delete from inv_book where id_book = ?;";
     
-	//Конструктор по умолчанию
+    //Конструктор по умолчанию
     public DataBaseDelete() throws SQLException{
         super();
     }
     
-	/**
-	 *Получение объекта с подготовленным запросом 
-	 * для удаления библиографических данных книги  
-	 */
+    /**
+     *Получение объекта с подготовленным запросом 
+     * для удаления библиографических данных книги  
+     */
     public PreparedStatement getPSBook(){
         PreparedStatement ps = null;
         try{
@@ -43,10 +43,10 @@ public class DataBaseDelete
         return ps;
     }
     
-	/**
-	 *Получение объекта с подготовленным запросом
-	 * для удаления инвентарных данных о книге
-	 */
+    /**
+     *Получение объекта с подготовленным запросом
+     * для удаления инвентарных данных о книге
+     */
     public PreparedStatement getPSInv(){
         PreparedStatement ps = null;
         try{

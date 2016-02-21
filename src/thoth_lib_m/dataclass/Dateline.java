@@ -18,10 +18,12 @@ public class Dateline implements Serializable{
     private String place;
     private int year;
     //not used
-    String filterYear = "Значения года варьируются от 40 до 9999.\n" +
+    private final String filterYear = 
+            "Значения года варьируются от 40 до 9999.\n" +
             "Вы ввели значение: " + this.year + ".\n" +
             "Поэтому будет использовано значение по умолчанию: 2015.";
-    String filterYearTwo = "Значения года варьируются от 40 до 9999.\n" +
+    private final String filterYearTwo = 
+            "Значения года варьируются от 40 до 9999.\n" +
             "Вы ввели значение: " + this.year + ".\n" +
             "Поэтому текущее значение: " + this.year + 
             " - изменено не будет.";
