@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import thoth_lib_m.AdditClass;
 
 /**
  *Окно экспорта и печати
@@ -22,11 +23,12 @@ import javax.swing.border.TitledBorder;
  */
 public class ExportWin extends JDialog {
     
-    private static final int WIDTH_DEFAULT = 200;
-    private static final int HEIGHT_DEFAULT = 170;
+    private static final int WIDTH_DEFAULT = 240;
+    private static final int HEIGHT_DEFAULT = 190;
     //
     private int resultDialog;
     private boolean resClose;
+    private boolean printSingleTable;
     
     //Конструктор с параметрами
     public ExportWin(JFrame frame){
@@ -35,6 +37,7 @@ public class ExportWin extends JDialog {
         this.setSize(WIDTH_DEFAULT, HEIGHT_DEFAULT);
         this.resultDialog = -1;
         this.resClose = false;
+        this.printSingleTable = false;
     }
     
     //Свойство для получения значения выбора параметра экспорта/печати
@@ -55,6 +58,20 @@ public class ExportWin extends JDialog {
     //Свойство для установки значения закрытия (выхода из) окна экспорта/выбора 
     public void setResClose(boolean resB){
         this.resClose = resB;
+    }
+    
+    //Свойство для получения значения, требуется ли экспортировать
+    // данные изданий одной таблицей (true) или постранично
+    // (25 записей на страницу - false)
+    public boolean getPrintSingleTable(){
+        return this.printSingleTable;
+    }
+    
+    //Свойство для установки значения, требуется ли экспортировать
+    // данные изданий одной таблицей (true) или постранично
+    // (25 записей на страницу - false)
+    public void setPrintSingleTable(boolean oneTable){
+        this.printSingleTable = oneTable;
     }
     
     //Создание интерфейса и вывод окна
@@ -129,6 +146,28 @@ public class ExportWin extends JDialog {
             }
         });
         //
+        JCheckBox printST = new JCheckBox("Печатать одной таблицей");
+        printST.setFont(fontP);
+        printST.setToolTipText("Печатать результат одной таблицей, " + 
+                "а не экспортировать его, разбивая по 25 записей на страницу.");
+        //
+        printST.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(printST.isSelected()){
+                    ExportWin.this.setPrintSingleTable(true);
+                }
+                else{
+                    ExportWin.this.setPrintSingleTable(false);
+                }
+                //
+                /*
+                AdditClass.infoMes("" + ExportWin.this.getPrintSingleTable());
+                */
+                //
+            }
+        });
+        //
         gbcc.anchor = GridBagConstraints.NORTHWEST;
         gbcc.fill = GridBagConstraints.NONE;
         gbcc.gridheight = 1;
@@ -146,6 +185,12 @@ public class ExportWin extends JDialog {
         //
         gbcc.gridx = 1;
         gbcc.gridy = 1;
+        //
+        gbl.setConstraints(printST, gbcc);
+        panelExport.add(printST);
+        //
+        gbcc.gridx = 1;
+        gbcc.gridy = 2;
         gbcc.gridwidth = 1;
         //
         gbl.setConstraints(exportBut, gbcc);

@@ -45,7 +45,6 @@ public class PrintButAction implements ActionListener{
     public void actionPerformed(ActionEvent e){
         //
         QueryPrint qp = null;
-        HTMLDoc htmlDoc = new HTMLDoc();
         //
         String mess;
         String nameMethod = "PrintButAction.actionPerformed(ActionEvent e)";
@@ -66,8 +65,9 @@ public class PrintButAction implements ActionListener{
                         qp.booksSectionCur(s.getArrayISection(
                             s.getSection().getSelectedIndex()).getIdSection());
                         if(!this.getPathToHTMLFile().trim().equals("")){
-                            htmlDoc.outputData(this.getPathToHTMLFile(), 
-                                    qp.getNameS(), qp.getBooksPrint());
+                            this.chooseVariantPrint(exportFrame, 
+                                        this.getPathToHTMLFile(), 
+                                        qp.getNameS(), qp.getBooksPrint());
                             //
                             try{
                                 this.openDirOrFile(this.getPathToHTMLFile());
@@ -95,8 +95,9 @@ public class PrintButAction implements ActionListener{
                         qp = new QueryPrint();
                         qp.booksLibrary();
                         if(!this.getPathToHTMLFile().trim().equals("")){
-                            htmlDoc.outputData(this.getPathToHTMLFile(), 
-                                    mess, qp.getBooksPrint());
+                            this.chooseVariantPrint(exportFrame, 
+                                        this.getPathToHTMLFile(), 
+                                        mess, qp.getBooksPrint());
                             //
                             try{
                                 this.openDirOrFile(this.getPathToHTMLFile());
@@ -125,7 +126,8 @@ public class PrintButAction implements ActionListener{
                         List<CopyTable> listBooks = this.getCurrentListTable();
                         this.shellSort(listBooks);
                         if(!this.getPathToHTMLFile().trim().equals("")){
-                            htmlDoc.outputData(this.getPathToHTMLFile(), mess, 
+                            this.chooseVariantPrint(exportFrame, 
+                                        this.getPathToHTMLFile(), mess, 
                                                                     listBooks);
                             //((CatalogJFrame)this.frame).
                             //getTable().getListCopyTable()
@@ -321,6 +323,19 @@ public class PrintButAction implements ActionListener{
                 listBooks.set(inner, temp);
             }
             h = (h - 1) / 3;
+        }
+    }
+    
+    private void chooseVariantPrint(ExportWin eFrame, String path,
+                                    String nameMess, List<CopyTable> lC){
+        HTMLDoc htmlDoc;
+        if(!eFrame.getPrintSingleTable()){
+            htmlDoc = new HTMLDoc();
+            htmlDoc.outputData(path, nameMess, lC);
+        }
+        else{
+            htmlDoc = new HTMLDocSingleTable();
+            htmlDoc.outputData(path, nameMess, lC);
         }
     }
 }

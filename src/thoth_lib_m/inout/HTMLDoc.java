@@ -36,7 +36,7 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //CSS-стили для HTML-документа
-    private StringBuffer cssDoc(){
+    protected StringBuffer cssDoc(){
         StringBuffer strCSS = new StringBuffer();
         //
         strCSS.append("<style>\n");
@@ -65,7 +65,7 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //JavaScript (функция печати print_())
-    private StringBuffer jsDoc(){
+    protected final StringBuffer jsDoc(){
         StringBuffer strJS = new StringBuffer();
         //
         strJS.append("<script type=\"text/javascript\">\n");
@@ -78,7 +78,7 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //Кнопка в верхней части документа для его печати
-    private String topButton(){
+    protected final String topButton(){
         StringBuffer strTopBut = new StringBuffer();
         //
         strTopBut.append("<form name=\"formTop\">\n");
@@ -93,7 +93,7 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //Кнопка в нижней части документа для его печати
-    private String bottomButton(){
+    protected final String bottomButton(){
         StringBuffer strBottomBut = new StringBuffer();
         //
         strBottomBut.append("<form name=\"formBottom\">\n");
@@ -108,18 +108,18 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //Заголовок таблицы (наименование библиотечного раздела)
-    private String captionTable(String nameSection){
+    protected final String captionTable(String nameSection){
         String captionT = "<caption>" + nameSection + "</caption>\n";
         return captionT;
     }
     
     //Свойство для получения знчений массива HTMLDoc.this.widthColumns
-    private String[] getWidthColumns(){
+    protected final String[] getWidthColumns(){
         return this.widthColumns;
     }
     
     //Строка с наименованиями столбцов таблицы
-    private StringBuffer headerTable(){
+    protected final StringBuffer headerTable(){
         StringBuffer strHeaderT = new StringBuffer();
         //
         String[] nameColumns = {
@@ -226,7 +226,7 @@ public class HTMLDoc extends DocumentContent{
     }
     
     //Формирование страниц с таблицами (с данными библиотечных изданий)
-    private StringBuffer pagesTableHTML(String nameSection, 
+    protected StringBuffer pagesTableHTML(String nameSection, 
                                         List<CopyTable> lC){
         //
         StringBuffer strPage = new StringBuffer();
@@ -272,7 +272,7 @@ public class HTMLDoc extends DocumentContent{
     //Формирование HTML-документа,
     // метод возвращает содержимое формируемого HTML-документа
     // в виде строки (свойство this.getTextDoc())
-    private String textHTMLDoc(String nameSection, List<CopyTable> lC){
+    protected String textHTMLDoc(String nameSection, List<CopyTable> lC){
         this.clearTextDoc();
         //
         this.setTextDoc("<!DOCTYPE html>\n");
